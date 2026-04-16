@@ -47,7 +47,7 @@ const int PWM_RES = 12;
 
 // 【修正】検証用の厳しいリミッター
 const int MIN_THROTTLE = 0;    
-const int MAX_THROTTLE = 125;  // 最大を125に制限
+const int MAX_THROTTLE = 1000;  // 最大を1000に制限
 
 Adafruit_BMP280 bmp;
 Adafruit_VL53L0X lox = Adafruit_VL53L0X();
@@ -79,6 +79,19 @@ void readRawMPU() {
   GyZ = Wire.read()<<8 | Wire.read();
 }
 
+
+void stopAllMotors() {
+    analogWrite(PIN_FR, 0); analogWrite(PIN_FL, 0);
+    analogWrite(PIN_RL, 0); analogWrite(PIN_RR, 0);
+}
+
+void testMotor(int pin) {
+    stopAllMotors();
+    analogWrite(pin,250); // 250くらいで回してみる
+}
+
+
+
 void setup() {
   Serial.begin(921600); // 高速通信
   Wire.begin(5, 6);
@@ -103,9 +116,10 @@ void setup() {
 
   calibrateGyro();   // 回転のズレを補正
 
-  calibrateLevel();  // 角度のズレを補正（ドリフト対策）
+  calibrateLevel();  // 角度のズレを補正（ドリフト対策）1
 
   targetState.throttle = 0; // 最初は停止
+
   Serial.println("System Ready. Send 's' to start motors.");
 }
 
@@ -119,9 +133,14 @@ void loop() {
 
   // --- B. コマンド処理 ---
   if (Serial.available()) {
-    char c = Serial.read();
-    if (c == 's') { targetState.throttle = 150; Serial.println("MOTOR START"); }
-    if (c == 'q') { targetState.throttle = 0;   Serial.println("MOTOR STOP"); }
+      char c = Serial.read();
+      targetState.throttle = 0; // 一旦リセット
+      
+      if (c == '1') { Serial.println("Motor 1 (FR) Test"); testMotor(PIN_FR); }
+      else if (c == '2') { Serial.println("Motor 2 (FL) Test"); testMotor(PIN_FL); }
+      else if (c == '3') { Serial.println("Motor 3 (RL) Test"); testMotor(PIN_RL); }
+      else if (c == '4') { Serial.println("Motor 4 (RR) Test"); testMotor(PIN_RR); }
+      else if (c == 'q') { Serial.println("All Stop"); stopAllMotors(); }
   }
 
   // --- C. 姿勢更新 & PID計算 ---
@@ -136,7 +155,7 @@ void loop() {
   float outYaw   = 0; 
 
   // --- D. 出力反映 ---
-  updateMotorMixer(targetState.throttle, outPitch, outRoll, outYaw);
+  // updateMotorMixer(targetState.throttle, outPitch, outRoll, outYaw);
 
   // --- E. 3軸詳細デバッグ出力 ---
   static unsigned long lastLog = 0;
@@ -196,23 +215,27 @@ void loop() {
 //   // Yawは常に起動時が0になるようオフセットを引かないか、別途管理
 // }
 
+// 1. グローバル変数で宣言
+float lpfAccX = 0, lpfAccY = 0, lpfAccZ = 1.0;
+float lpfBeta = 0.05; // 0.01（強力）〜0.1（弱め）で調整
+
 void updateAttitude(float dt) {
-  readRawMPU(); // 生データの更新
+  readRawMPU();
 
-  // 1. 加速度角度を計算し、その瞬間にオフセットを引く！
-  float accPitch = (atan2((float)AcY, sqrt(pow((float)AcX,2) + pow((float)AcZ,2))) * 180 / PI) - pitch_offset;
-  float accRoll  = (atan2(-(float)AcX, (float)AcZ) * 180 / PI) - roll_offset;
+  // 2. 加速度の生データに LPF をかけて「トゲ」を抜く
+  lpfAccX = (1.0 - lpfBeta) * lpfAccX + lpfBeta * (AcX / 16384.0);
+  lpfAccY = (1.0 - lpfBeta) * lpfAccY + lpfBeta * (AcY / 16384.0);
+  lpfAccZ = (1.0 - lpfBeta) * lpfAccZ + lpfBeta * (AcZ / 16384.0);
 
-  // 2. 補正済みの加速度角度を使って相補フィルタ
-  // ここではもう -= pitch_offset は絶対にしない
-  currentState.pitch = 0.95 * (currentState.pitch + currentState.gyroX * dt) + 0.05 * accPitch;
-  currentState.roll  = 0.95 * (currentState.roll  + currentState.gyroY * dt) + 0.05 * accRoll;
-  // 0.95 : 0.05 → 0.99 : 0.01 に変更
-  // currentState.pitch = 0.99 * (currentState.pitch + currentState.gyroX * dt) + 0.01 * accPitch;
-  // currentState.roll  = 0.99 * (currentState.roll  + currentState.gyroY * dt) + 0.01 * accRoll;
-  currentState.yaw  += currentState.gyroZ * dt;
+  // 3. フィルタ後の値で角度計算
+  float accPitch = (atan2(lpfAccY, sqrt(lpfAccX*lpfAccX + lpfAccZ*lpfAccZ)) * 180 / PI) - pitch_offset;
+  float accRoll  = (atan2(-lpfAccX, lpfAccZ) * 180 / PI) - roll_offset;
+
+  // 4. 相補フィルタの比率を「ジャイロ 99.9%」にする
+  // 加速度センサー（嘘つき）を 0.1% しか信じない設定
+  currentState.pitch = 0.999 * (currentState.pitch + currentState.gyroX * dt) + 0.001 * accPitch;
+  currentState.roll  = 0.999 * (currentState.roll  + currentState.gyroY * dt) + 0.001 * accRoll;
 }
-
 void calibrateLevel() {
   Serial.println("Level Calibrating... PLEASE WAIT 2 SECONDS");
   delay(2000); // フィルタが落ち着くのをしっかり待つ
