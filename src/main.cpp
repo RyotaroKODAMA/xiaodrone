@@ -41,7 +41,7 @@ PIDParameters pidPitch = { 1.2, 0.0, 0.0, 0, 0 };
 PIDParameters pidYaw   = { 2.0, 0.0, 0.0, 0, 0 };
 
 // モーターピン
-const int PIN_FR = 4, PIN_FL = 9, PIN_RL = 10, PIN_RR = 1;
+const int PIN_FR = 4, PIN_FL = 8, PIN_RL = 9, PIN_RR = 1;
 const int PWM_FREQ = 16000;
 const int PWM_RES = 12;
 
@@ -58,6 +58,26 @@ void calibrateLevel();
 void updateAttitude(float dt);
 float calculatePID(float current, float target, PIDParameters &p, float dt);
 void updateMotorMixer(int throttle, float p, float r, float y);
+
+// 1. 関数の外（グローバル）に宣言
+int16_t AcX, AcY, AcZ, GyX, GyY, GyZ;
+
+// 2. 読み込み専用の関数
+void readRawMPU() {
+  Wire.beginTransmission(MPU_ADDR);
+  Wire.write(0x3B); // 加速度データの先頭アドレス
+  Wire.endTransmission(false);
+  Wire.requestFrom(MPU_ADDR, (size_t)14, true);
+
+  // 14バイト分を順番に読み込む
+  AcX = Wire.read()<<8 | Wire.read(); 
+  AcY = Wire.read()<<8 | Wire.read(); 
+  AcZ = Wire.read()<<8 | Wire.read();
+  Wire.read(); Wire.read(); // 温度データ(2バイト)を読み飛ばす
+  GyX = Wire.read()<<8 | Wire.read(); 
+  GyY = Wire.read()<<8 | Wire.read(); 
+  GyZ = Wire.read()<<8 | Wire.read();
+}
 
 void setup() {
   Serial.begin(921600); // 高速通信
@@ -78,7 +98,11 @@ void setup() {
   Wire.write(0x1B); Wire.write(0x18); // 2000dps
   Wire.endTransmission();
 
+  Serial.println("Stabilizing Sensor (Wait 2s)...");
+  delay(2000); // ここで DLPF を安定させ
+
   calibrateGyro();   // 回転のズレを補正
+
   calibrateLevel();  // 角度のズレを補正（ドリフト対策）
 
   targetState.throttle = 0; // 最初は停止
@@ -103,8 +127,11 @@ void loop() {
   // --- C. 姿勢更新 & PID計算 ---
   updateAttitude(dt);
 
-  float outPitch = calculatePID(currentState.pitch, targetState.pitch, pidPitch, dt);
-  float outRoll  = calculatePID(currentState.roll,  targetState.roll,  pidRoll,  dt);
+  float currentP = currentState.pitch - pitch_offset;
+  float currentR = currentState.roll  - roll_offset;
+
+  float outPitch = calculatePID(currentP, targetState.pitch, pidPitch, dt);
+  float outRoll  = calculatePID(currentR, targetState.roll,  pidRoll,  dt);
   // ヨーは振動が激しいので一旦 0 に固定
   float outYaw   = 0; 
 
@@ -115,59 +142,86 @@ void loop() {
   static unsigned long lastLog = 0;
   if (millis() - lastLog > 50) {
     lastLog = millis();
-    // P, R, Y の角度と、PIDの出力を表示
-    Serial.printf("Deg P:%5.1f R:%5.1f Y:%5.1f | Out P:%5.1f R:%5.1f Y:%5.1f | Thr:%d\n", 
+    Serial.printf("Deg P:%6.1f R:%6.1f Y:%6.1f | Out P:%6.1f R:%6.1f | Thr:%d\n", 
                   currentState.pitch, currentState.roll, currentState.yaw,
-                  outPitch, outRoll, outYaw, targetState.throttle);
+                  outPitch, outRoll, targetState.throttle);
   }
 }
 
-void updateAttitude(float dt) {
-  Wire.beginTransmission(MPU_ADDR);
-  Wire.write(0x3B); 
-  Wire.endTransmission(false);
-  Wire.requestFrom(MPU_ADDR, (size_t)14, true);
+// void updateAttitude(float dt) {
+//   Wire.beginTransmission(MPU_ADDR);
+//   Wire.write(0x3B); 
+//   Wire.endTransmission(false);
+//   Wire.requestFrom(MPU_ADDR, (size_t)14, true);
 
-  int16_t AcX = Wire.read()<<8|Wire.read(); 
-  int16_t AcY = Wire.read()<<8|Wire.read(); 
-  int16_t AcZ = Wire.read()<<8|Wire.read();
-  Wire.read(); Wire.read(); // skip temp
-  int16_t GyX = Wire.read()<<8|Wire.read(); 
-  int16_t GyY = Wire.read()<<8|Wire.read(); 
-  int16_t GyZ = Wire.read()<<8|Wire.read();
+//   int16_t AcX = Wire.read()<<8|Wire.read(); 
+//   int16_t AcY = Wire.read()<<8|Wire.read(); 
+//   int16_t AcZ = Wire.read()<<8|Wire.read();
+//   Wire.read(); Wire.read(); // skip temp
+//   int16_t GyX = Wire.read()<<8|Wire.read(); 
+//   int16_t GyY = Wire.read()<<8|Wire.read(); 
+//   int16_t GyZ = Wire.read()<<8|Wire.read();
 
-  // 物理量変換
-  currentState.gyroX = (GyX - gyro_x_offset) / 131.0; 
-  currentState.gyroY = (GyY - gyro_y_offset) / 131.0; 
-  currentState.gyroZ = (GyZ - gyro_z_offset) / 131.0;
+//   // 物理量変換
+//   currentState.gyroX = (GyX - gyro_x_offset) / 131.0; 
+//   currentState.gyroY = (GyY - gyro_y_offset) / 131.0; 
+//   currentState.gyroZ = (GyZ - gyro_z_offset) / 131.0;
   
-  // 加速度角度（生の加速度を使用）
-  float accPitch = atan2((float)AcY, sqrt(pow((float)AcX,2) + pow((float)AcZ,2))) * 180 / PI;
-  float accRoll  = atan2(-(float)AcX, (float)AcZ) * 180 / PI;
+//   // 加速度角度（生の加速度を使用）
+//   float accPitch = atan2((float)AcY, sqrt(pow((float)AcX,2) + pow((float)AcZ,2))) * 180 / PI;
+//   float accRoll  = atan2(-(float)AcX, (float)AcZ) * 180 / PI;
 
-  // 【ドリフト対策】相補フィルタの比率を調整
-  // 加速度の比率(0.04)を少し上げるとドリフトからの復帰が早くなります
-  currentState.pitch = 0.96 * (currentState.pitch + currentState.gyroX * dt) + 0.04 * accPitch;
-  currentState.roll  = 0.96 * (currentState.roll  + currentState.gyroY * dt) + 0.04 * accRoll;
+//   // 【ドリフト対策】相補フィルタの比率を調整
+//   // 加速度の比率(0.05)を少し上げるとドリフトからの復帰が早くなります
+//   currentState.pitch = 0.95 * (currentState.pitch + currentState.gyroX * dt) + 0.05 * accPitch;
+//   currentState.roll  = 0.95 * (currentState.roll  + currentState.gyroY * dt) + 0.05 * accRoll;
+//   currentState.yaw  += currentState.gyroZ * dt;
+
+//   // オフセット適用（これで 0点 が安定する）
+//   // currentState.pitch -= pitch_offset;
+//   // currentState.roll  -= roll_offset;
+//   // Yawは常に起動時が0になるようオフセットを引かないか、別途管理
+// }
+
+void updateAttitude(float dt) {
+  readRawMPU(); // 生データの更新
+
+  // 1. 加速度角度を計算し、その瞬間にオフセットを引く！
+  float accPitch = (atan2((float)AcY, sqrt(pow((float)AcX,2) + pow((float)AcZ,2))) * 180 / PI) - pitch_offset;
+  float accRoll  = (atan2(-(float)AcX, (float)AcZ) * 180 / PI) - roll_offset;
+
+  // 2. 補正済みの加速度角度を使って相補フィルタ
+  // ここではもう -= pitch_offset は絶対にしない
+  currentState.pitch = 0.95 * (currentState.pitch + currentState.gyroX * dt) + 0.05 * accPitch;
+  currentState.roll  = 0.95 * (currentState.roll  + currentState.gyroY * dt) + 0.05 * accRoll;
   currentState.yaw  += currentState.gyroZ * dt;
-
-  // オフセット適用（これで 0点 が安定する）
-  currentState.pitch -= pitch_offset;
-  currentState.roll  -= roll_offset;
-  // Yawは常に起動時が0になるようオフセットを引かないか、別途管理
 }
 
 void calibrateLevel() {
-  Serial.println("Level Calibrating...");
+  Serial.println("Level Calibrating... PLEASE WAIT 2 SECONDS");
+  delay(2000); // フィルタが落ち着くのをしっかり待つ
+
   float p_sum = 0, r_sum = 0;
-  for(int i=0; i<100; i++) {
-    updateAttitude(0.004);
-    p_sum += currentState.pitch;
-    r_sum += currentState.roll;
-    delay(10);
+  int samples = 500; // サンプルを増やして精度を上げる
+
+  for(int i = 0; i < samples; i++) {
+    readRawMPU(); // 加速度・ジャイロを読み込むだけの関数（後述）
+
+    // フィルタを通さない「生の加速度角度」を計算
+    float rawAccP = atan2((float)AcY, sqrt(pow((float)AcX,2) + pow((float)AcZ,2))) * 180 / PI;
+    float rawAccR = atan2(-(float)AcX, (float)AcZ) * 180 / PI;
+
+    p_sum += rawAccP;
+    r_sum += rawAccR;
+    delay(2);
   }
-  pitch_offset = p_sum / 100.0;
-  roll_offset = r_sum / 100.0;
+
+  pitch_offset = p_sum / samples;
+  roll_offset = r_sum / samples;
+
+  // キャリブレーションが終わったら、今の姿勢を 0 に初期化
+  currentState.pitch = 0;
+  currentState.roll = 0;
 }
 
 void calibrateGyro() {
