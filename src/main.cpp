@@ -36,8 +36,8 @@ float gyro_x_offset = 0, gyro_y_offset = 0, gyro_z_offset = 0;
 float pitch_offset = 0, roll_offset = 0, yaw_offset = 0;
 
 // PIDパラメータ (一旦 D は 0 で安定化を優先)
-PIDParameters pidRoll  = { 1.2, 0.0, 0.0, 0, 0 }; 
-PIDParameters pidPitch = { 1.2, 0.0, 0.0, 0, 0 };
+PIDParameters pidRoll  = { 0.6, 0.0, 0.0, 0, 0 }; 
+PIDParameters pidPitch = { 0.6, 0.0, 0.0, 0, 0 };
 PIDParameters pidYaw   = { 2.0, 0.0, 0.0, 0, 0 };
 
 // モーターピン
@@ -47,7 +47,7 @@ const int PWM_RES = 12;
 
 // 【修正】検証用の厳しいリミッター
 const int MIN_THROTTLE = 0;    
-const int MAX_THROTTLE = 250;  // 最大を250に制限
+const int MAX_THROTTLE = 125;  // 最大を125に制限
 
 Adafruit_BMP280 bmp;
 Adafruit_VL53L0X lox = Adafruit_VL53L0X();
@@ -140,11 +140,24 @@ void loop() {
 
   // --- E. 3軸詳細デバッグ出力 ---
   static unsigned long lastLog = 0;
-  if (millis() - lastLog > 50) {
+  if (millis() - lastLog > 50) { // 20Hzで出力
     lastLog = millis();
-    Serial.printf("Deg P:%6.1f R:%6.1f Y:%6.1f | Out P:%6.1f R:%6.1f | Thr:%d\n", 
-                  currentState.pitch, currentState.roll, currentState.yaw,
-                  outPitch, outRoll, targetState.throttle);
+
+    // 1. 加速度センサーだけの「生」の角度を再計算（デバッグ用）
+    float rawAccP = atan2((float)AcY, sqrt(pow((float)AcX,2) + pow((float)AcZ,2))) * 180 / PI - pitch_offset;
+    float rawAccR = atan2(-(float)AcX, (float)AcZ) * 180 / PI - roll_offset;
+
+    // 2. モーターの各出力を計算（確認用）
+    // updateMotorMixer内の計算と同じものをシミュレート
+    int mFR = targetState.throttle - outPitch - outRoll;
+    int mFL = targetState.throttle - outPitch + outRoll;
+
+    // 3. 超詳細シリアル表示
+    // [姿勢データ] [PID出力] [モーター出力想定]
+    Serial.printf("P[Raw:%5.1f Deg:%5.1f Out:%5.0f] | R[Raw:%5.1f Deg:%5.1f Out:%5.0f] | Mot[FR:%4d FL:%4d] | Thr:%d\n", 
+                  rawAccP, currentState.pitch, outPitch,
+                  rawAccR, currentState.roll, outRoll,
+                  mFR, mFL, targetState.throttle);
   }
 }
 
@@ -194,6 +207,9 @@ void updateAttitude(float dt) {
   // ここではもう -= pitch_offset は絶対にしない
   currentState.pitch = 0.95 * (currentState.pitch + currentState.gyroX * dt) + 0.05 * accPitch;
   currentState.roll  = 0.95 * (currentState.roll  + currentState.gyroY * dt) + 0.05 * accRoll;
+  // 0.95 : 0.05 → 0.99 : 0.01 に変更
+  // currentState.pitch = 0.99 * (currentState.pitch + currentState.gyroX * dt) + 0.01 * accPitch;
+  // currentState.roll  = 0.99 * (currentState.roll  + currentState.gyroY * dt) + 0.01 * accRoll;
   currentState.yaw  += currentState.gyroZ * dt;
 }
 
