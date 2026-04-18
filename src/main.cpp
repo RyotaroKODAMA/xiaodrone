@@ -17,7 +17,7 @@ struct DroneSetpoint {
   float roll = 0;
   float pitch = 0;
   float yawRate = 0;
-  int throttle = 150; // 検証用に最初から少し上げる設定
+  int throttle = 0; // 検証用に最初から少し上げる設定
 };
 
 struct PIDParameters {
@@ -35,10 +35,10 @@ const uint8_t MPU_ADDR = 0x68;
 float gyro_x_offset = 0, gyro_y_offset = 0, gyro_z_offset = 0;
 float pitch_offset = 0, roll_offset = 0, yaw_offset = 0;
 
-// PIDパラメータ (一旦 D は 0 で安定化を優先)
-PIDParameters pidRoll  = { 0.6, 0.0, 0.0, 0, 0 }; 
-PIDParameters pidPitch = { 0.6, 0.0, 0.0, 0, 0 };
-PIDParameters pidYaw   = { 2.0, 0.0, 0.0, 0, 0 };
+// Kp=20 に対して、まずは 1/20 くらいの 1.0 あたりから試すのが 12bit では現実的です
+PIDParameters pidRoll  = { 20.0, 0.0, 1.0, 0, 0 }; 
+PIDParameters pidPitch = { 20.0, 0.0, 1.0, 0, 0 };
+PIDParameters pidYaw   = { 20.0, 0.0, 0.0, 0, 0 }; // ヨーは一旦 0 で OK
 
 // モーターピン
 const int PIN_FR = 4, PIN_FL = 8, PIN_RL = 9, PIN_RR = 1;
@@ -47,10 +47,14 @@ const int PWM_RES = 12;
 
 // 【修正】検証用の厳しいリミッター
 const int MIN_THROTTLE = 0;    
-const int MAX_THROTTLE = 1000;  // 最大を1000に制限
+const int MAX_THROTTLE = 3000;  // 最大を3000に制限
 
 Adafruit_BMP280 bmp;
 Adafruit_VL53L0X lox = Adafruit_VL53L0X();
+
+// フィルタ定数
+float lpfAccX = 0, lpfAccY = 0, lpfAccZ = 1.0;
+float lpfBeta = 0.05;
 
 // --- プロトタイプ宣言 ---
 void calibrateGyro();
@@ -65,18 +69,12 @@ int16_t AcX, AcY, AcZ, GyX, GyY, GyZ;
 // 2. 読み込み専用の関数
 void readRawMPU() {
   Wire.beginTransmission(MPU_ADDR);
-  Wire.write(0x3B); // 加速度データの先頭アドレス
+  Wire.write(0x3B);
   Wire.endTransmission(false);
   Wire.requestFrom(MPU_ADDR, (size_t)14, true);
-
-  // 14バイト分を順番に読み込む
-  AcX = Wire.read()<<8 | Wire.read(); 
-  AcY = Wire.read()<<8 | Wire.read(); 
-  AcZ = Wire.read()<<8 | Wire.read();
-  Wire.read(); Wire.read(); // 温度データ(2バイト)を読み飛ばす
-  GyX = Wire.read()<<8 | Wire.read(); 
-  GyY = Wire.read()<<8 | Wire.read(); 
-  GyZ = Wire.read()<<8 | Wire.read();
+  AcX = Wire.read()<<8 | Wire.read(); AcY = Wire.read()<<8 | Wire.read(); AcZ = Wire.read()<<8 | Wire.read();
+  Wire.read(); Wire.read(); // skip temp
+  GyX = Wire.read()<<8 | Wire.read(); GyY = Wire.read()<<8 | Wire.read(); GyZ = Wire.read()<<8 | Wire.read();
 }
 
 
@@ -85,100 +83,87 @@ void stopAllMotors() {
     analogWrite(PIN_RL, 0); analogWrite(PIN_RR, 0);
 }
 
-void testMotor(int pin) {
-    stopAllMotors();
-    analogWrite(pin,250); // 250くらいで回してみる
-}
-
-
+void testMotor(int pin);
 
 void setup() {
-  Serial.begin(921600); // 高速通信
-  Wire.begin(5, 6);
-  Wire.setClock(400000);
+  // 1. ピン初期化 (Serialより先に!)
+  pinMode(PIN_FR, OUTPUT); pinMode(PIN_FL, OUTPUT);
+  pinMode(PIN_RL, OUTPUT); pinMode(PIN_RR, OUTPUT);
+  stopAllMotors();
+  analogWriteResolution(PWM_RES);
+  analogWriteFrequency(PWM_FREQ);
 
-  // MPU6500初期化
-  Wire.beginTransmission(MPU_ADDR);
-  Wire.write(0x6B); Wire.write(0x00); // Wake up
-  Wire.endTransmission();
+  // 2. 通信開始
+  Serial.begin(921600);
+  Wire.begin(5, 6); Wire.setClock(400000);
 
-  // 【ドリフト・振動対策】内蔵デジタルフィルタ(DLPF)を最強に
-  Wire.beginTransmission(MPU_ADDR);
-  Wire.write(0x1A); Wire.write(0x05); // 10Hz LPF
-  Wire.endTransmission();
+  // 3. センサー初期化
+  Wire.beginTransmission(MPU_ADDR); Wire.write(0x6B); Wire.write(0x00); Wire.endTransmission();
+  Wire.beginTransmission(MPU_ADDR); Wire.write(0x1A); Wire.write(0x05); Wire.endTransmission(); // DLPF 10Hz
+  
+  Serial.println("Stabilizing...");
+  delay(2000);
+  calibrateGyro();
+  calibrateLevel();
 
-  Wire.beginTransmission(MPU_ADDR);
-  Wire.write(0x1B); Wire.write(0x18); // 2000dps
-  Wire.endTransmission();
-
-  Serial.println("Stabilizing Sensor (Wait 2s)...");
-  delay(2000); // ここで DLPF を安定させ
-
-  calibrateGyro();   // 回転のズレを補正
-
-  calibrateLevel();  // 角度のズレを補正（ドリフト対策）1
-
-  targetState.throttle = 0; // 最初は停止
-
-  Serial.println("System Ready. Send 's' to start motors.");
+  // シリアルバッファ掃除
+  while(Serial.available() > 0) Serial.read();
+  Serial.println("Ready: 'w'=Up, 'x'=Down, 'q'=STOP");
 }
 
 void loop() {
-  // --- A. タイミング管理 (250Hz) ---
   static unsigned long lastLoopTime = micros();
   unsigned long now = micros();
   float dt = (now - lastLoopTime) / 1000000.0;
   if (dt < 0.004) return; 
   lastLoopTime = now;
 
-  // --- B. コマンド処理 ---
+  // --- コマンド処理 (スロットル保持) ---
   if (Serial.available()) {
-      char c = Serial.read();
-      targetState.throttle = 0; // 一旦リセット
-      
-      if (c == '1') { Serial.println("Motor 1 (FR) Test"); testMotor(PIN_FR); }
-      else if (c == '2') { Serial.println("Motor 2 (FL) Test"); testMotor(PIN_FL); }
-      else if (c == '3') { Serial.println("Motor 3 (RL) Test"); testMotor(PIN_RL); }
-      else if (c == '4') { Serial.println("Motor 4 (RR) Test"); testMotor(PIN_RR); }
-      else if (c == 'q') { Serial.println("All Stop"); stopAllMotors(); }
+    char c = Serial.read();
+    if (c == 'w') targetState.throttle += 500;
+    if (c == 'x') targetState.throttle -= 500;
+    if (c == 'q') targetState.throttle = 0;
+    targetState.throttle = constrain(targetState.throttle, 0, MAX_THROTTLE);
+    Serial.printf("Thr: %d\n", targetState.throttle);
   }
 
-  // --- C. 姿勢更新 & PID計算 ---
   updateAttitude(dt);
 
-  float currentP = currentState.pitch - pitch_offset;
-  float currentR = currentState.roll  - roll_offset;
+  float outP = calculatePID(currentState.pitch, targetState.pitch, pidPitch, dt);
+  float outR = calculatePID(currentState.roll,  targetState.roll,  pidRoll,  dt);
 
-  float outPitch = calculatePID(currentP, targetState.pitch, pidPitch, dt);
-  float outRoll  = calculatePID(currentR, targetState.roll,  pidRoll,  dt);
-  // ヨーは振動が激しいので一旦 0 に固定
-  float outYaw   = 0; 
+  // --- D. モーター出力の計算 (Mixerの中身をここでシミュレートして表示) ---
+  int mFR = targetState.throttle + outP - outR;
+  int mFL = targetState.throttle + outP + outR;
+  int mRL = targetState.throttle - outP + outR;
+  int mRR = targetState.throttle - outP - outR;
 
-  // --- D. 出力反映 ---
-  // updateMotorMixer(targetState.throttle, outPitch, outRoll, outYaw);
 
-  // --- E. 3軸詳細デバッグ出力 ---
+
+
+  updateMotorMixer(targetState.throttle, outP, outR, 0);
+
+// --- E. 超詳細ログ出力 (100msおき) ---
   static unsigned long lastLog = 0;
-  if (millis() - lastLog > 50) { // 20Hzで出力
-    lastLog = millis();
+  if (now / 1000 - lastLog > 100) {
+    lastLog = now / 1000;
 
-    // 1. 加速度センサーだけの「生」の角度を再計算（デバッグ用）
-    float rawAccP = atan2((float)AcY, sqrt(pow((float)AcX,2) + pow((float)AcZ,2))) * 180 / PI - pitch_offset;
-    float rawAccR = atan2(-(float)AcX, (float)AcZ) * 180 / PI - roll_offset;
-
-    // 2. モーターの各出力を計算（確認用）
-    // updateMotorMixer内の計算と同じものをシミュレート
-    int mFR = targetState.throttle - outPitch - outRoll;
-    int mFL = targetState.throttle - outPitch + outRoll;
-
-    // 3. 超詳細シリアル表示
-    // [姿勢データ] [PID出力] [モーター出力想定]
-    Serial.printf("P[Raw:%5.1f Deg:%5.1f Out:%5.0f] | R[Raw:%5.1f Deg:%5.1f Out:%5.0f] | Mot[FR:%4d FL:%4d] | Thr:%d\n", 
-                  rawAccP, currentState.pitch, outPitch,
-                  rawAccR, currentState.roll, outRoll,
-                  mFR, mFL, targetState.throttle);
+    Serial.println("-----------------------------------------------------------------------");
+    // 1段目：姿勢データ
+    Serial.printf("ATTITUDE | Pitch:%6.1f deg | Roll:%6.1f deg\n", currentState.pitch, currentState.roll);
+    
+    // 2段目：PID計算結果
+    Serial.printf("PID OUT  | OutP:%7.1f | OutR:%7.1f | (KpP:%.1f, KpR:%.1f)\n", outP, outR, pidPitch.Kp, pidRoll.Kp);
+    
+    // 3段目：各モーターへの最終PWM値 (12bit: 0-4095)
+    Serial.printf("MOTORS   | FR:%4d | FL:%4d | RL:%4d | RR:%4d | BaseThr:%d\n", 
+                  constrain(mFR, 0, 4095), constrain(mFL, 0, 4095), 
+                  constrain(mRL, 0, 4095), constrain(mRR, 0, 4095), 
+                  targetState.throttle);
   }
 }
+
 
 // void updateAttitude(float dt) {
 //   Wire.beginTransmission(MPU_ADDR);
@@ -216,26 +201,41 @@ void loop() {
 // }
 
 // 1. グローバル変数で宣言
-float lpfAccX = 0, lpfAccY = 0, lpfAccZ = 1.0;
-float lpfBeta = 0.05; // 0.01（強力）〜0.1（弱め）で調整
+// float lpfAccX = 0, lpfAccY = 0, lpfAccZ = 1.0;
+// float lpfBeta = 0.05; // 0.01（強力）〜0.1（弱め）で調整
 
 void updateAttitude(float dt) {
   readRawMPU();
 
-  // 2. 加速度の生データに LPF をかけて「トゲ」を抜く
+  // ★重要：ジャイロを dps に変換
+  currentState.gyroX = (GyX - gyro_x_offset) / 131.0;
+  currentState.gyroY = (GyY - gyro_y_offset) / 131.0;
+  currentState.gyroZ = (GyZ - gyro_z_offset) / 131.0;
+
+  static float filteredGyX = 0, filteredGyY = 0;
+  float gyroAlpha = 0.3; // 0.1〜0.5で調整。小さいほど強力
+
+  filteredGyX = (1.0 - gyroAlpha) * filteredGyX + gyroAlpha * ((GyX - gyro_x_offset) / 131.0);
+  filteredGyY = (1.0 - gyroAlpha) * filteredGyY + gyroAlpha * ((GyY - gyro_y_offset) / 131.0);
+
+  currentState.gyroX = filteredGyX;
+  currentState.gyroY = filteredGyY;
+
+  // 加速度LPF
   lpfAccX = (1.0 - lpfBeta) * lpfAccX + lpfBeta * (AcX / 16384.0);
   lpfAccY = (1.0 - lpfBeta) * lpfAccY + lpfBeta * (AcY / 16384.0);
   lpfAccZ = (1.0 - lpfBeta) * lpfAccZ + lpfBeta * (AcZ / 16384.0);
 
-  // 3. フィルタ後の値で角度計算
   float accPitch = (atan2(lpfAccY, sqrt(lpfAccX*lpfAccX + lpfAccZ*lpfAccZ)) * 180 / PI) - pitch_offset;
   float accRoll  = (atan2(-lpfAccX, lpfAccZ) * 180 / PI) - roll_offset;
 
-  // 4. 相補フィルタの比率を「ジャイロ 99.9%」にする
-  // 加速度センサー（嘘つき）を 0.1% しか信じない設定
-  currentState.pitch = 0.999 * (currentState.pitch + currentState.gyroX * dt) + 0.001 * accPitch;
-  currentState.roll  = 0.999 * (currentState.roll  + currentState.gyroY * dt) + 0.001 * accRoll;
+  // 相補フィルタ
+  currentState.pitch = 0.98 * (currentState.pitch + currentState.gyroX * dt) + 0.02 * accPitch;
+  currentState.roll  = 0.98 * (currentState.roll  + currentState.gyroY * dt) + 0.02 * accRoll;
 }
+
+
+
 void calibrateLevel() {
   Serial.println("Level Calibrating... PLEASE WAIT 2 SECONDS");
   delay(2000); // フィルタが落ち着くのをしっかり待つ
@@ -286,11 +286,14 @@ void updateMotorMixer(int throttle, float p, float r, float y) {
     analogWrite(PIN_RL, 0); analogWrite(PIN_RR, 0);
     return;
   }
-  int mFR = throttle - p - r - y;
-  int mFL = throttle - p + r + y;
-  int mRL = throttle + p + r - y;
-  int mRR = throttle + p - r + y;
-
+  // int mFR = throttle + p - r - y;
+  // int mFL = throttle + p + r + y;
+  // int mRL = throttle - p + r - y;
+  // int mRR = throttle - p - r + y;
+  int mFR = throttle + p - r ;
+  int mFL = throttle + p + r ;
+  int mRL = throttle - p + r ;
+  int mRR = throttle - p - r ;
   analogWrite(PIN_FR, constrain(mFR, MIN_THROTTLE, MAX_THROTTLE));
   analogWrite(PIN_FL, constrain(mFL, MIN_THROTTLE, MAX_THROTTLE));
   analogWrite(PIN_RL, constrain(mRL, MIN_THROTTLE, MAX_THROTTLE));
@@ -306,4 +309,9 @@ float calculatePID(float current, float target, PIDParameters &p, float dt) {
   float D = p.Kd * (error - p.error_prev) / dt;
   p.error_prev = error;
   return P + I + D;
+}
+
+void testMotor(int pin) {
+    stopAllMotors();
+    analogWrite(pin,250); // 250くらいで回してみる
 }
