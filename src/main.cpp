@@ -47,7 +47,7 @@ const int PWM_RES = 12;
 
 // 【修正】検証用の厳しいリミッター
 const int MIN_THROTTLE = 0;    
-const int MAX_THROTTLE = 3000;  // 最大を3000に制限
+const int MAX_THROTTLE = 4000;  // 最大を4000に制限
 
 Adafruit_BMP280 bmp;
 Adafruit_VL53L0X lox = Adafruit_VL53L0X();
