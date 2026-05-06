@@ -1,10 +1,10 @@
 #include <Arduino.h>
 
-constexpr uint8_t MOTOR_PINS[] = {4, 9, 10, 1};
+constexpr uint8_t MOTOR_PINS[] = {4, 81 , 9, 1};
 constexpr uint8_t MOTOR_CHANNELS[] = {0, 1, 2, 3};
 constexpr uint8_t MOTOR_COUNT = sizeof(MOTOR_PINS) / sizeof(MOTOR_PINS[0]);
 constexpr int PWM_FREQ = 16000;
-constexpr int PWM_RESOLUTION = 12;
+constexpr int PWM_RESOLUTION = 10;
 constexpr int PWM_MAX = (1 << PWM_RESOLUTION) - 1;
 constexpr int THROTTLE_STEP = 80;
 
@@ -20,6 +20,8 @@ void setupMotors() {
 
 void writeMotor(uint8_t motorIndex, int throttle) {
   throttle = constrain(throttle, 0, PWM_MAX);
+
+
   motorThrottle[motorIndex] = throttle;
 
   if (motorIndex < MOTOR_COUNT) {
