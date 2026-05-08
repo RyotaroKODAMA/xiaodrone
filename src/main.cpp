@@ -78,6 +78,7 @@ float calculatePID(float current, float target, PIDParameters &p, float dt);
 void updateMotorMixer(int throttle, float p, float r, float y);
 void updateAltitude();
 float calculateAltitudeFromPressure(float pressure);
+float calculateToFAltitudeWithAttitude(float distanceMm, float pitchDeg, float rollDeg);
 
 // 1. 関数の外（グローバル）に宣言
 int16_t AcX, AcY, AcZ, GyX, GyY, GyZ;
@@ -411,6 +412,21 @@ float calculateAltitudeFromPressure(float pressure) {
   return altitude;
 }
 
+float calculateToFAltitudeWithAttitude(float distanceMm, float pitchDeg, float rollDeg) {
+  if (distanceMm <= 0.0f) {
+    return -1.0f;
+  }
+
+  float pitchRad = pitchDeg * PI / 180.0f;
+  float rollRad = rollDeg * PI / 180.0f;
+  float correction = cos(pitchRad) * cos(rollRad);
+
+  // 斜め姿勢での過補正を防ぐため、補正係数を下限付きで扱う
+  correction = constrain(correction, 0.2f, 1.0f);
+
+  return (distanceMm / 1000.0f) * correction;
+}
+
 // 高度を更新する関数
 void updateAltitude() {
   float pressure = bmp.readPressure();
@@ -425,9 +441,7 @@ void updateAltitude() {
     if (lox.isRangeComplete()) {
       float distanceMm = (float)lox.readRange();
       if (distanceMm > 0) {
-        float pitchRad = currentState.pitch * PI / 180.0;
-        float rollRad  = currentState.roll * PI / 180.0;
-        tofAltitude = (distanceMm / 1000.0) * cos(pitchRad) * cos(rollRad);
+        tofAltitude = calculateToFAltitudeWithAttitude(distanceMm, currentState.pitch, currentState.roll);
         lastValidToFAltitude = tofAltitude;
       }
     }
