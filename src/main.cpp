@@ -154,90 +154,90 @@ void setup() {
 
 
 
-void loop() {
-  static unsigned long lastLoopTime = micros();
-  unsigned long now = micros();
-  float dt = (now - lastLoopTime) / 1000000.0; // 秒単位
-
-  // 指定した周期（例: 4ms = 250Hz）まで待機
-  if (dt < 0.004) return; 
-  lastLoopTime = now;
-
-  // 1. 最新の姿勢を取得
-  updateAttitude();
-
-  // 2. 高度・ToFデータの取得（必要に応じて）
-  // ※ToFは毎秒30回程度なので、isRangeCompleteでチェック
-  if (lox.isRangeComplete()) {
-    currentState.altitudeToF = lox.readRange();
-    // ここで前述の傾き補正を入れても良い
-  }
-
-  // 3. PID計算 (目標角度と現在の角度の差を埋める)
-  float outPitch = calculatePID(currentState.pitch, targetState.pitch, pidPitch, dt);
-  float outRoll  = calculatePID(currentState.roll,  targetState.roll,  pidRoll,  dt);
-  float outYaw   = calculatePID(currentState.gyroZ, targetState.yawRate, pidYaw,   dt); // ヨーは角速度で制御
-
-  // 4. モーター出力へ反映 (前述のミキサー関数を呼ぶ)
-  // ※まだ送信機がないので、テスト時は targetState.throttle を安全な値に固定
-  updateMotorMixer(targetState.throttle, outPitch, outRoll, outYaw);
-
-  // 5. デバッグ表示 (100msおき)
-  static unsigned long lastLog = 0;
-  if (millis() - lastLog > 100) {
-    lastLog = millis();
-    Serial.printf("P:%.1f R:%.1f Thr:%d\n", currentState.pitch, currentState.roll, targetState.throttle);
-  }
-}
-
 // void loop() {
-//   // 1. 姿勢の更新
+//   static unsigned long lastLoopTime = micros();
+//   unsigned long now = micros();
+//   float dt = (now - lastLoopTime) / 1000000.0; // 秒単位
+
+//   // 指定した周期（例: 4ms = 250Hz）まで待機
+//   if (dt < 0.004) return; 
+//   lastLoopTime = now;
+
+//   // 1. 最新の姿勢を取得
 //   updateAttitude();
 
-//   // 2. 気圧センサーからの相対高度
-//   float relAlt = bmp.readAltitude(1013.25) - baseAltitude;
-
-//   // 3. ToFセンサーからの距離取得
-//   float distanceToF = lox.isRangeComplete() ? lox.readRange() : -1;
-
-//   // 4. ToFの傾き補正（キャリブレーション）
-//   float calibratedToF = -1; // 初期値（無効な状態）
-  
-//   if (distanceToF > 0) {
-//     // 角度(deg)をラジアン(rad)に変換
-//     float pitchRad = currentState.pitch * PI / 180.0;
-//     float rollRad  = currentState.roll  * PI / 180.0;
-
-//     // 斜めの距離に、cos(pitch) と cos(roll) を掛けて真の垂直高度を出す
-//     calibratedToF = distanceToF * cos(pitchRad) * cos(rollRad);
+//   // 2. 高度・ToFデータの取得（必要に応じて）
+//   // ※ToFは毎秒30回程度なので、isRangeCompleteでチェック
+//   if (lox.isRangeComplete()) {
+//     currentState.altitudeToF = lox.readRange();
+//     // ここで前述の傾き補正を入れても良い
 //   }
 
-//   // // 2. 表示処理 (毎ループやると遅いので、100msごとに表示)
-//   // static unsigned long lastPrintTime = 0;
-//   // if (millis() - lastPrintTime > 100) {
-//   //   lastPrintTime = millis();
+//   // 3. PID計算 (目標角度と現在の角度の差を埋める)
+//   float outPitch = calculatePID(currentState.pitch, targetState.pitch, pidPitch, dt);
+//   float outRoll  = calculatePID(currentState.roll,  targetState.roll,  pidRoll,  dt);
+//   float outYaw   = calculatePID(currentState.gyroZ, targetState.yawRate, pidYaw,   dt); // ヨーは角速度で制御
 
-//   //   // 6軸表示 (Accel: g, Gyro: deg/s)
-//   //   Serial.print("Acc:"); Serial.print(currentState.accX); Serial.print(","); Serial.print(currentState.accY); Serial.print(","); Serial.print(currentState.accZ);
-//   //   Serial.print(" | Gyr:"); Serial.print(currentState.gyroX); Serial.print(","); Serial.print(currentState.gyroY); Serial.print(","); Serial.print(currentState.gyroZ
-    
-    
-//   //   );
+//   // 4. モーター出力へ反映 (前述のミキサー関数を呼ぶ)
+//   // ※まだ送信機がないので、テスト時は targetState.throttle を安全な値に固定
+//   updateMotorMixer(targetState.throttle, outPitch, outRoll, outYaw);
 
-//   //   // 姿勢表示
-//   //   Serial.print(" | P:"); Serial.print(currentState.pitch); Serial.print(" R:"); Serial.print(currentState.roll); Serial.print(" Y:"); Serial.print(currentState.yaw);
-
-//   //   // 相対高度表示
-//   //   float relAlt = bmp.readAltitude(1013.25) - baseAltitude;
-//   //   Serial.print(" | BaroRel:"); Serial.print(relAlt);
-
-//   //   // ToF表示
-//   //   if (lox.isRangeComplete()) {
-//   //     Serial.print(" | ToF:"); Serial.print(lox.readRange()); Serial.print("mm");
-//   //   }
-//   //   Serial.println();
-//   // }
+//   // 5. デバッグ表示 (100msおき)
+//   static unsigned long lastLog = 0;
+//   if (millis() - lastLog > 100) {
+//     lastLog = millis();
+//     Serial.printf("P:%.1f R:%.1f Thr:%d\n", currentState.pitch, currentState.roll, targetState.throttle);
+//   }
 // }
+
+void loop() {
+  // 1. 姿勢の更新
+  updateAttitude();
+
+  // 2. 気圧センサーからの相対高度
+  float relAlt = bmp.readAltitude(1013.25) - baseAltitude;
+
+  // 3. ToFセンサーからの距離取得
+  float distanceToF = lox.isRangeComplete() ? lox.readRange() : -1;
+
+  // 4. ToFの傾き補正（キャリブレーション）
+  float calibratedToF = -1; // 初期値（無効な状態）
+  
+  if (distanceToF > 0) {
+    // 角度(deg)をラジアン(rad)に変換
+    float pitchRad = currentState.pitch * PI / 180.0;
+    float rollRad  = currentState.roll  * PI / 180.0;
+
+    // 斜めの距離に、cos(pitch) と cos(roll) を掛けて真の垂直高度を出す
+    calibratedToF = distanceToF * cos(pitchRad) * cos(rollRad);
+  }
+
+  // 2. 表示処理 (毎ループやると遅いので、100msごとに表示)
+  static unsigned long lastPrintTime = 0;
+  if (millis() - lastPrintTime > 100) {
+    lastPrintTime = millis();
+
+    // 6軸表示 (Accel: g, Gyro: deg/s)
+    Serial.print("Acc:"); Serial.print(currentState.accX); Serial.print(","); Serial.print(currentState.accY); Serial.print(","); Serial.print(currentState.accZ);
+    Serial.print(" | Gyr:"); Serial.print(currentState.gyroX); Serial.print(","); Serial.print(currentState.gyroY); Serial.print(","); Serial.print(currentState.gyroZ
+    
+    
+    );
+
+    // 姿勢表示
+    Serial.print(" | P:"); Serial.print(currentState.pitch); Serial.print(" R:"); Serial.print(currentState.roll); Serial.print(" Y:"); Serial.print(currentState.yaw);
+
+    // 相対高度表示
+    float relAlt = bmp.readAltitude(1013.25) - baseAltitude;
+    Serial.print(" | BaroRel:"); Serial.print(relAlt);
+
+    // ToF表示
+    if (lox.isRangeComplete()) {
+      Serial.print(" | ToF:"); Serial.print(lox.readRange()); Serial.print("mm");
+    }
+    Serial.println();
+  }
+}
 
 
 // -----------------------------------------
