@@ -39,7 +39,7 @@ float pitch_offset = 0, roll_offset = 0, yaw_offset = 0;
 PIDParameters pidRoll  = { 20.0, 0.0, 1.0, 0, 0 }; 
 PIDParameters pidPitch = { 20.0, 0.0, 1.0, 0, 0 };
 PIDParameters pidYaw   = { 20.0, 0.0, 0.0, 0, 0 }; // ヨーは一旦 0 で OK
-PIDParameters pidAltitude = { 20.0, 2.0, 3.0, 0, 0 }; // 高度制御用PID (抑制版)
+PIDParameters pidAltitude = { 300.0, 100.0, 30.0, 0, 0 }; // 高度制御用PID (抑制強化版)
 
 // モーターピン
 const int PIN_FR = 4, PIN_FL = 8, PIN_RL = 9, PIN_RR = 1;
@@ -61,9 +61,9 @@ float lpfBeta = 0.05;
 float seaLevelPressure = 101325.0; // 海面気圧（Pa）
 float referencePressure = 101325.0; // キャリブレーション時の気圧
 float filteredAltitude = 0.0; // フィルタ済み高度
-float altitudeFilterAlpha = 0.15; // 高度のLPF係数（小さいほど平滑）
-int throttleLimitRate = 200; // スロットル変化率リミッター（PWM/ループ）
-int lastThrottle = 0; // 前フレームのスロットル値
+float altitudeFilterAlpha = 0.03; // 高度のLPF係数（かなり強く平滑）
+int throttleLimitRate = 100; // スロットル変化率リミッター（PWM/ループ）
+int lastThrottle = 1000; // 前フレームのスロットル値（初期値調整）
 
 // --- プロトタイプ宣言 ---
 void calibrateGyro();
@@ -113,7 +113,7 @@ void setup() {
   Wire.beginTransmission(MPU_ADDR); Wire.write(0x1A); Wire.write(0x05); Wire.endTransmission(); // DLPF 10Hz
   
   // BMP280初期化
-  if (!bmp.begin(0x77)) {
+  if (!bmp.begin(0x76)) {
     Serial.println("BMP280 not found!");
     while (1);
   }
@@ -129,12 +129,16 @@ void setup() {
     initialPressure += bmp.readPressure();
     delay(10);
   }
-  referencePressure = initialPressure / 100.0;
+  referencePressure = initialPressure / 100.0;  // 平均気圧をそのまま基準に
+  filteredAltitude = 0.0;  // 初期高度を0に固定
   Serial.printf("Reference Pressure: %.2f Pa\n", referencePressure);
 
   // シリアルバッファ掃除
   while(Serial.available() > 0) Serial.read();
-  Serial.println("Ready: 'w'=Up, 'x'=Down, 'q'=STOP");
+  Serial.println("=== Commands ===");
+  Serial.println("w: Altitude +0.01m, x: Altitude -0.01m, q: Reset Altitude");
+  Serial.println("k: KILL - Force stop all motors immediately!");
+  Serial.println("Note: Hovering throttle is automatically determined by PID integral.");
 }
 
 void loop() {
@@ -150,6 +154,10 @@ void loop() {
     if (c == 'w') targetState.altitudeTarget += 0.01;  // 0.01m上昇
     if (c == 'x') targetState.altitudeTarget -= 0.01;  // 0.01m下降
     if (c == 'q') targetState.altitudeTarget = 0;     // 初期高度に戻す
+    if (c == 'k') {
+      stopAllMotors();  // モーター強制停止
+      Serial.println("KILL: All motors stopped!");
+    }
     targetState.altitudeTarget = constrain(targetState.altitudeTarget, -5.0, 10.0);
     Serial.printf("Alt Target: %.2f m\n", targetState.altitudeTarget);
   }
@@ -158,8 +166,8 @@ void loop() {
 
   updateAttitude(dt);
 
-  // 高度制御PIDで必要なスロットルを計算
-  int throttle = 2000 + (int)calculatePID(filteredAltitude, targetState.altitudeTarget, pidAltitude, dt);
+  // 高度PIDで直接スロットルを計算（基準値不要、integral項で自動調整）
+  int throttle = (int)calculatePID(filteredAltitude, targetState.altitudeTarget, pidAltitude, dt);
   throttle = constrain(throttle, MIN_THROTTLE, MAX_THROTTLE);
   
   // スロットル変化率リミッター（急激な上下動を防止）
@@ -348,8 +356,8 @@ float calculatePID(float current, float target, PIDParameters &p, float dt) {
   float error = target - current;
   float P = p.Kp * error;
   p.integral += error * dt;
-  // アンチウインドアップ：積分項をより制限
-  p.integral = constrain(p.integral, -20, 20);
+  // アンチウインドアップ：積分項を厳しく制限してスロットル暴走を防ぐ
+  p.integral = constrain(p.integral, -5, 5);
   float I = p.Ki * p.integral;
   float D = p.Kd * (error - p.error_prev) / dt;
   p.error_prev = error;
