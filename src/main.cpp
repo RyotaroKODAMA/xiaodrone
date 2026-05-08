@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-constexpr uint8_t MOTOR_PINS[] = {4, 81 , 9, 1};
+constexpr uint8_t MOTOR_PINS[] = {4, 8 , 9, 1};
 constexpr uint8_t MOTOR_CHANNELS[] = {0, 1, 2, 3};
 constexpr uint8_t MOTOR_COUNT = sizeof(MOTOR_PINS) / sizeof(MOTOR_PINS[0]);
 constexpr int PWM_FREQ = 16000;
