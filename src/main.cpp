@@ -3,6 +3,7 @@
 #include <math.h> 
 #include <Adafruit_BMP280.h>
 #include "Adafruit_VL53L0X.h"
+#include "sbus.h"
 
 // --- 構造体定義 ---
 struct DroneState {
@@ -100,7 +101,15 @@ void stopAllMotors() {
     analogWrite(PIN_RL, 0); analogWrite(PIN_RR, 0);
 }
 
-void testMotor(int pin);
+/* SBUS object, reading SBUS */
+const int SBusPin = 3;
+bfs::SbusRx sbus_rx(&Serial1, SBusPin, 43, true);
+bfs::SbusData data;
+
+
+
+
+
 
 void setup() {
   // 1. ピン初期化 (Serialより先に!)
@@ -114,181 +123,190 @@ void setup() {
   Serial.begin(921600);
   Wire.begin(5, 6); Wire.setClock(400000);
 
-  // 3. センサー初期化
-  Wire.beginTransmission(MPU_ADDR); Wire.write(0x6B); Wire.write(0x00); Wire.endTransmission();
-  Wire.beginTransmission(MPU_ADDR); Wire.write(0x1A); Wire.write(0x05); Wire.endTransmission(); // DLPF 10Hz
+  // // 3. センサー初期化
+  // Wire.beginTransmission(MPU_ADDR); Wire.write(0x6B); Wire.write(0x00); Wire.endTransmission();
+  // Wire.beginTransmission(MPU_ADDR); Wire.write(0x1A); Wire.write(0x05); Wire.endTransmission(); // DLPF 10Hz
   
-  // BMP280初期化
-  if (!bmp.begin(0x76)) {
-    Serial.println("BMP280 not found!");
-    while (1);
-  }
+  // // BMP280初期化
+  // if (!bmp.begin(0x76)) {
+  //   Serial.println("BMP280 not found!");
+  //   while (1);
+  // }
   
-  Serial.println("Stabilizing...");
-  delay(2000);
-  calibrateGyro();
-  calibrateLevel();
+  // Serial.println("Stabilizing...");
+  // delay(2000);
+  // calibrateGyro();
+  // calibrateLevel();
 
-  // ToF初期化
-  if (lox.begin()) {
-    lox.startRangeContinuous();
-    tofReady = true;
-    Serial.println("VL53L0X ready");
-  } else {
-    tofReady = false;
-    Serial.println("VL53L0X not found, fallback to barometer only");
-  }
+  // // ToF初期化
+  // if (lox.begin()) {
+  //   lox.startRangeContinuous();
+  //   tofReady = true;
+  //   Serial.println("VL53L0X ready");
+  // } else {
+  //   tofReady = false;
+  //   Serial.println("VL53L0X not found, fallback to barometer only");
+  // }
   
-  // 気圧キャリブレーション（初期位置を基準高度0とする）
-  float initialPressure = 0;
-  for(int i = 0; i < 100; i++) {
-    initialPressure += bmp.readPressure();
-    delay(10);
-  }
-  referencePressure = initialPressure / 100.0;  // 平均気圧をそのまま基準に
-  filteredAltitude = 0.0;  // 初期高度を0に固定
-  Serial.printf("Reference Pressure: %.2f Pa\n", referencePressure);
+  // // 気圧キャリブレーション（初期位置を基準高度0とする）
+  // float initialPressure = 0;
+  // for(int i = 0; i < 100; i++) {
+  //   initialPressure += bmp.readPressure();
+  //   delay(10);
+  // }
+  // referencePressure = initialPressure / 100.0;  // 平均気圧をそのまま基準に
+  // filteredAltitude = 0.0;  // 初期高度を0に固定
+  // Serial.printf("Reference Pressure: %.2f Pa\n", referencePressure);
 
-  // シリアルバッファ掃除
-  while(Serial.available() > 0) Serial.read();
-  Serial.println("=== Commands ===");
-  Serial.println("w: Altitude +0.01m, x: Altitude -0.01m, q: Reset Altitude");
-  Serial.println("k: KILL - Force stop all motors immediately!");
-  Serial.println("u: Release KILL and resume control");
-  Serial.println("Note: Hovering throttle is automatically determined by PID integral.");
-}
+  // // シリアルバッファ掃除
+  // while(Serial.available() > 0) Serial.read();
+  // Serial.println("=== Commands ===");
+  // Serial.println("w: Altitude +0.01m, x: Altitude -0.01m, q: Reset Altitude");
+  // Serial.println("k: KILL - Force stop all motors immediately!");
+  // Serial.println("u: Release KILL and resume control");
+  // Serial.println("Note: Hovering throttle is automatically determined by PID integral.");
 
-void loop() {
-  static unsigned long lastLoopTime = micros();
-  unsigned long now = micros();
-  float dt = (now - lastLoopTime) / 1000000.0;
-  if (dt < 0.004) return; 
-  lastLoopTime = now;
-
-  // --- コマンド処理 (高度目標値制御) ---
-  if (Serial.available()) {
-    char c = Serial.read();
-    if (c == 'w') targetState.altitudeTarget += 0.01;  // 0.01m上昇
-    if (c == 'x') targetState.altitudeTarget -= 0.01;  // 0.01m下降
-    if (c == 'q') targetState.altitudeTarget = 0;     // 初期高度に戻す
-    if (c == 'k') {
-      emergencyKill = true;
-      pidAltitude.integral = 0;
-      pidAltitude.error_prev = 0;
-      lastThrottle = 0;
-      stopAllMotors();  // モーター強制停止
-      Serial.println("KILL: All motors stopped!");
+  // begin Sbus
+  sbus_rx.Begin();
+  // --- SBUS quick test: 500ms window, print once if data received ---
+  {
+    bool sbus_ok = false;
+    for (int i = 0; i < 50; i++) { // 50 * 10ms = 500ms
+      if (sbus_rx.Read()) {
+        data = sbus_rx.data();
+        Serial.println("SBUS: OK");
+        for (int8_t ch = 0; ch < data.NUM_CH; ch++) {
+          Serial.print(data.ch[ch]);
+          Serial.print('\t');
+        }
+        Serial.print(data.lost_frame);
+        Serial.print('\t');
+        Serial.println(data.failsafe);
+        sbus_ok = true;
+        break;
+      }
+      delay(10);
     }
-    if (c == 'u') {
-      emergencyKill = false;
-      pidAltitude.integral = 0;
-      pidAltitude.error_prev = 0;
-      lastThrottle = 0;
-      Serial.println("KILL released: control resumed");
+    if (!sbus_ok) {
+      Serial.println("SBUS: No data (check wiring/baud)");
     }
-    targetState.altitudeTarget = constrain(targetState.altitudeTarget, -5.0, 10.0);
-    Serial.printf("Alt Target: %.2f m\n", targetState.altitudeTarget);
   }
 
-  if (emergencyKill) {
-    stopAllMotors();
-    return;
-  }
-  
-  updateAltitude();
-
-  updateAttitude(dt);
-
-  // 高度PIDで直接スロットルを計算（基準値不要、integral項で自動調整）
-  int throttle = (int)calculatePID(currentState.altitudeBaro, targetState.altitudeTarget, pidAltitude, dt);
-  throttle = constrain(throttle, MIN_THROTTLE, MAX_THROTTLE);
-  
-  // スロットル変化率リミッター（急激な上下動を防止）
-  if (throttle > lastThrottle + throttleLimitRate) {
-    throttle = lastThrottle + throttleLimitRate;
-  } else if (throttle < lastThrottle - throttleLimitRate) {
-    throttle = lastThrottle - throttleLimitRate;
-  }
-  lastThrottle = throttle;
-  
-  float outP = calculatePID(currentState.pitch, targetState.pitch, pidPitch, dt);
-  float outR = calculatePID(currentState.roll,  targetState.roll,  pidRoll,  dt);
-
-  // --- D. モーター出力の計算 (Mixerの中身をここでシミュレートして表示) ---
-  int mFR = throttle + outP - outR;
-  int mFL = throttle + outP + outR;
-  int mRL = throttle - outP + outR;
-  int mRR = throttle - outP - outR;
 
 
-
-
-  updateMotorMixer(throttle, outP, outR, 0);
-
-// --- E. 超詳細ログ出力 (100msおき) ---
-  static unsigned long lastLog = 0;
-  if (now / 1000 - lastLog > 100) {
-    lastLog = now / 1000;
-
-    Serial.println("-----------------------------------------------------------------------");
-    // 1段目：姿勢データ
-    Serial.printf("ATTITUDE | Pitch:%6.1f deg | Roll:%6.1f deg\n", currentState.pitch, currentState.roll);
-    
-    // 2段目：PID計算結果
-    Serial.printf("PID OUT  | OutP:%7.1f | OutR:%7.1f | (KpP:%.1f, KpR:%.1f)\n", outP, outR, pidPitch.Kp, pidRoll.Kp);
-    
-    // 3段目：高度情報
-    Serial.printf("ALTITUDE | Current:%.2f m | Target:%.2f m | Baro:%.2f m | ToF:%.2f m | Pressure:%.0f Pa\n", 
-            currentState.altitudeBaro, targetState.altitudeTarget, 
-            filteredAltitude, currentState.altitudeToF, bmp.readPressure());
-    
-    // 4段目：各モーターへの最終PWM値 (12bit: 0-4095)
-    Serial.printf("MOTORS   | FR:%4d | FL:%4d | RL:%4d | RR:%4d | Thr:%d\n", 
-                  constrain(mFR, 0, 4095), constrain(mFL, 0, 4095), 
-                  constrain(mRL, 0, 4095), constrain(mRR, 0, 4095), 
-                  throttle);
-  }
 }
 
 
-// void updateAttitude(float dt) {
-//   Wire.beginTransmission(MPU_ADDR);
-//   Wire.write(0x3B); 
-//   Wire.endTransmission(false);
-//   Wire.requestFrom(MPU_ADDR, (size_t)14, true);
 
-//   int16_t AcX = Wire.read()<<8|Wire.read(); 
-//   int16_t AcY = Wire.read()<<8|Wire.read(); 
-//   int16_t AcZ = Wire.read()<<8|Wire.read();
-//   Wire.read(); Wire.read(); // skip temp
-//   int16_t GyX = Wire.read()<<8|Wire.read(); 
-//   int16_t GyY = Wire.read()<<8|Wire.read(); 
-//   int16_t GyZ = Wire.read()<<8|Wire.read();
+void loop () {
+  // SBUSからのデータ読み込み
+  if (sbus_rx.Read()) {
+    /* Grab the received data */
+    data = sbus_rx.data();
+    /* Display the received data */
+    for (int8_t i = 0; i < data.NUM_CH; i++) {
+      Serial.print(data.ch[i]);
+      Serial.print("\t");
+    }
+    /* Display lost frames and failsafe data */
+    /* Set the SBUS TX data to the received data */
+    // sbus_tx.data(data);
+    /* Write the data to the servos */
+    // sbus_tx.Write();
+  }
 
-//   // 物理量変換
-//   currentState.gyroX = (GyX - gyro_x_offset) / 131.0; 
-//   currentState.gyroY = (GyY - gyro_y_offset) / 131.0; 
-//   currentState.gyroZ = (GyZ - gyro_z_offset) / 131.0;
+}
+// void loop() {
+//   static unsigned long lastLoopTime = micros();
+//   unsigned long now = micros();
+//   float dt = (now - lastLoopTime) / 1000000.0;
+//   if (dt < 0.004) return; 
+//   lastLoopTime = now;
+
+//   // --- コマンド処理 (高度目標値制御) ---
+//   if (Serial.available()) {
+//     char c = Serial.read();
+//     if (c == 'w') targetState.altitudeTarget += 0.01;  // 0.01m上昇
+//     if (c == 'x') targetState.altitudeTarget -= 0.01;  // 0.01m下降
+//     if (c == 'q') targetState.altitudeTarget = 0;     // 初期高度に戻す
+//     if (c == 'k') {
+//       emergencyKill = true;
+//       pidAltitude.integral = 0;
+//       pidAltitude.error_prev = 0;
+//       lastThrottle = 0;
+//       stopAllMotors();  // モーター強制停止
+//       Serial.println("KILL: All motors stopped!");
+//     }
+//     if (c == 'u') {
+//       emergencyKill = false;
+//       pidAltitude.integral = 0;
+//       pidAltitude.error_prev = 0;
+//       lastThrottle = 0;
+//       Serial.println("KILL released: control resumed");
+//     }
+//     targetState.altitudeTarget = constrain(targetState.altitudeTarget, -5.0, 10.0);
+//     Serial.printf("Alt Target: %.2f m\n", targetState.altitudeTarget);
+//   }
+
+//   if (emergencyKill) {
+//     stopAllMotors();
+//     return;
+//   }
   
-//   // 加速度角度（生の加速度を使用）
-//   float accPitch = atan2((float)AcY, sqrt(pow((float)AcX,2) + pow((float)AcZ,2))) * 180 / PI;
-//   float accRoll  = atan2(-(float)AcX, (float)AcZ) * 180 / PI;
+//   updateAltitude();
 
-//   // 【ドリフト対策】相補フィルタの比率を調整
-//   // 加速度の比率(0.05)を少し上げるとドリフトからの復帰が早くなります
-//   currentState.pitch = 0.95 * (currentState.pitch + currentState.gyroX * dt) + 0.05 * accPitch;
-//   currentState.roll  = 0.95 * (currentState.roll  + currentState.gyroY * dt) + 0.05 * accRoll;
-//   currentState.yaw  += currentState.gyroZ * dt;
+//   updateAttitude(dt);
 
-//   // オフセット適用（これで 0点 が安定する）
-//   // currentState.pitch -= pitch_offset;
-//   // currentState.roll  -= roll_offset;
-//   // Yawは常に起動時が0になるようオフセットを引かないか、別途管理
+//   // 高度PIDで直接スロットルを計算（基準値不要、integral項で自動調整）
+//   int throttle = (int)calculatePID(currentState.altitudeBaro, targetState.altitudeTarget, pidAltitude, dt);
+//   throttle = constrain(throttle, MIN_THROTTLE, MAX_THROTTLE);
+  
+//   // スロットル変化率リミッター（急激な上下動を防止）
+//   if (throttle > lastThrottle + throttleLimitRate) {
+//     throttle = lastThrottle + throttleLimitRate;
+//   } else if (throttle < lastThrottle - throttleLimitRate) {
+//     throttle = lastThrottle - throttleLimitRate;
+//   }
+//   lastThrottle = throttle;
+  
+//   float outP = calculatePID(currentState.pitch, targetState.pitch, pidPitch, dt);
+//   float outR = calculatePID(currentState.roll,  targetState.roll,  pidRoll,  dt);
+
+//   // --- D. モーター出力の計算 (Mixerの中身をここでシミュレートして表示) ---
+//   int mFR = throttle + outP - outR;
+//   int mFL = throttle + outP + outR;
+//   int mRL = throttle - outP + outR;
+//   int mRR = throttle - outP - outR;
+
+
+
+
+//   updateMotorMixer(throttle, outP, outR, 0);
+
+// // --- E. 超詳細ログ出力 (100msおき) ---
+//   static unsigned long lastLog = 0;
+//   if (now / 1000 - lastLog > 100) {
+//     lastLog = now / 1000;
+
+//     Serial.println("-----------------------------------------------------------------------");
+//     // 1段目：姿勢データ
+//     Serial.printf("ATTITUDE | Pitch:%6.1f deg | Roll:%6.1f deg\n", currentState.pitch, currentState.roll);
+    
+//     // 2段目：PID計算結果
+//     Serial.printf("PID OUT  | OutP:%7.1f | OutR:%7.1f | (KpP:%.1f, KpR:%.1f)\n", outP, outR, pidPitch.Kp, pidRoll.Kp);
+    
+//     // 3段目：高度情報
+//     Serial.printf("ALTITUDE | Current:%.2f m | Target:%.2f m | Baro:%.2f m | ToF:%.2f m | Pressure:%.0f Pa\n", 
+//             currentState.altitudeBaro, targetState.altitudeTarget, 
+//             filteredAltitude, currentState.altitudeToF, bmp.readPressure());
+    
+//     // 4段目：各モーターへの最終PWM値 (12bit: 0-4095)
+//     Serial.printf("MOTORS   | FR:%4d | FL:%4d | RL:%4d | RR:%4d | Thr:%d\n", 
+//                   constrain(mFR, 0, 4095), constrain(mFL, 0, 4095), 
+//                   constrain(mRL, 0, 4095), constrain(mRR, 0, 4095), 
+//                   throttle);
+//   }
 // }
-
-// 1. グローバル変数で宣言
-// float lpfAccX = 0, lpfAccY = 0, lpfAccZ = 1.0;
-// float lpfBeta = 0.05; // 0.01（強力）〜0.1（弱め）で調整
 
 void updateAttitude(float dt) {
   readRawMPU();
@@ -398,11 +416,6 @@ float calculatePID(float current, float target, PIDParameters &p, float dt) {
   return P + I + D;
 }
 
-void testMotor(int pin) {
-    stopAllMotors();
-    analogWrite(pin,250); // 250くらいで回してみる
-}
-
 // 気圧から高度を計算する関数
 // 国際標準大気モデルを使用
 float calculateAltitudeFromPressure(float pressure) {
@@ -456,3 +469,5 @@ void updateAltitude() {
     currentState.altitudeBaro = filteredAltitude;
   }
 }
+
+
