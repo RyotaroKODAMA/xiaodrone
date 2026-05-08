@@ -17,7 +17,7 @@ struct DroneSetpoint {
   float roll = 0;
   float pitch = 0;
   float yawRate = 0;
-  int throttle = 0; // 検証用に最初から少し上げる設定
+  float altitudeTarget = 0; // 目標高度（メートル）
 };
 
 struct PIDParameters {
@@ -39,6 +39,7 @@ float pitch_offset = 0, roll_offset = 0, yaw_offset = 0;
 PIDParameters pidRoll  = { 20.0, 0.0, 1.0, 0, 0 }; 
 PIDParameters pidPitch = { 20.0, 0.0, 1.0, 0, 0 };
 PIDParameters pidYaw   = { 20.0, 0.0, 0.0, 0, 0 }; // ヨーは一旦 0 で OK
+PIDParameters pidAltitude = { 20.0, 2.0, 3.0, 0, 0 }; // 高度制御用PID (抑制版)
 
 // モーターピン
 const int PIN_FR = 4, PIN_FL = 8, PIN_RL = 9, PIN_RR = 1;
@@ -56,12 +57,22 @@ Adafruit_VL53L0X lox = Adafruit_VL53L0X();
 float lpfAccX = 0, lpfAccY = 0, lpfAccZ = 1.0;
 float lpfBeta = 0.05;
 
+// 気圧高度計算用
+float seaLevelPressure = 101325.0; // 海面気圧（Pa）
+float referencePressure = 101325.0; // キャリブレーション時の気圧
+float filteredAltitude = 0.0; // フィルタ済み高度
+float altitudeFilterAlpha = 0.15; // 高度のLPF係数（小さいほど平滑）
+int throttleLimitRate = 200; // スロットル変化率リミッター（PWM/ループ）
+int lastThrottle = 0; // 前フレームのスロットル値
+
 // --- プロトタイプ宣言 ---
 void calibrateGyro();
 void calibrateLevel();
 void updateAttitude(float dt);
 float calculatePID(float current, float target, PIDParameters &p, float dt);
 void updateMotorMixer(int throttle, float p, float r, float y);
+void updateAltitude();
+float calculateAltitudeFromPressure(float pressure);
 
 // 1. 関数の外（グローバル）に宣言
 int16_t AcX, AcY, AcZ, GyX, GyY, GyZ;
@@ -101,10 +112,25 @@ void setup() {
   Wire.beginTransmission(MPU_ADDR); Wire.write(0x6B); Wire.write(0x00); Wire.endTransmission();
   Wire.beginTransmission(MPU_ADDR); Wire.write(0x1A); Wire.write(0x05); Wire.endTransmission(); // DLPF 10Hz
   
+  // BMP280初期化
+  if (!bmp.begin(0x77)) {
+    Serial.println("BMP280 not found!");
+    while (1);
+  }
+  
   Serial.println("Stabilizing...");
   delay(2000);
   calibrateGyro();
   calibrateLevel();
+  
+  // 気圧キャリブレーション（初期位置を基準高度0とする）
+  float initialPressure = 0;
+  for(int i = 0; i < 100; i++) {
+    initialPressure += bmp.readPressure();
+    delay(10);
+  }
+  referencePressure = initialPressure / 100.0;
+  Serial.printf("Reference Pressure: %.2f Pa\n", referencePressure);
 
   // シリアルバッファ掃除
   while(Serial.available() > 0) Serial.read();
@@ -118,31 +144,45 @@ void loop() {
   if (dt < 0.004) return; 
   lastLoopTime = now;
 
-  // --- コマンド処理 (スロットル保持) ---
+  // --- コマンド処理 (高度目標値制御) ---
   if (Serial.available()) {
     char c = Serial.read();
-    if (c == 'w') targetState.throttle += 500;
-    if (c == 'x') targetState.throttle -= 500;
-    if (c == 'q') targetState.throttle = 0;
-    targetState.throttle = constrain(targetState.throttle, 0, MAX_THROTTLE);
-    Serial.printf("Thr: %d\n", targetState.throttle);
+    if (c == 'w') targetState.altitudeTarget += 0.01;  // 0.01m上昇
+    if (c == 'x') targetState.altitudeTarget -= 0.01;  // 0.01m下降
+    if (c == 'q') targetState.altitudeTarget = 0;     // 初期高度に戻す
+    targetState.altitudeTarget = constrain(targetState.altitudeTarget, -5.0, 10.0);
+    Serial.printf("Alt Target: %.2f m\n", targetState.altitudeTarget);
   }
+  
+  updateAltitude();
 
   updateAttitude(dt);
 
+  // 高度制御PIDで必要なスロットルを計算
+  int throttle = 2000 + (int)calculatePID(filteredAltitude, targetState.altitudeTarget, pidAltitude, dt);
+  throttle = constrain(throttle, MIN_THROTTLE, MAX_THROTTLE);
+  
+  // スロットル変化率リミッター（急激な上下動を防止）
+  if (throttle > lastThrottle + throttleLimitRate) {
+    throttle = lastThrottle + throttleLimitRate;
+  } else if (throttle < lastThrottle - throttleLimitRate) {
+    throttle = lastThrottle - throttleLimitRate;
+  }
+  lastThrottle = throttle;
+  
   float outP = calculatePID(currentState.pitch, targetState.pitch, pidPitch, dt);
   float outR = calculatePID(currentState.roll,  targetState.roll,  pidRoll,  dt);
 
   // --- D. モーター出力の計算 (Mixerの中身をここでシミュレートして表示) ---
-  int mFR = targetState.throttle + outP - outR;
-  int mFL = targetState.throttle + outP + outR;
-  int mRL = targetState.throttle - outP + outR;
-  int mRR = targetState.throttle - outP - outR;
+  int mFR = throttle + outP - outR;
+  int mFL = throttle + outP + outR;
+  int mRL = throttle - outP + outR;
+  int mRR = throttle - outP - outR;
 
 
 
 
-  updateMotorMixer(targetState.throttle, outP, outR, 0);
+  updateMotorMixer(throttle, outP, outR, 0);
 
 // --- E. 超詳細ログ出力 (100msおき) ---
   static unsigned long lastLog = 0;
@@ -156,11 +196,15 @@ void loop() {
     // 2段目：PID計算結果
     Serial.printf("PID OUT  | OutP:%7.1f | OutR:%7.1f | (KpP:%.1f, KpR:%.1f)\n", outP, outR, pidPitch.Kp, pidRoll.Kp);
     
-    // 3段目：各モーターへの最終PWM値 (12bit: 0-4095)
-    Serial.printf("MOTORS   | FR:%4d | FL:%4d | RL:%4d | RR:%4d | BaseThr:%d\n", 
+    // 3段目：高度情報
+    Serial.printf("ALTITUDE | Current:%.2f m | Target:%.2f m | Pressure:%.0f Pa\n", 
+                  currentState.altitudeBaro, targetState.altitudeTarget, bmp.readPressure());
+    
+    // 4段目：各モーターへの最終PWM値 (12bit: 0-4095)
+    Serial.printf("MOTORS   | FR:%4d | FL:%4d | RL:%4d | RR:%4d | Thr:%d\n", 
                   constrain(mFR, 0, 4095), constrain(mFL, 0, 4095), 
                   constrain(mRL, 0, 4095), constrain(mRR, 0, 4095), 
-                  targetState.throttle);
+                  throttle);
   }
 }
 
@@ -304,7 +348,8 @@ float calculatePID(float current, float target, PIDParameters &p, float dt) {
   float error = target - current;
   float P = p.Kp * error;
   p.integral += error * dt;
-  p.integral = constrain(p.integral, -50, 50);
+  // アンチウインドアップ：積分項をより制限
+  p.integral = constrain(p.integral, -20, 20);
   float I = p.Ki * p.integral;
   float D = p.Kd * (error - p.error_prev) / dt;
   p.error_prev = error;
@@ -314,4 +359,23 @@ float calculatePID(float current, float target, PIDParameters &p, float dt) {
 void testMotor(int pin) {
     stopAllMotors();
     analogWrite(pin,250); // 250くらいで回してみる
+}
+
+// 気圧から高度を計算する関数
+// 国際標準大気モデルを使用
+float calculateAltitudeFromPressure(float pressure) {
+  // h = 44330 * (1 - (P/P0)^(1/5.255))
+  float ratio = pressure / referencePressure;
+  float altitude = 44330.0 * (1.0 - pow(ratio, 1.0 / 5.255));
+  return altitude;
+}
+
+// 高度を更新する関数
+void updateAltitude() {
+  float pressure = bmp.readPressure();
+  float altitude = calculateAltitudeFromPressure(pressure);
+  
+  // 低域フィルタ（気圧ノイズを軽減）
+  filteredAltitude = (1.0 - altitudeFilterAlpha) * filteredAltitude + altitudeFilterAlpha * altitude;
+  currentState.altitudeBaro = filteredAltitude;
 }
