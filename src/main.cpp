@@ -52,6 +52,8 @@ const int MAX_THROTTLE = 4000;  // 最大を4000に制限
 
 Adafruit_BMP280 bmp;
 Adafruit_VL53L0X lox = Adafruit_VL53L0X();
+bool tofReady = false;
+bool emergencyKill = false;
 
 // フィルタ定数
 float lpfAccX = 0, lpfAccY = 0, lpfAccZ = 1.0;
@@ -64,6 +66,9 @@ float filteredAltitude = 0.0; // フィルタ済み高度
 float altitudeFilterAlpha = 0.03; // 高度のLPF係数（かなり強く平滑）
 int throttleLimitRate = 100; // スロットル変化率リミッター（PWM/ループ）
 int lastThrottle = 1000; // 前フレームのスロットル値（初期値調整）
+float lastValidToFAltitude = -1.0;
+unsigned long lastToFReadMs = 0;
+const unsigned long TOF_READ_INTERVAL_MS = 50;
 
 // --- プロトタイプ宣言 ---
 void calibrateGyro();
@@ -122,6 +127,16 @@ void setup() {
   delay(2000);
   calibrateGyro();
   calibrateLevel();
+
+  // ToF初期化
+  if (lox.begin()) {
+    lox.startRangeContinuous();
+    tofReady = true;
+    Serial.println("VL53L0X ready");
+  } else {
+    tofReady = false;
+    Serial.println("VL53L0X not found, fallback to barometer only");
+  }
   
   // 気圧キャリブレーション（初期位置を基準高度0とする）
   float initialPressure = 0;
@@ -138,6 +153,7 @@ void setup() {
   Serial.println("=== Commands ===");
   Serial.println("w: Altitude +0.01m, x: Altitude -0.01m, q: Reset Altitude");
   Serial.println("k: KILL - Force stop all motors immediately!");
+  Serial.println("u: Release KILL and resume control");
   Serial.println("Note: Hovering throttle is automatically determined by PID integral.");
 }
 
@@ -155,11 +171,27 @@ void loop() {
     if (c == 'x') targetState.altitudeTarget -= 0.01;  // 0.01m下降
     if (c == 'q') targetState.altitudeTarget = 0;     // 初期高度に戻す
     if (c == 'k') {
+      emergencyKill = true;
+      pidAltitude.integral = 0;
+      pidAltitude.error_prev = 0;
+      lastThrottle = 0;
       stopAllMotors();  // モーター強制停止
       Serial.println("KILL: All motors stopped!");
     }
+    if (c == 'u') {
+      emergencyKill = false;
+      pidAltitude.integral = 0;
+      pidAltitude.error_prev = 0;
+      lastThrottle = 0;
+      Serial.println("KILL released: control resumed");
+    }
     targetState.altitudeTarget = constrain(targetState.altitudeTarget, -5.0, 10.0);
     Serial.printf("Alt Target: %.2f m\n", targetState.altitudeTarget);
+  }
+
+  if (emergencyKill) {
+    stopAllMotors();
+    return;
   }
   
   updateAltitude();
@@ -167,7 +199,7 @@ void loop() {
   updateAttitude(dt);
 
   // 高度PIDで直接スロットルを計算（基準値不要、integral項で自動調整）
-  int throttle = (int)calculatePID(filteredAltitude, targetState.altitudeTarget, pidAltitude, dt);
+  int throttle = (int)calculatePID(currentState.altitudeBaro, targetState.altitudeTarget, pidAltitude, dt);
   throttle = constrain(throttle, MIN_THROTTLE, MAX_THROTTLE);
   
   // スロットル変化率リミッター（急激な上下動を防止）
@@ -205,8 +237,9 @@ void loop() {
     Serial.printf("PID OUT  | OutP:%7.1f | OutR:%7.1f | (KpP:%.1f, KpR:%.1f)\n", outP, outR, pidPitch.Kp, pidRoll.Kp);
     
     // 3段目：高度情報
-    Serial.printf("ALTITUDE | Current:%.2f m | Target:%.2f m | Pressure:%.0f Pa\n", 
-                  currentState.altitudeBaro, targetState.altitudeTarget, bmp.readPressure());
+    Serial.printf("ALTITUDE | Current:%.2f m | Target:%.2f m | Baro:%.2f m | ToF:%.2f m | Pressure:%.0f Pa\n", 
+            currentState.altitudeBaro, targetState.altitudeTarget, 
+            filteredAltitude, currentState.altitudeToF, bmp.readPressure());
     
     // 4段目：各モーターへの最終PWM値 (12bit: 0-4095)
     Serial.printf("MOTORS   | FR:%4d | FL:%4d | RL:%4d | RR:%4d | Thr:%d\n", 
@@ -381,9 +414,31 @@ float calculateAltitudeFromPressure(float pressure) {
 // 高度を更新する関数
 void updateAltitude() {
   float pressure = bmp.readPressure();
-  float altitude = calculateAltitudeFromPressure(pressure);
+  float baroAltitude = calculateAltitudeFromPressure(pressure);
   
   // 低域フィルタ（気圧ノイズを軽減）
-  filteredAltitude = (1.0 - altitudeFilterAlpha) * filteredAltitude + altitudeFilterAlpha * altitude;
-  currentState.altitudeBaro = filteredAltitude;
+  filteredAltitude = (1.0 - altitudeFilterAlpha) * filteredAltitude + altitudeFilterAlpha * baroAltitude;
+
+  float tofAltitude = lastValidToFAltitude;
+  if (tofReady && (millis() - lastToFReadMs >= TOF_READ_INTERVAL_MS)) {
+    lastToFReadMs = millis();
+    if (lox.isRangeComplete()) {
+      float distanceMm = (float)lox.readRange();
+      if (distanceMm > 0) {
+        float pitchRad = currentState.pitch * PI / 180.0;
+        float rollRad  = currentState.roll * PI / 180.0;
+        tofAltitude = (distanceMm / 1000.0) * cos(pitchRad) * cos(rollRad);
+        lastValidToFAltitude = tofAltitude;
+      }
+    }
+  }
+
+  currentState.altitudeToF = tofAltitude;
+
+  // 1m以下ではToFを優先、1m以上は気圧高度を使う
+  if (tofAltitude > 0.0 && filteredAltitude < 1.0) {
+    currentState.altitudeBaro = tofAltitude;
+  } else {
+    currentState.altitudeBaro = filteredAltitude;
+  }
 }
