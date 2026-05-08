@@ -41,6 +41,9 @@ unsigned long lastTime;
 // ジャイロのゼロ点ズレ（オフセット）を保存する変数
 float gyro_x_offset = 0, gyro_y_offset = 0, gyro_z_offset = 0;
 float baseAltitude = 0; // 起動時の基準高度
+float referencePressure = 101325.0; // 基準気圧（Pa）
+float filteredAltitude = 0.0; // フィルタ済み高度
+float altitudeFilterAlpha = 0.03; // 高度フィルタ係数（小さいほど平滑。0.08→0.03に削減）
 
 #define BMP_SCK  (13)
 #define BMP_MISO (12)
@@ -154,48 +157,21 @@ void setup() {
 
 
 
-// void loop() {
-//   static unsigned long lastLoopTime = micros();
-//   unsigned long now = micros();
-//   float dt = (now - lastLoopTime) / 1000000.0; // 秒単位
-
-//   // 指定した周期（例: 4ms = 250Hz）まで待機
-//   if (dt < 0.004) return; 
-//   lastLoopTime = now;
-
-//   // 1. 最新の姿勢を取得
-//   updateAttitude();
-
-//   // 2. 高度・ToFデータの取得（必要に応じて）
-//   // ※ToFは毎秒30回程度なので、isRangeCompleteでチェック
-//   if (lox.isRangeComplete()) {
-//     currentState.altitudeToF = lox.readRange();
-//     // ここで前述の傾き補正を入れても良い
-//   }
-
-//   // 3. PID計算 (目標角度と現在の角度の差を埋める)
-//   float outPitch = calculatePID(currentState.pitch, targetState.pitch, pidPitch, dt);
-//   float outRoll  = calculatePID(currentState.roll,  targetState.roll,  pidRoll,  dt);
-//   float outYaw   = calculatePID(currentState.gyroZ, targetState.yawRate, pidYaw,   dt); // ヨーは角速度で制御
-
-//   // 4. モーター出力へ反映 (前述のミキサー関数を呼ぶ)
-//   // ※まだ送信機がないので、テスト時は targetState.throttle を安全な値に固定
-//   updateMotorMixer(targetState.throttle, outPitch, outRoll, outYaw);
-
-//   // 5. デバッグ表示 (100msおき)
-//   static unsigned long lastLog = 0;
-//   if (millis() - lastLog > 100) {
-//     lastLog = millis();
-//     Serial.printf("P:%.1f R:%.1f Thr:%d\n", currentState.pitch, currentState.roll, targetState.throttle);
-//   }
-// }
-
 void loop() {
   // 1. 姿勢の更新
   updateAttitude();
 
   // 2. 気圧センサーからの相対高度
-  float relAlt = bmp.readAltitude(1013.25) - baseAltitude;
+  float pressure = bmp.readPressure();
+  float temperature = bmp.readTemperature();
+  
+  // 気圧から高度を計算（海面気圧1013.25hPaを基準）
+  float calculatedAltitude = 44330.0 * (1.0 - pow(pressure / 101325.0, 1.0 / 5.255));
+  
+  // 低域フィルタ（ノイズ除去）
+  filteredAltitude = (1.0 - altitudeFilterAlpha) * filteredAltitude + altitudeFilterAlpha * calculatedAltitude;
+  float relAlt = filteredAltitude - baseAltitude; // 相対高度 = 現在の高度 - 起動時の高度
+  currentState.altitudeBaro = relAlt;
 
   // 3. ToFセンサーからの距離取得
   float distanceToF = lox.isRangeComplete() ? lox.readRange() : -1;
@@ -228,8 +204,8 @@ void loop() {
     Serial.print(" | P:"); Serial.print(currentState.pitch); Serial.print(" R:"); Serial.print(currentState.roll); Serial.print(" Y:"); Serial.print(currentState.yaw);
 
     // 相対高度表示
-    float relAlt = bmp.readAltitude(1013.25) - baseAltitude;
     Serial.print(" | BaroRel:"); Serial.print(relAlt);
+    Serial.print("m T:"); Serial.print(temperature); Serial.print("C P:"); Serial.print(pressure / 100.0); Serial.print("hPa");
 
     // ToF表示
     if (lox.isRangeComplete()) {
@@ -275,13 +251,21 @@ void calibrateGyro() {
 
 void calibrateAltitude() {
   Serial.println("Calibrating Altitude...");
-  float sum = 0;
+  float altSum = 0;
+  float pressureSum = 0;
   for (int i = 0; i < 50; i++) {
-    sum += bmp.readAltitude(1013.25);
+    pressureSum += bmp.readPressure();
     delay(20);
   }
-  baseAltitude = sum / 50.0;
-  Serial.print("Base Altitude set to: "); Serial.println(baseAltitude);
+  referencePressure = pressureSum / 50.0; // 平均気圧を基準に
+  
+  // 気圧から高度を計算（海面気圧1013.25hPaを基準）
+  baseAltitude = 44330.0 * (1.0 - pow(referencePressure / 101325.0, 1.0 / 5.255));
+  filteredAltitude = baseAltitude;
+  
+  Serial.print("Base Pressure: "); Serial.print(referencePressure / 100.0);
+  Serial.print(" hPa, Base Altitude: "); Serial.print(baseAltitude);
+  Serial.println(" m");
 }
 
 void setupMotors() {
