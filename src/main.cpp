@@ -27,9 +27,20 @@ struct PIDParameters {
   float integral;
 };
 
+struct TargetState {
+  float yawRateTarget; // ヨーの回転速度目標
+  float pitch;         // ピッチ目標角度
+  float roll;          // ロール目標角度
+  float throttleRaw;   // SBUSから来た生のスロットル値
+  float altitudeTarget; // 高度制御用の目標高さ(m)
+  float GainScalingfactor; // ゲインスケーリング係数
+};
+
+TargetState targetState = {0, 0, 0, 0, 0, 1.0}; // 全て0で初期化
+
 // --- グローバル変数 ---
 DroneState currentState; 
-DroneSetpoint targetState;
+// DroneSetpoint targetState;
 const uint8_t MPU_ADDR = 0x68;
 
 // ゼロ点オフセット
@@ -37,10 +48,22 @@ float gyro_x_offset = 0, gyro_y_offset = 0, gyro_z_offset = 0;
 float pitch_offset = 0, roll_offset = 0, yaw_offset = 0;
 
 // Kp=20 に対して、まずは 1/20 くらいの 1.0 あたりから試すのが 12bit では現実的です
-PIDParameters pidRoll  = { 20.0, 0.0, 1.0, 0, 0 }; 
-PIDParameters pidPitch = { 20.0, 0.0, 1.0, 0, 0 };
-PIDParameters pidYaw   = { 20.0, 0.0, 0.0, 0, 0 }; // ヨーは一旦 0 で OK
+// PIDParameters pidRoll  = { 20.0, 0.0, 1.0, 0, 0 }; 
+// PIDParameters pidPitch = { 20.0, 0.0, 1.0, 0, 0 };
+// PIDParameters pidYaw   = { 20.0, 0.0, 0.0, 0, 0 }; // ヨーは一旦 0 で OK
+// PIDParameters pidAltitude = { 300.0, 100.0, 30.0, 0, 0 }; // 高度制御用PID (抑制強化版)
+
+// scaleもとになるゲイン。これにSbusのゲインを掛けて最終的なKpなどを決定するイメージ
+PIDParameters pidRoll  = { 2.0, 0.0, 0.1, 0, 0 }; 
+PIDParameters pidPitch = { 2.0, 0.0, 0.1, 0, 0 };
+PIDParameters pidYaw   = { 2.0, 0.0, 0.0, 0, 0 }; // ヨーは一旦 0 で OK
 PIDParameters pidAltitude = { 300.0, 100.0, 30.0, 0, 0 }; // 高度制御用PID (抑制強化版)
+
+
+
+
+
+
 
 // モーターピン
 const int PIN_FR = 4, PIN_FL = 8, PIN_RL = 9, PIN_RR = 1;
@@ -75,14 +98,15 @@ const unsigned long TOF_READ_INTERVAL_MS = 50;
 void calibrateGyro();
 void calibrateLevel();
 void updateAttitude(float dt);
-float calculatePID(float current, float target, PIDParameters &p, float dt);
+float calculatePID(float current, float target, PIDParameters &p, float scaling, float dt);
 void updateMotorMixer(int throttle, float p, float r, float y);
 void updateAltitude();
 float calculateAltitudeFromPressure(float pressure);
 float calculateToFAltitudeWithAttitude(float distanceMm, float pitchDeg, float rollDeg);
-
+void updateSBUS();
 // 1. 関数の外（グローバル）に宣言
 int16_t AcX, AcY, AcZ, GyX, GyY, GyZ;
+float throttle; // スロットル値をグローバルに宣言
 
 // 2. 読み込み専用の関数
 void readRawMPU() {
@@ -106,7 +130,17 @@ const int SBusPin = 3;
 bfs::SbusRx sbus_rx(&Serial1, SBusPin, 43, true);
 bfs::SbusData data;
 
+// SBUS(368-1680) を 12bit(0-4095) に変換する関数
+uint16_t sbusTo12bit(uint16_t val) {
+    val = constrain(val, 368, 1680);
+    return (uint16_t)map(val, 368, 1680, 0, 4095);
+}
 
+// ゲインチューニング用に 0.0 ~ 20.0 などのfloatに変換する関数
+float sbusToGain(uint16_t val, float maxGain) {
+    val = constrain(val, 144, 1904);
+    return ((float)(val - 144) / (1904 - 144)) * maxGain;
+}
 
 
 
@@ -197,116 +231,84 @@ void setup() {
 }
 
 
+void loop() {
+  // 1. 受信（独立関数）
+  updateSBUS();
 
-void loop () {
-  // SBUSからのデータ読み込み
-  if (sbus_rx.Read()) {
-    /* Grab the received data */
-    data = sbus_rx.data();
-    /* Display the received data */
-    for (int8_t i = 0; i < data.NUM_CH; i++) {
-      Serial.print(data.ch[i]);
-      Serial.print("\t");
-    }
-    /* Display lost frames and failsafe data */
-    /* Set the SBUS TX data to the received data */
-    // sbus_tx.data(data);
-    /* Write the data to the servos */
-    // sbus_tx.Write();
+  // 2. タイミング管理
+  static unsigned long lastLoopTime = micros();
+  unsigned long now = micros();
+  float dt = (now - lastLoopTime) / 1000000.0;
+  // keep loop time
+  if (dt < 0.004) return; 
+  lastLoopTime = now;
+
+  // get drone state from sensors
+  updateAltitude();
+  updateAttitude(dt);
+
+  // scale PID parameter
+  // PIDParameters {
+  //   pidRoll.Kp * targetState.GainScalingfactor, pidRoll.Ki * targetState.GainScalingfactor, pidRoll.Kd * targetState.GainScalingfactor, 
+  //   0, 0
+  // };
+  // PIDParameters
+
+  throttle = targetState.throttleRaw; // 3chのスロットル値をそのまま使用
+
+  // // スロットル変化率リミッター（急激な上下動を防止）
+  // if (throttle > lastThrottle + throttleLimitRate) {
+  //   throttle = lastThrottle + throttleLimitRate;
+  // } else if (throttle < lastThrottle - throttleLimitRate) {
+  //   throttle = lastThrottle - throttleLimitRate;
+  // }
+  // lastThrottle = throttle;
+  
+  // controll for pitch and roll state using PID
+  float outP = calculatePID(currentState.pitch, targetState.pitch, pidPitch,targetState.GainScalingfactor, dt);
+  float outR = calculatePID(currentState.roll,  targetState.roll,  pidRoll,  targetState.GainScalingfactor, dt);
+
+
+
+
+  // --- D. モーター出力の計算 (Mixerの中身をここでシミュレートして表示) ---
+  int mFR = throttle + outP - outR;
+  int mFL = throttle + outP + outR;
+  int mRL = throttle - outP + outR;
+  int mRR = throttle - outP - outR;
+
+
+
+
+  updateMotorMixer(throttle, outP, outR, 0);
+
+
+
+
+// --- E. 超詳細ログ出力 (100msおき) ---
+  static unsigned long lastLog = 0;
+  if (now / 1000 - lastLog > 100) {
+    lastLog = now / 1000;
+
+    Serial.println("-----------------------------------------------------------------------");
+    // 1段目：姿勢データ
+    Serial.printf("ATTITUDE | Pitch:%6.1f deg | Roll:%6.1f deg\n", currentState.pitch, currentState.roll);
+    
+    // 2段目：PID計算結果
+    Serial.printf("PID OUT  | OutP:%7.1f | OutR:%7.1f | (KpP:%.1f, KpR:%.1f)\n", outP, outR, pidPitch.Kp, pidRoll.Kp);
+    
+    // 3段目：高度情報
+    Serial.printf("ALTITUDE | Current:%.2f m | Target:%.2f m | Baro:%.2f m | ToF:%.2f m | Pressure:%.0f Pa\n", 
+            currentState.altitudeBaro, targetState.altitudeTarget, 
+            filteredAltitude, currentState.altitudeToF, bmp.readPressure());
+    
+    // 4段目：各モーターへの最終PWM値 (12bit: 0-4095)
+    Serial.printf("MOTORS   | FR:%4d | FL:%4d | RL:%4d | RR:%4d | Thr:%d\n", 
+                  constrain(mFR, 0, 4095), constrain(mFL, 0, 4095), 
+                  constrain(mRL, 0, 4095), constrain(mRR, 0, 4095), 
+                  throttle);
   }
-
 }
-// void loop() {
-//   static unsigned long lastLoopTime = micros();
-//   unsigned long now = micros();
-//   float dt = (now - lastLoopTime) / 1000000.0;
-//   if (dt < 0.004) return; 
-//   lastLoopTime = now;
-
-//   // --- コマンド処理 (高度目標値制御) ---
-//   if (Serial.available()) {
-//     char c = Serial.read();
-//     if (c == 'w') targetState.altitudeTarget += 0.01;  // 0.01m上昇
-//     if (c == 'x') targetState.altitudeTarget -= 0.01;  // 0.01m下降
-//     if (c == 'q') targetState.altitudeTarget = 0;     // 初期高度に戻す
-//     if (c == 'k') {
-//       emergencyKill = true;
-//       pidAltitude.integral = 0;
-//       pidAltitude.error_prev = 0;
-//       lastThrottle = 0;
-//       stopAllMotors();  // モーター強制停止
-//       Serial.println("KILL: All motors stopped!");
-//     }
-//     if (c == 'u') {
-//       emergencyKill = false;
-//       pidAltitude.integral = 0;
-//       pidAltitude.error_prev = 0;
-//       lastThrottle = 0;
-//       Serial.println("KILL released: control resumed");
-//     }
-//     targetState.altitudeTarget = constrain(targetState.altitudeTarget, -5.0, 10.0);
-//     Serial.printf("Alt Target: %.2f m\n", targetState.altitudeTarget);
-//   }
-
-//   if (emergencyKill) {
-//     stopAllMotors();
-//     return;
-//   }
-  
-//   updateAltitude();
-
-//   updateAttitude(dt);
-
-//   // 高度PIDで直接スロットルを計算（基準値不要、integral項で自動調整）
-//   int throttle = (int)calculatePID(currentState.altitudeBaro, targetState.altitudeTarget, pidAltitude, dt);
-//   throttle = constrain(throttle, MIN_THROTTLE, MAX_THROTTLE);
-  
-//   // スロットル変化率リミッター（急激な上下動を防止）
-//   if (throttle > lastThrottle + throttleLimitRate) {
-//     throttle = lastThrottle + throttleLimitRate;
-//   } else if (throttle < lastThrottle - throttleLimitRate) {
-//     throttle = lastThrottle - throttleLimitRate;
-//   }
-//   lastThrottle = throttle;
-  
-//   float outP = calculatePID(currentState.pitch, targetState.pitch, pidPitch, dt);
-//   float outR = calculatePID(currentState.roll,  targetState.roll,  pidRoll,  dt);
-
-//   // --- D. モーター出力の計算 (Mixerの中身をここでシミュレートして表示) ---
-//   int mFR = throttle + outP - outR;
-//   int mFL = throttle + outP + outR;
-//   int mRL = throttle - outP + outR;
-//   int mRR = throttle - outP - outR;
-
-
-
-
-//   updateMotorMixer(throttle, outP, outR, 0);
-
-// // --- E. 超詳細ログ出力 (100msおき) ---
-//   static unsigned long lastLog = 0;
-//   if (now / 1000 - lastLog > 100) {
-//     lastLog = now / 1000;
-
-//     Serial.println("-----------------------------------------------------------------------");
-//     // 1段目：姿勢データ
-//     Serial.printf("ATTITUDE | Pitch:%6.1f deg | Roll:%6.1f deg\n", currentState.pitch, currentState.roll);
-    
-//     // 2段目：PID計算結果
-//     Serial.printf("PID OUT  | OutP:%7.1f | OutR:%7.1f | (KpP:%.1f, KpR:%.1f)\n", outP, outR, pidPitch.Kp, pidRoll.Kp);
-    
-//     // 3段目：高度情報
-//     Serial.printf("ALTITUDE | Current:%.2f m | Target:%.2f m | Baro:%.2f m | ToF:%.2f m | Pressure:%.0f Pa\n", 
-//             currentState.altitudeBaro, targetState.altitudeTarget, 
-//             filteredAltitude, currentState.altitudeToF, bmp.readPressure());
-    
-//     // 4段目：各モーターへの最終PWM値 (12bit: 0-4095)
-//     Serial.printf("MOTORS   | FR:%4d | FL:%4d | RL:%4d | RR:%4d | Thr:%d\n", 
-//                   constrain(mFR, 0, 4095), constrain(mFL, 0, 4095), 
-//                   constrain(mRL, 0, 4095), constrain(mRR, 0, 4095), 
-//                   throttle);
-//   }
-// }
 
 void updateAttitude(float dt) {
   readRawMPU();
@@ -404,17 +406,74 @@ void updateMotorMixer(int throttle, float p, float r, float y) {
   analogWrite(PIN_RR, constrain(mRR, MIN_THROTTLE, MAX_THROTTLE));
 }
 
-float calculatePID(float current, float target, PIDParameters &p, float dt) {
+float calculatePID(float current, float target, PIDParameters &p, float scaling, float dt) {
   float error = target - current;
-  float P = p.Kp * error;
+  float P = p.Kp * error * scaling;
   p.integral += error * dt;
   // アンチウインドアップ：積分項を厳しく制限してスロットル暴走を防ぐ
   p.integral = constrain(p.integral, -5, 5);
-  float I = p.Ki * p.integral;
-  float D = p.Kd * (error - p.error_prev) / dt;
+  float I = p.Ki * p.integral * scaling;
+  float D = p.Kd * (error - p.error_prev) * scaling / dt;
   p.error_prev = error;
   return P + I + D;
 }
+
+
+
+void updateSBUS() {
+  if (sbus_rx.Read()) {
+    data = sbus_rx.data();
+
+    // フェイルセーフ（電波途絶）時の処理
+    if (data.failsafe) {
+      emergencyKill = true;
+      stopAllMotors();
+      return;
+    }
+
+    // --- モード1割り当て ---
+    
+    // 0ch: ヨー (Yaw Rate) -> -180〜180 deg/s 程度にマッピング
+    int rawYaw = sbusTo12bit(data.ch[0]);
+    targetState.yawRateTarget = map(rawYaw, 0, 4095, -180, 180);
+
+    // 1ch: エレベーター (Pitch) -> 前後傾き目標 -30〜30 deg
+    int rawPitch = sbusTo12bit(data.ch[1]);
+    targetState.pitch = map(rawPitch, 0, 4095, 30, -30); // モード1なら下方向がプラス（前傾）
+
+    // 2ch: スロットル (Altitude/Power) -> 0〜4095 (12bit)
+    // ※ 高度制御に使うか直接スロットルにするかは、後のPID計算で利用
+    uint16_t rawThrottle = sbusTo12bit(data.ch[2]);
+    targetState.throttleRaw = rawThrottle; 
+
+    // 3ch: エルロン (Roll) -> 左右傾き目標 -30〜30 deg
+    int rawRoll = sbusTo12bit(data.ch[3]);
+    targetState.roll = map(rawRoll, 0, 4095, -30, 30);
+
+    // 6ch: ゲインスケーリング係数
+    float maximum_gain = 80.0; // 例: 最大ゲインを2.0に設定
+    targetState.GainScalingfactor = sbusToGain(data.ch[6], maximum_gain);
+    
+    // デッドゾーン処理 (スティック中央の遊び: 12bit中央は2048)
+    if (abs(rawRoll - 2048) < 100) targetState.roll = 0;
+    if (abs(rawPitch - 2048) < 100) targetState.pitch = 0;
+    if (abs(rawYaw - 2048) < 100) targetState.yawRateTarget = 0;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // 気圧から高度を計算する関数
 // 国際標準大気モデルを使用
