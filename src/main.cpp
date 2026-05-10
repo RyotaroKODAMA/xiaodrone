@@ -4,6 +4,14 @@
 #include <Adafruit_BMP280.h>
 #include "Adafruit_VL53L0X.h"
 #include "sbus.h"
+#include <WiFi.h>
+#include <WiFiUdp.h>
+
+WiFiUDP udp;
+const char* pc_ip = "9026eabeadfa7"; // PCのIPアドレス
+const int udp_port = 12345;
+
+
 
 // --- 構造体定義 ---
 struct DroneState {
@@ -144,7 +152,6 @@ float sbusToGain(uint16_t val, float maxGain) {
 
 
 
-
 void setup() {
   // 1. ピン初期化 (Serialより先に!)
   pinMode(PIN_FR, OUTPUT); pinMode(PIN_FL, OUTPUT);
@@ -153,44 +160,51 @@ void setup() {
   analogWriteResolution(PWM_RES);
   analogWriteFrequency(PWM_FREQ);
 
+  // WiFi接続
+  WiFi.begin("SPWH_L12_015d3d", "9026eabeadfa7");
+
+  udpPrintf("Drone starting up...");
+
   // 2. 通信開始
-  Serial.begin(921600);
+  // Serial.begin(921600);
   Wire.begin(5, 6); Wire.setClock(400000);
+  
 
-  // // 3. センサー初期化
-  // Wire.beginTransmission(MPU_ADDR); Wire.write(0x6B); Wire.write(0x00); Wire.endTransmission();
-  // Wire.beginTransmission(MPU_ADDR); Wire.write(0x1A); Wire.write(0x05); Wire.endTransmission(); // DLPF 10Hz
-  
-  // // BMP280初期化
-  // if (!bmp.begin(0x76)) {
-  //   Serial.println("BMP280 not found!");
-  //   while (1);
-  // }
-  
-  // Serial.println("Stabilizing...");
-  // delay(2000);
-  // calibrateGyro();
-  // calibrateLevel();
 
-  // // ToF初期化
-  // if (lox.begin()) {
-  //   lox.startRangeContinuous();
-  //   tofReady = true;
-  //   Serial.println("VL53L0X ready");
-  // } else {
-  //   tofReady = false;
-  //   Serial.println("VL53L0X not found, fallback to barometer only");
-  // }
+  // 3. センサー初期化
+  Wire.beginTransmission(MPU_ADDR); Wire.write(0x6B); Wire.write(0x00); Wire.endTransmission();
+  Wire.beginTransmission(MPU_ADDR); Wire.write(0x1A); Wire.write(0x05); Wire.endTransmission(); // DLPF 10Hz
   
-  // // 気圧キャリブレーション（初期位置を基準高度0とする）
-  // float initialPressure = 0;
-  // for(int i = 0; i < 100; i++) {
-  //   initialPressure += bmp.readPressure();
-  //   delay(10);
-  // }
-  // referencePressure = initialPressure / 100.0;  // 平均気圧をそのまま基準に
-  // filteredAltitude = 0.0;  // 初期高度を0に固定
-  // Serial.printf("Reference Pressure: %.2f Pa\n", referencePressure);
+  // BMP280初期化
+  if (!bmp.begin(0x76)) {
+    udpPrintf("BMP280 not found!");
+    while (1);
+  }
+  
+  udpPrintf("Stabilizing...");
+  delay(2000);
+  calibrateGyro();
+  calibrateLevel();
+
+  // ToF初期化
+  if (lox.begin()) {
+    lox.startRangeContinuous();
+    tofReady = true;
+    udpPrintf("VL53L0X ready");
+  } else {
+    tofReady = false;
+    udpPrintf("VL53L0X not found, fallback to barometer only");
+  }
+  
+  // 気圧キャリブレーション（初期位置を基準高度0とする）
+  float initialPressure = 0;
+  for(int i = 0; i < 100; i++) {
+    initialPressure += bmp.readPressure();
+    delay(10);
+  }
+  referencePressure = initialPressure / 100.0;  // 平均気圧をそのまま基準に
+  filteredAltitude = 0.0;  // 初期高度を0に固定
+  udpPrintf("Reference Pressure: %.2f Pa\n", referencePressure);
 
   // // シリアルバッファ掃除
   // while(Serial.available() > 0) Serial.read();
@@ -208,21 +222,19 @@ void setup() {
     for (int i = 0; i < 50; i++) { // 50 * 10ms = 500ms
       if (sbus_rx.Read()) {
         data = sbus_rx.data();
-        Serial.println("SBUS: OK");
+        udpPrintf("SBUS: OK");
         for (int8_t ch = 0; ch < data.NUM_CH; ch++) {
-          Serial.print(data.ch[ch]);
-          Serial.print('\t');
+          udpPrintf("%d\t", data.ch[ch]);
         }
-        Serial.print(data.lost_frame);
-        Serial.print('\t');
-        Serial.println(data.failsafe);
+        udpPrintf("Lost Frame: %d", data.lost_frame);
+        udpPrintf("Failsafe: %d", data.failsafe);
         sbus_ok = true;
         break;
       }
       delay(10);
     }
     if (!sbus_ok) {
-      Serial.println("SBUS: No data (check wiring/baud)");
+      udpPrintf("SBUS: No data (check wiring/baud)");
     }
   }
 
@@ -290,20 +302,20 @@ void loop() {
   if (now / 1000 - lastLog > 100) {
     lastLog = now / 1000;
 
-    Serial.println("-----------------------------------------------------------------------");
+    udpPrintf("-----------------------------------------------------------------------");
     // 1段目：姿勢データ
-    Serial.printf("ATTITUDE | Pitch:%6.1f deg | Roll:%6.1f deg\n", currentState.pitch, currentState.roll);
+    udpPrintf("ATTITUDE | Pitch:%6.1f deg | Roll:%6.1f deg\n", currentState.pitch, currentState.roll);
     
     // 2段目：PID計算結果
-    Serial.printf("PID OUT  | OutP:%7.1f | OutR:%7.1f | (KpP:%.1f, KpR:%.1f)\n", outP, outR, pidPitch.Kp, pidRoll.Kp);
+    udpPrintf("PID OUT  | OutP:%7.1f | OutR:%7.1f | (KpP:%.1f, KpR:%.1f)\n", outP, outR, pidPitch.Kp, pidRoll.Kp);
     
     // 3段目：高度情報
-    Serial.printf("ALTITUDE | Current:%.2f m | Target:%.2f m | Baro:%.2f m | ToF:%.2f m | Pressure:%.0f Pa\n", 
+    udpPrintf("ALTITUDE | Current:%.2f m | Target:%.2f m | Baro:%.2f m | ToF:%.2f m | Pressure:%.0f Pa\n", 
             currentState.altitudeBaro, targetState.altitudeTarget, 
             filteredAltitude, currentState.altitudeToF, bmp.readPressure());
     
     // 4段目：各モーターへの最終PWM値 (12bit: 0-4095)
-    Serial.printf("MOTORS   | FR:%4d | FL:%4d | RL:%4d | RR:%4d | Thr:%d\n", 
+    udpPrintf("MOTORS   | FR:%4d | FL:%4d | RL:%4d | RR:%4d | Thr:%d\n", 
                   constrain(mFR, 0, 4095), constrain(mFL, 0, 4095), 
                   constrain(mRL, 0, 4095), constrain(mRR, 0, 4095), 
                   throttle);
@@ -463,7 +475,17 @@ void updateSBUS() {
 
 
 
+void udpPrintf(const char* format, ...) {
+    char buffer[256];
+    va_list args;
+    va_start(args, format);
+    vsnprintf(buffer, sizeof(buffer), format, args);
+    va_end(args);
 
+    udp.beginPacket(pc_ip, udp_port);
+    udp.print(buffer);
+    udp.endPacket();
+}
 
 
 
