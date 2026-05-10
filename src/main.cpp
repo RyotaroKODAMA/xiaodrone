@@ -6,9 +6,11 @@
 #include "sbus.h"
 #include <WiFi.h>
 #include <WiFiUdp.h>
+#include "calibration_storage.h"
 
 WiFiUDP udp;
-const char* pc_ip = "192.168.179.56"; // PCのIPアドレス
+// const char* pc_ip = "192.168.179.56"; // PCのIPアドレス
+const char* pc_ip = "192.168.179.40"; // PCのIPアドレス
 const int udp_port = 22222;
 
 
@@ -105,8 +107,7 @@ unsigned long lastToFReadMs = 0;
 const unsigned long TOF_READ_INTERVAL_MS = 50;
 
 // --- プロトタイプ宣言 ---
-void calibrateGyro();
-void calibrateLevel();
+bool loadCalibrationFromStorage();
 void updateAttitude(float dt);
 float calculatePID(float current, float target, PIDParameters &p, float scaling, float dt);
 void updateMotorMixer(int throttle, float p, float r, float y);
@@ -155,6 +156,25 @@ float sbusToGain(uint16_t val, float maxGain) {
     return ((float)(val - 144) / (1904 - 144)) * maxGain;
 }
 
+bool loadCalibrationFromStorage() {
+  CalibrationStorage::Data data{};
+  if (!CalibrationStorage::load(data)) {
+    return false;
+  }
+
+  gyro_x_offset = data.gyro_x_offset;
+  gyro_y_offset = data.gyro_y_offset;
+  gyro_z_offset = data.gyro_z_offset;
+  pitch_offset = data.pitch_offset;
+  roll_offset = data.roll_offset;
+
+  if (data.referencePressure > 0.0f) {
+    referencePressure = data.referencePressure;
+  }
+
+  return true;
+}
+
 
 
 void setup() {
@@ -194,11 +214,15 @@ void setup() {
     Serial.println("BMP280 not found!");
     while (1);
   }
+
+  if (loadCalibrationFromStorage()) {
+    Serial.println("Calibration loaded from NVS");
+  } else {
+    Serial.println("Calibration data not found. Using default offsets.");
+  }
   
   Serial.println("Stabilizing...");
-  delay(2000);
-  calibrateGyro();
-  calibrateLevel();
+  delay(1000);
 
   // ToF初期化
   if (lox.begin()) {
@@ -210,13 +234,7 @@ void setup() {
     Serial.println("VL53L0X not found, fallback to barometer only");
   }
   
-  // 気圧キャリブレーション（初期位置を基準高度0とする）
-  float initialPressure = 0;
-  for(int i = 0; i < 100; i++) {
-    initialPressure += bmp.readPressure();
-    delay(10);
-  }
-  referencePressure = initialPressure / 100.0;  // 平均気圧をそのまま基準に
+  // 保存済みの基準気圧を使って高度を計算する
   filteredAltitude = 0.0;  // 初期高度を0に固定
   debugLog("Reference Pressure: %.2f Pa\n", referencePressure);
 
