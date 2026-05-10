@@ -86,6 +86,8 @@ Adafruit_BMP280 bmp;
 Adafruit_VL53L0X lox = Adafruit_VL53L0X();
 bool tofReady = false;
 bool emergencyKill = false;
+unsigned long lastSbusDataMs = 0;
+const unsigned long SBUS_TIMEOUT_MS = 200;
 
 // フィルタ定数
 float lpfAccX = 0, lpfAccY = 0, lpfAccZ = 1.0;
@@ -132,6 +134,8 @@ void readRawMPU() {
 void stopAllMotors() {
     analogWrite(PIN_FR, 0); analogWrite(PIN_FL, 0);
     analogWrite(PIN_RL, 0); analogWrite(PIN_RR, 0);
+  targetState.throttleRaw = 0;
+  throttle = 0;
 }
 
 /* SBUS object, reading SBUS */
@@ -259,6 +263,12 @@ void loop() {
   // 1. 受信（独立関数）
   updateSBUS();
 
+  // if (emergencyKill) {
+  //   throttle = 0;
+  //   stopAllMotors();
+  //   return;
+  // }
+
   // 2. タイミング管理
   static unsigned long lastLoopTime = micros();
   unsigned long now = micros();
@@ -292,7 +302,8 @@ void loop() {
   float outP = calculatePID(currentState.pitch, targetState.pitch, pidPitch,targetState.GainScalingfactor, dt);
   float outR = calculatePID(currentState.roll,  targetState.roll,  pidRoll,  targetState.GainScalingfactor, dt);
 
-
+  float Kpp = pidPitch.Kp * targetState.GainScalingfactor;
+  float Kpr = pidRoll.Kp * targetState.GainScalingfactor;
 
 
   // --- D. モーター出力の計算 (Mixerの中身をここでシミュレートして表示) ---
@@ -309,7 +320,7 @@ void loop() {
 
 
 
-// --- E. 超詳細ログ出力 (100msおき) ---
+  // --- E. 超詳細ログ出力 (100msおき) ---
   static unsigned long lastLog = 0;
   if (now / 1000 - lastLog > 100) {
     lastLog = now / 1000;
@@ -319,7 +330,7 @@ void loop() {
     debugLog("ATTITUDE | Pitch:%6.1f deg | Roll:%6.1f deg\n", currentState.pitch, currentState.roll);
     
     // 2段目：PID計算結果
-    debugLog("PID OUT  | OutP:%7.1f | OutR:%7.1f | (KpP:%.1f, KpR:%.1f)\n", outP, outR, pidPitch.Kp, pidRoll.Kp);
+    debugLog("PID OUT  | OutP:%7.1f | OutR:%7.1f | (KpP:%.1f, KpR:%.1f)\n", outP, outR, Kpp, Kpr);
     
     // 3段目：高度情報
     debugLog("ALTITUDE | Current:%.2f m | Target:%.2f m | Baro:%.2f m | ToF:%.2f m | Pressure:%.0f Pa\n", 
@@ -360,8 +371,9 @@ void updateAttitude(float dt) {
   float accRoll  = (atan2(-lpfAccX, lpfAccZ) * 180 / PI) - roll_offset;
 
   // 相補フィルタ
-  currentState.pitch = 0.98 * (currentState.pitch + currentState.gyroX * dt) + 0.02 * accPitch;
-  currentState.roll  = 0.98 * (currentState.roll  + currentState.gyroY * dt) + 0.02 * accRoll;
+  // 配置による補正も含む
+  currentState.pitch = 0.98 * (currentState.pitch + currentState.gyroY * dt) + 0.02 * accRoll;
+  currentState.roll  = 0.98 * (currentState.roll  + currentState.gyroX * dt) + 0.02 * accPitch;
 }
 
 
@@ -446,6 +458,7 @@ float calculatePID(float current, float target, PIDParameters &p, float scaling,
 
 void updateSBUS() {
   if (sbus_rx.Read()) {
+    lastSbusDataMs = millis();
     data = sbus_rx.data();
 
     // フェイルセーフ（電波途絶）時の処理
@@ -482,6 +495,9 @@ void updateSBUS() {
     if (abs(rawRoll - 2048) < 100) targetState.roll = 0;
     if (abs(rawPitch - 2048) < 100) targetState.pitch = 0;
     if (abs(rawYaw - 2048) < 100) targetState.yawRateTarget = 0;
+  } else if (millis() - lastSbusDataMs > SBUS_TIMEOUT_MS) {
+    emergencyKill = true;
+    stopAllMotors();
   }
 }
 
