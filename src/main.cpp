@@ -76,7 +76,7 @@ PIDParameters pidAltitude = { 300.0, 100.0, 30.0, 0, 0 }; // 高度制御用PID 
 
 
 // モーターピン
-const int PIN_FR = 4, PIN_FL = 8, PIN_RL = 9, PIN_RR = 1;
+const int PIN_FR = 1, PIN_FL = 8, PIN_RL = 9, PIN_RR = 4;
 const int PWM_FREQ = 16000;
 const int PWM_RES = 12;
 
