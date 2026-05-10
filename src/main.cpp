@@ -209,6 +209,10 @@ void setup() {
   Wire.beginTransmission(MPU_ADDR); Wire.write(0x6B); Wire.write(0x00); Wire.endTransmission();
   Wire.beginTransmission(MPU_ADDR); Wire.write(0x1A); Wire.write(0x05); Wire.endTransmission(); // DLPF 10Hz
   
+  // 【ここを追加】加速度センサーのレンジを ±8g に変更 (0x1C レジスタに 0x10 を書き込む)
+  Wire.beginTransmission(MPU_ADDR); Wire.write(0x1C); Wire.write(0x10); Wire.endTransmission();
+
+
   // BMP280初期化
   if (!bmp.begin(0x76)) {
     Serial.println("BMP280 not found!");
@@ -365,6 +369,15 @@ void loop() {
 
 void updateAttitude(float dt) {
   readRawMPU();
+  // 100msに1回だけ、生のI2C通信データを覗き見する
+  static unsigned long lastRawLog = 0;
+  if (millis() - lastRawLog > 100) {
+      lastRawLog = millis();
+      // GyXやAcXが、いきなり 30000 などの異常値になっていないか確認する
+      debugLog("RAW SENSOR | GyX:%6d | GyY:%6d | AcX:%6d | AcY:%6d\n", GyX, GyY, AcX, AcY);
+  }
+
+  float temp = GyX; GyX = GyY; GyY = -temp;
 
   // ★重要：ジャイロを dps に変換
   currentState.gyroX = (GyX - gyro_x_offset) / 131.0;
@@ -385,18 +398,23 @@ void updateAttitude(float dt) {
   currentState.gyroZ = filteredGyZ;
 
   // 加速度LPF
-  lpfAccX = (1.0 - lpfBeta) * lpfAccX + lpfBeta * (AcX / 16384.0);
-  lpfAccY = (1.0 - lpfBeta) * lpfAccY + lpfBeta * (AcY / 16384.0);
-  lpfAccZ = (1.0 - lpfBeta) * lpfAccZ + lpfBeta * (AcZ / 16384.0);
+  // lpfAccX = (1.0 - lpfBeta) * lpfAccX + lpfBeta * (AcX / 16384.0);
+  // lpfAccY = (1.0 - lpfBeta) * lpfAccY + lpfBeta * (AcY / 16384.0);
+  // lpfAccZ = (1.0 - lpfBeta) * lpfAccZ + lpfBeta * (AcZ / 16384.0);
+  // 加速度LPF (8Gレンジ用に 4096.0 で割る)
+  lpfAccX = (1.0 - lpfBeta) * lpfAccX + lpfBeta * (AcX / 4096.0);
+  lpfAccY = (1.0 - lpfBeta) * lpfAccY + lpfBeta * (AcY / 4096.0);
+  lpfAccZ = (1.0 - lpfBeta) * lpfAccZ + lpfBeta * (AcZ / 4096.0);
 
-  float accPitch = (atan2(lpfAccY, sqrt(lpfAccX*lpfAccX + lpfAccZ*lpfAccZ)) * 180 / PI) - pitch_offset;
-  float accRoll  = (atan2(-lpfAccX, lpfAccZ) * 180 / PI) - roll_offset;
 
-  // 相補フィルタ
-  // 配置による補正も含む
-  currentState.pitch = 0.98 * (currentState.pitch + currentState.gyroY * dt) + 0.02 * accRoll;
-  currentState.roll  = 0.98 * (currentState.roll  + currentState.gyroX * dt) + 0.02 * accPitch;
-}
+  // 1. まず標準的な計算式に直す（一般的な航空力学の軸）
+  float accPitch = (atan2(-lpfAccX, sqrt(lpfAccY*lpfAccY + lpfAccZ*lpfAccZ)) * 180 / PI) - pitch_offset;
+  float accRoll  = (atan2(lpfAccY, lpfAccZ) * 180 / PI) - roll_offset;
+
+  // 2. 同士を素直に掛け合わせる
+  currentState.pitch = 0.98 * (currentState.pitch + currentState.gyroY * dt) + 0.02 * accPitch;
+  currentState.roll  = 0.98 * (currentState.roll  + currentState.gyroX * dt) + 0.02 * accRoll;
+  }
 
 
 

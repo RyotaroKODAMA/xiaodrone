@@ -139,6 +139,10 @@ void setup() {
   Wire.write(0x1A);
   Wire.write(0x05);
   Wire.endTransmission();
+  Wire.beginTransmission(MPU_ADDR);
+  Wire.write(0x1C);
+  Wire.write(0x10);
+  Wire.endTransmission();
 
   if (!bmp.begin(0x76)) {
     Serial.println("BMP280 not found!");
