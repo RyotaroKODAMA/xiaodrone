@@ -371,14 +371,18 @@ void updateAttitude(float dt) {
   currentState.gyroY = (GyY - gyro_y_offset) / 131.0;
   currentState.gyroZ = (GyZ - gyro_z_offset) / 131.0;
 
-  static float filteredGyX = 0, filteredGyY = 0;
-  float gyroAlpha = 0.3; // 0.1〜0.5で調整。小さいほど強力
+  // ジャイロLPF：モーター振動ノイズを減らすため強力なフィルター
+  // gyroAlphaが小さいほど過去の値を重視してノイズを減衰
+  static float filteredGyX = 0, filteredGyY = 0, filteredGyZ = 0;
+  float gyroAlpha = 0.1; // 0.1に強化（デフォルト0.3から変更）
 
   filteredGyX = (1.0 - gyroAlpha) * filteredGyX + gyroAlpha * ((GyX - gyro_x_offset) / 131.0);
   filteredGyY = (1.0 - gyroAlpha) * filteredGyY + gyroAlpha * ((GyY - gyro_y_offset) / 131.0);
+  filteredGyZ = (1.0 - gyroAlpha) * filteredGyZ + gyroAlpha * ((GyZ - gyro_z_offset) / 131.0);
 
   currentState.gyroX = filteredGyX;
   currentState.gyroY = filteredGyY;
+  currentState.gyroZ = filteredGyZ;
 
   // 加速度LPF
   lpfAccX = (1.0 - lpfBeta) * lpfAccX + lpfBeta * (AcX / 16384.0);
