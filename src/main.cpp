@@ -483,6 +483,20 @@ void updateSBUS() {
     lastSbusDataMs = millis();
     data = sbus_rx.data();
 
+    // SBUSライブラリでは、信号欠落や無効チャネルを示すために
+    // チャネル値に 2047 (11bit の全1) を入れることがあります。
+    // もし 2047 が来たらフェイルセーフ扱いにしてモータ停止します。
+    bool sbus_invalid = false;
+    for (int i = 0; i < 16; ++i) {
+      if (data.ch[i] == 2047) { sbus_invalid = true; break; }
+    }
+    if (sbus_invalid) {
+      Serial.println("SBUS: invalid channel value 2047 detected -> entering failsafe");
+      emergencyKill = true;
+      stopAllMotors();
+      return;
+    }
+
     // フェイルセーフ（電波途絶）時の処理
     if (data.failsafe) {
       emergencyKill = true;
