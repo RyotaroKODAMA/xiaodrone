@@ -147,10 +147,32 @@ void setup() {
     }
   }
 
-  Serial.println("Calibration mode started");
-  Serial.println("Keep the frame level and still. Upside-down placement is supported.");
-  delay(2000);
+  // キャリブレーション指示と確認
+  Serial.println("\n========== CALIBRATION MODE ==========");
+  Serial.println("準備ができたら 'y' または 'Y' を入力してください。");
+  Serial.println("\n【準備内容】");
+  Serial.println("1. 機体を平坦で安定した場所に静置してください");
+  Serial.println("2. 機体は通常姿勢（上が上）でも上下逆さでもOKです");
+  Serial.println("3. キャリブレーション中は絶対に動かさないでください");
+  Serial.println("4. 2～3秒の測定時間がかかります");
+  Serial.println("\n準備完了したら 'y' または 'Y' を入力: ");
 
+  // ユーザーからの確認入力を待つ
+  bool confirmed = false;
+  while (!confirmed) {
+    if (Serial.available() > 0) {
+      char input = Serial.read();
+      if (input == 'y' || input == 'Y') {
+        confirmed = true;
+        Serial.println("了解、キャリブレーション開始します...\n");
+      } else {
+        Serial.print("'y' または 'Y' を入力してください: ");
+      }
+    }
+    delay(100);
+  }
+
+  delay(1000);
   calibrateGyro();
   calibrateLevel();
   referencePressure = measureReferencePressure();

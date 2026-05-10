@@ -32,7 +32,16 @@ ESP32-S3 で動くドローン制御プロジェクトです。通常の飛行�
 
 ## 使い方
 
-### 1. 校正を実行する
+### 簡単な方法（VS Code 推奨）
+
+VS Code の**ターミナル > タスクを実行**から、以下を選ぶだけです。
+
+- **PlatformIO: Calibration Build & Upload** - 校正用をビルド・書き込み
+- **PlatformIO: Flight Build & Upload** - 飛行用をビルド・書き込み
+
+### コマンドラインで実行する場合
+
+#### 1. 校正を実行する
 
 機体を静置した状態で、校正用ファームを書き込みます。
 
@@ -42,7 +51,7 @@ platformio run -e seeed_xiao_esp32s3_calibration -t upload
 
 シリアルモニタでは、校正完了後に NVS へ保存された旨が表示されます。
 
-### 2. 飛行用ファームを書き込む
+#### 2. 飛行用ファームを書き込む
 
 校正が終わったら、通常の飛行用ファームを書き込みます。
 
@@ -52,11 +61,13 @@ platformio run -e seeed_xiao_esp32s3 -t upload
 
 起動時に保存済みのキャリブレーションを読み込んで飛行を開始します。
 
-### 3. シリアルモニタを見る
+#### 3. シリアルモニタを見る
 
 ```bash
 platformio device monitor -e seeed_xiao_esp32s3
 ```
+
+`platformio` が PATH に入っていない環境では、各自のインストール方法に合わせて `platformio.exe` を直接呼び出してください。Windows では通常、ユーザーごとの PlatformIO 環境に入っています。
 
 ## 保存される校正値
 
