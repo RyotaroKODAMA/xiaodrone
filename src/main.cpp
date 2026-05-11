@@ -65,7 +65,7 @@ float pitch_offset = 0, roll_offset = 0, yaw_offset = 0;
 
 // scaleもとになるゲイン。これにSbusのゲインを掛けて最終的なKpなどを決定するイメージ
 PIDParameters pidRoll  = { 2.0, 0.0, 0.1, 0, 0 }; 
-PIDParameters pidPitch = { 2.0, 0.0, 0.1, 0, 0 };
+PIDParameters pidPitch = { 1.4, 0.0, 0.07, 0, 0 };
 PIDParameters pidYaw   = { 2.0, 0.0, 0.0, 0, 0 }; // ヨーは一旦 0 で OK
 PIDParameters pidAltitude = { 300.0, 100.0, 30.0, 0, 0 }; // 高度制御用PID (抑制強化版)
 
@@ -207,11 +207,14 @@ void setup() {
 
   // 3. センサー初期化
   Wire.beginTransmission(MPU_ADDR); Wire.write(0x6B); Wire.write(0x00); Wire.endTransmission();
+    // 1. ジャイロのノイズフィルター (10Hz)
   Wire.beginTransmission(MPU_ADDR); Wire.write(0x1A); Wire.write(0x05); Wire.endTransmission(); // DLPF 10Hz
-  
+  // 2. 加速度の測定レンジを 8G に拡張
   // 【ここを追加】加速度センサーのレンジを ±8g に変更 (0x1C レジスタに 0x10 を書き込む)
   Wire.beginTransmission(MPU_ADDR); Wire.write(0x1C); Wire.write(0x10); Wire.endTransmission();
 
+  // ★3. これを追加！ 加速度のノイズフィルター (10Hz)
+  Wire.beginTransmission(MPU_ADDR); Wire.write(0x1D); Wire.write(0x05); Wire.endTransmission();
 
   // BMP280初期化
   if (!bmp.begin(0x76)) {
@@ -320,6 +323,14 @@ void loop() {
   // }
   // lastThrottle = throttle;
   
+
+  // ★追加：地上にいるときは過去のストレス（積分）を忘れる
+  if (throttle < 100) {
+    pidPitch.integral = 0;
+    pidRoll.integral = 0;
+  }
+
+
   // controll for pitch and roll state using PID
   float outP = calculatePID(currentState.pitch, targetState.pitch, pidPitch,targetState.GainScalingfactor, dt);
   float outR = calculatePID(currentState.roll,  targetState.roll,  pidRoll,  targetState.GainScalingfactor, dt);
@@ -329,10 +340,10 @@ void loop() {
 
 
   // --- D. モーター出力の計算 (Mixerの中身をここでシミュレートして表示) ---
-  int mFR = throttle + outP - outR;
-  int mFL = throttle + outP + outR;
-  int mRL = throttle - outP + outR;
-  int mRR = throttle - outP - outR;
+  int mFR = throttle + outP + outR;
+  int mFL = throttle + outP - outR;
+  int mRL = throttle - outP - outR;
+  int mRR = throttle - outP + outR;
 
 
 
@@ -367,55 +378,111 @@ void loop() {
   }
 }
 
+// void updateAttitude(float dt) {
+//   readRawMPU();
+//   // 100msに1回だけ、生のI2C通信データを覗き見する
+//   static unsigned long lastRawLog = 0;
+//   if (millis() - lastRawLog > 100) {
+//       lastRawLog = millis();
+//       // GyXやAcXが、いきなり 30000 などの異常値になっていないか確認する
+//       debugLog("RAW SENSOR | GyX:%6d | GyY:%6d | AcX:%6d | AcY:%6d\n", GyX, GyY, AcX, AcY);
+//   }
+
+//   float temp = GyX; GyX = GyY; GyY = -temp;
+
+//   // ★重要：ジャイロを dps に変換
+//   currentState.gyroX = (GyX - gyro_x_offset) / 131.0;
+//   currentState.gyroY = (GyY - gyro_y_offset) / 131.0;
+//   currentState.gyroZ = (GyZ - gyro_z_offset) / 131.0;
+
+//   // ジャイロLPF：モーター振動ノイズを減らすため強力なフィルター
+//   // gyroAlphaが小さいほど過去の値を重視してノイズを減衰
+//   static float filteredGyX = 0, filteredGyY = 0, filteredGyZ = 0;
+//   float gyroAlpha = 0.1; // 0.1に強化（デフォルト0.3から変更）
+
+//   filteredGyX = (1.0 - gyroAlpha) * filteredGyX + gyroAlpha * ((GyX - gyro_x_offset) / 131.0);
+//   filteredGyY = (1.0 - gyroAlpha) * filteredGyY + gyroAlpha * ((GyY - gyro_y_offset) / 131.0);
+//   filteredGyZ = (1.0 - gyroAlpha) * filteredGyZ + gyroAlpha * ((GyZ - gyro_z_offset) / 131.0);
+
+//   currentState.gyroX = filteredGyX;
+//   currentState.gyroY = filteredGyY;
+//   currentState.gyroZ = filteredGyZ;
+
+//   // 加速度LPF
+//   // lpfAccX = (1.0 - lpfBeta) * lpfAccX + lpfBeta * (AcX / 16384.0);
+//   // lpfAccY = (1.0 - lpfBeta) * lpfAccY + lpfBeta * (AcY / 16384.0);
+//   // lpfAccZ = (1.0 - lpfBeta) * lpfAccZ + lpfBeta * (AcZ / 16384.0);
+//   // 加速度LPF (8Gレンジ用に 4096.0 で割る)
+//   lpfAccX = (1.0 - lpfBeta) * lpfAccX + lpfBeta * (AcX / 4096.0);
+//   lpfAccY = (1.0 - lpfBeta) * lpfAccY + lpfBeta * (AcY / 4096.0);
+//   lpfAccZ = (1.0 - lpfBeta) * lpfAccZ + lpfBeta * (AcZ / 4096.0);
+
+
+//   // 1. まず標準的な計算式に直す（一般的な航空力学の軸）
+//   float accPitch = (atan2(-lpfAccX, sqrt(lpfAccY*lpfAccY + lpfAccZ*lpfAccZ)) * 180 / PI) - pitch_offset;
+//   float accRoll  = (atan2(lpfAccY, lpfAccZ) * 180 / PI) - roll_offset;
+
+//   // 2. 同士を素直に掛け合わせる
+//   currentState.pitch = 0.98 * (currentState.pitch + currentState.gyroY * dt) + 0.02 * accPitch;
+//   currentState.roll  = 0.98 * (currentState.roll  + currentState.gyroX * dt) + 0.02 * accRoll;
+//   }
+
+
+
 void updateAttitude(float dt) {
   readRawMPU();
+
   // 100msに1回だけ、生のI2C通信データを覗き見する
   static unsigned long lastRawLog = 0;
   if (millis() - lastRawLog > 100) {
       lastRawLog = millis();
-      // GyXやAcXが、いきなり 30000 などの異常値になっていないか確認する
       debugLog("RAW SENSOR | GyX:%6d | GyY:%6d | AcX:%6d | AcY:%6d\n", GyX, GyY, AcX, AcY);
   }
 
-  float temp = GyX; GyX = GyY; GyY = -temp;
+  // 1. オフセットを引いて物理値に変換
+  float rawGyX = (GyX - gyro_x_offset) / 131.0;
+  float rawGyY = (GyY - gyro_y_offset) / 131.0;
+  float rawGyZ = (GyZ - gyro_z_offset) / 131.0;
 
-  // ★重要：ジャイロを dps に変換
-  currentState.gyroX = (GyX - gyro_x_offset) / 131.0;
-  currentState.gyroY = (GyY - gyro_y_offset) / 131.0;
-  currentState.gyroZ = (GyZ - gyro_z_offset) / 131.0;
+  float rawAcX = AcX / 4096.0;
+  float rawAcY = AcY / 4096.0;
+  float rawAcZ = AcZ / 4096.0;
 
-  // ジャイロLPF：モーター振動ノイズを減らすため強力なフィルター
-  // gyroAlphaが小さいほど過去の値を重視してノイズを減衰
-  static float filteredGyX = 0, filteredGyY = 0, filteredGyZ = 0;
-  float gyroAlpha = 0.1; // 0.1に強化（デフォルト0.3から変更）
+  // 2. 基板の向き補正（ピンヘッダー前、チップ上の「ストレート配置」）
+  // 90度回転のコードを廃止し、そのまま素直に割り当てます。
+  // ※後で行う「動作確認テスト」で逆の動きをしたら、ここにマイナス(-)を付けます
+  float mappedGyRoll  = -rawGyX;  // ロール（左右）はX軸
+  float mappedGyPitch = rawGyY;  // ピッチ（前後）はY軸
+  float mappedGyYaw   = rawGyZ;
 
-  filteredGyX = (1.0 - gyroAlpha) * filteredGyX + gyroAlpha * ((GyX - gyro_x_offset) / 131.0);
-  filteredGyY = (1.0 - gyroAlpha) * filteredGyY + gyroAlpha * ((GyY - gyro_y_offset) / 131.0);
-  filteredGyZ = (1.0 - gyroAlpha) * filteredGyZ + gyroAlpha * ((GyZ - gyro_z_offset) / 131.0);
+  float mappedAcX = rawAcX;
+  float mappedAcY = -rawAcY;
+  float mappedAcZ = rawAcZ;
 
-  currentState.gyroX = filteredGyX;
-  currentState.gyroY = filteredGyY;
-  currentState.gyroZ = filteredGyZ;
+  // 3. ジャイロLPF
+  static float filteredGyR = 0, filteredGyP = 0, filteredGyY = 0;
+  float gyroAlpha = 0.1; 
+  filteredGyR = (1.0 - gyroAlpha) * filteredGyR + gyroAlpha * mappedGyRoll;
+  filteredGyP = (1.0 - gyroAlpha) * filteredGyP + gyroAlpha * mappedGyPitch;
+  filteredGyY = (1.0 - gyroAlpha) * filteredGyY + gyroAlpha * mappedGyYaw;
 
-  // 加速度LPF
-  // lpfAccX = (1.0 - lpfBeta) * lpfAccX + lpfBeta * (AcX / 16384.0);
-  // lpfAccY = (1.0 - lpfBeta) * lpfAccY + lpfBeta * (AcY / 16384.0);
-  // lpfAccZ = (1.0 - lpfBeta) * lpfAccZ + lpfBeta * (AcZ / 16384.0);
-  // 加速度LPF (8Gレンジ用に 4096.0 で割る)
-  lpfAccX = (1.0 - lpfBeta) * lpfAccX + lpfBeta * (AcX / 4096.0);
-  lpfAccY = (1.0 - lpfBeta) * lpfAccY + lpfBeta * (AcY / 4096.0);
-  lpfAccZ = (1.0 - lpfBeta) * lpfAccZ + lpfBeta * (AcZ / 4096.0);
+  currentState.gyroX = filteredGyR;
+  currentState.gyroY = filteredGyP;
+  currentState.gyroZ = filteredGyY;
 
+  // 4. 加速度LPF
+  lpfAccX = (1.0 - lpfBeta) * lpfAccX + lpfBeta * mappedAcX;
+  lpfAccY = (1.0 - lpfBeta) * lpfAccY + lpfBeta * mappedAcY;
+  lpfAccZ = (1.0 - lpfBeta) * lpfAccZ + lpfBeta * mappedAcZ;
 
-  // 1. まず標準的な計算式に直す（一般的な航空力学の軸）
-  float accPitch = (atan2(-lpfAccX, sqrt(lpfAccY*lpfAccY + lpfAccZ*lpfAccZ)) * 180 / PI) - pitch_offset;
-  float accRoll  = (atan2(lpfAccY, lpfAccZ) * 180 / PI) - roll_offset;
+  // 5. 角度計算（ストレート配置用の標準式）
+  float accRoll  = (atan2(lpfAccY, lpfAccZ) * 180.0 / PI) - roll_offset;
+  float accPitch = (atan2(-lpfAccX, sqrt(lpfAccY*lpfAccY + lpfAccZ*lpfAccZ)) * 180.0 / PI) - pitch_offset;
 
-  // 2. 同士を素直に掛け合わせる
-  currentState.pitch = 0.98 * (currentState.pitch + currentState.gyroY * dt) + 0.02 * accPitch;
+  // 6. 相補フィルター（ついにピッチとロールが正しく独立します！）
   currentState.roll  = 0.98 * (currentState.roll  + currentState.gyroX * dt) + 0.02 * accRoll;
-  }
-
+  currentState.pitch = 0.98 * (currentState.pitch + currentState.gyroY * dt) + 0.02 * accPitch;
+}
 
 
 void calibrateLevel() {
@@ -468,14 +535,11 @@ void updateMotorMixer(int throttle, float p, float r, float y) {
     analogWrite(PIN_RL, 0); analogWrite(PIN_RR, 0);
     return;
   }
-  // int mFR = throttle + p - r - y;
-  // int mFL = throttle + p + r + y;
-  // int mRL = throttle - p + r - y;
-  // int mRR = throttle - p - r + y;
-  int mFR = throttle + p - r ;
-  int mFL = throttle + p + r ;
-  int mRL = throttle - p + r ;
-  int mRR = throttle - p - r ;
+  // 物理法則に従った正しいX型ミキサー（符号を絶対にいじらない！）
+  int mFR = throttle + p - r; // 右前
+  int mFL = throttle + p + r; // 左前
+  int mRL = throttle - p + r; // 左後
+  int mRR = throttle - p - r; // 右後
   analogWrite(PIN_FR, constrain(mFR, MIN_THROTTLE, MAX_THROTTLE));
   analogWrite(PIN_FL, constrain(mFL, MIN_THROTTLE, MAX_THROTTLE));
   analogWrite(PIN_RL, constrain(mRL, MIN_THROTTLE, MAX_THROTTLE));
@@ -497,6 +561,8 @@ float calculatePID(float current, float target, PIDParameters &p, float scaling,
 
 
 void updateSBUS() {
+  constexpr bool kInvertControllerInputSign = true;
+
   if (sbus_rx.Read()) {
     lastSbusDataMs = millis();
     data = sbus_rx.data();
@@ -540,6 +606,13 @@ void updateSBUS() {
     // 3ch: エルロン (Roll) -> 左右傾き目標 -30〜30 deg
     int rawRoll = sbusTo12bit(data.ch[3]);
     targetState.roll = map(rawRoll, 0, 4095, -30, 30);
+
+    if (kInvertControllerInputSign) {
+      // スティック入力のモーター反映方向を反転（スロットルは除外）
+      targetState.pitch = -targetState.pitch;
+      targetState.roll = targetState.roll;
+      targetState.yawRateTarget = -targetState.yawRateTarget;
+    }
 
     // 6ch: ゲインスケーリング係数
     float maximum_gain = 80.0; // 例: 最大ゲインを2.0に設定

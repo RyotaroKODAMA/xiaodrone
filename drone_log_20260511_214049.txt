@@ -1,0 +1,1264 @@
+PID OUT  | OutP:   10.7 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.10 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -914 | GyY:   575 | AcX:    87 | AcY:    66
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:-0.05 m | ToF:0.03 m | Pressure:101596 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -907 | GyY:   580 | AcX:    86 | AcY:    58
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.08 m | ToF:0.02 m | Pressure:101592 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -905 | GyY:   580 | AcX:    84 | AcY:    60
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.20 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   574 | AcX:    86 | AcY:    61
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.10 m | ToF:0.03 m | Pressure:101596 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   576 | AcX:    86 | AcY:    61
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.00 m | ToF:0.02 m | Pressure:101597 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -915 | GyY:   572 | AcX:    87 | AcY:    60
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.10 m | ToF:0.02 m | Pressure:101590 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -911 | GyY:   580 | AcX:    86 | AcY:    60
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.20 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -917 | GyY:   569 | AcX:    83 | AcY:    56
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.21 m | ToF:0.03 m | Pressure:101594 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -918 | GyY:   579 | AcX:    84 | AcY:    64
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.7 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.18 m | ToF:0.02 m | Pressure:101592 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -910 | GyY:   571 | AcX:    87 | AcY:    61
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.07 m | ToF:0.03 m | Pressure:101595 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -911 | GyY:   574 | AcX:    82 | AcY:    62
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.12 m | ToF:0.02 m | Pressure:101592 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -919 | GyY:   575 | AcX:    84 | AcY:    58
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.01 m | ToF:0.02 m | Pressure:101597 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   580 | AcX:    84 | AcY:    64
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.05 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -905 | GyY:   573 | AcX:    89 | AcY:    60
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.15 m | ToF:0.03 m | Pressure:101598 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -911 | GyY:   574 | AcX:    84 | AcY:    59
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.09 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -915 | GyY:   574 | AcX:    85 | AcY:    56
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.11 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -914 | GyY:   579 | AcX:    85 | AcY:    59
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.04 m | ToF:0.03 m | Pressure:101592 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -911 | GyY:   578 | AcX:    87 | AcY:    60
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.12 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -903 | GyY:   577 | AcX:    78 | AcY:    62
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.05 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -918 | GyY:   572 | AcX:    81 | AcY:    59
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.7 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.12 m | ToF:0.02 m | Pressure:101592 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   576 | AcX:    82 | AcY:    59
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.7 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.25 m | ToF:0.03 m | Pressure:101591 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   579 | AcX:    85 | AcY:    58
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.7 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.29 m | ToF:0.03 m | Pressure:101592 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -905 | GyY:   572 | AcX:    81 | AcY:    57
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.7 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.33 m | ToF:0.03 m | Pressure:101591 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -905 | GyY:   575 | AcX:    90 | AcY:    57
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.28 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -909 | GyY:   581 | AcX:    85 | AcY:    58
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.21 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -907 | GyY:   572 | AcX:    88 | AcY:    64
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.16 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   576 | AcX:    84 | AcY:    60
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -3.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.12 m | ToF:0.03 m | Pressure:101596 Pa
+MOTORS   | FR:   7 | FL:  14 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -925 | GyY:   576 | AcX:    86 | AcY:    61
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.22 m | ToF:0.03 m | Pressure:101594 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -919 | GyY:   577 | AcX:    85 | AcY:    56
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.13 m | ToF:0.02 m | Pressure:101596 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   576 | AcX:    81 | AcY:    61
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.10 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -909 | GyY:   574 | AcX:    84 | AcY:    59
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.26 m | ToF:0.03 m | Pressure:101590 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -914 | GyY:   574 | AcX:    83 | AcY:    56
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.7 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.33 m | ToF:0.03 m | Pressure:101591 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -919 | GyY:   579 | AcX:    88 | AcY:    59
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.24 m | ToF:0.03 m | Pressure:101596 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   579 | AcX:    88 | AcY:    60
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.04 m | ToF:0.02 m | Pressure:101599 Pa
+MOTORS   | FR:   3 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -919 | GyY:   578 | AcX:    84 | AcY:    59
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:-0.04 m | ToF:0.03 m | Pressure:101596 Pa
+MOTORS   | FR:  65 | FL:  79 | RL:  58 | RR:  44 | Thr:0
+RAW SENSOR | GyX:  -891 | GyY:   579 | AcX:    82 | AcY:    63
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.01 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:  81 | FL:  95 | RL:  74 | RR:  60 | Thr:0
+RAW SENSOR | GyX:  -940 | GyY:   584 | AcX:    74 | AcY:    64
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.7 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.15 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR:  87 | FL: 101 | RL:  80 | RR:  66 | Thr:0
+RAW SENSOR | GyX:  -906 | GyY:   574 | AcX:    78 | AcY:    76
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.6 | OutR:   -7.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.27 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR:  87 | FL: 101 | RL:  80 | RR:  66 | Thr:0
+RAW SENSOR | GyX:  -897 | GyY:   553 | AcX:    92 | AcY:    85
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.6 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.21 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:  87 | FL: 101 | RL:  80 | RR:  66 | Thr:0
+RAW SENSOR | GyX: -1086 | GyY:   648 | AcX:   113 | AcY:   114
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.6 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.16 m | ToF:0.02 m | Pressure:101592 Pa
+MOTORS   | FR: 227 | FL: 241 | RL: 220 | RR: 206 | Thr:0
+RAW SENSOR | GyX:  -661 | GyY:   470 | AcX:    44 | AcY:     4
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.4 | OutR:   -7.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.24 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR: 252 | FL: 266 | RL: 245 | RR: 231 | Thr:0
+RAW SENSOR | GyX:  -897 | GyY:   419 | AcX:    80 | AcY:   122
+ATTITUDE | Pitch:  -0.7 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.5 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.23 m | ToF:0.02 m | Pressure:101589 Pa
+MOTORS   | FR: 255 | FL: 269 | RL: 248 | RR: 234 | Thr:0
+RAW SENSOR | GyX: -1061 | GyY:   862 | AcX:    49 | AcY:   -97
+ATTITUDE | Pitch:  -0.7 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.1 | OutR:   -7.3 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.37 m | ToF:0.02 m | Pressure:101590 Pa
+MOTORS   | FR: 239 | FL: 254 | RL: 234 | RR: 219 | Thr:0
+RAW SENSOR | GyX:  -990 | GyY:   797 | AcX:   109 | AcY:   -42
+ATTITUDE | Pitch:  -0.6 deg | Roll:  -1.7 deg
+PID OUT  | OutP:    7.2 | OutR:   -4.7 | (KpP:1.5, KpR:2.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.47 m | ToF:0.02 m | Pressure:101588 Pa
+MOTORS   | FR: 239 | FL: 248 | RL: 234 | RR: 225 | Thr:0
+RAW SENSOR | GyX: -1446 | GyY:   895 | AcX:   214 | AcY:    96
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:    8.0 | OutR:   -5.6 | (KpP:1.7, KpR:2.5)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.48 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR: 239 | FL: 250 | RL: 234 | RR: 223 | Thr:0
+RAW SENSOR | GyX:  -466 | GyY:   322 | AcX:    99 | AcY:    -1
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   11.6 | OutR:   -6.9 | (KpP:2.4, KpR:3.5)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.28 m | ToF:0.03 m | Pressure:101596 Pa
+MOTORS   | FR: 241 | FL: 255 | RL: 232 | RR: 218 | Thr:0
+RAW SENSOR | GyX:  -959 | GyY:   117 | AcX:   693 | AcY:   282
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -2.0 deg
+PID OUT  | OutP:   11.5 | OutR:   -7.1 | (KpP:2.4, KpR:3.5)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.18 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR: 241 | FL: 255 | RL: 232 | RR: 218 | Thr:0
+RAW SENSOR | GyX: -1069 | GyY:   795 | AcX:   272 | AcY:   130
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   11.4 | OutR:   -7.5 | (KpP:2.4, KpR:3.5)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.23 m | ToF:0.02 m | Pressure:101589 Pa
+MOTORS   | FR: 240 | FL: 255 | RL: 233 | RR: 218 | Thr:0
+RAW SENSOR | GyX: -1043 | GyY:   730 | AcX:   -56 | AcY:     4
+ATTITUDE | Pitch:  -0.7 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.0 | OutR:   -7.1 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.36 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR: 237 | FL: 252 | RL: 230 | RR: 215 | Thr:0
+RAW SENSOR | GyX:    37 | GyY:   -44 | AcX:   -22 | AcY:    45
+ATTITUDE | Pitch:  -0.9 deg | Roll:  -2.0 deg
+PID OUT  | OutP:   11.3 | OutR:   -6.5 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.36 m | ToF:0.02 m | Pressure:101590 Pa
+MOTORS   | FR: 238 | FL: 251 | RL: 229 | RR: 216 | Thr:0
+RAW SENSOR | GyX: -1137 | GyY:   844 | AcX:    73 | AcY:   -17
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.8 | OutR:   -7.4 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.46 m | ToF:0.02 m | Pressure:101592 Pa
+MOTORS   | FR: 237 | FL: 252 | RL: 230 | RR: 215 | Thr:0
+RAW SENSOR | GyX:  -718 | GyY:   129 | AcX:    72 | AcY:    24
+ATTITUDE | Pitch:  -0.6 deg | Roll:  -1.7 deg
+PID OUT  | OutP:   10.5 | OutR:   -7.1 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.44 m | ToF:0.03 m | Pressure:101590 Pa
+MOTORS   | FR: 227 | FL: 241 | RL: 220 | RR: 206 | Thr:0
+RAW SENSOR | GyX: -1071 | GyY:   417 | AcX:   159 | AcY:   196
+ATTITUDE | Pitch:  -0.6 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.5 | OutR:   -6.9 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.41 m | ToF:0.02 m | Pressure:101589 Pa
+MOTORS   | FR: 237 | FL: 251 | RL: 230 | RR: 216 | Thr:0
+RAW SENSOR | GyX: -1137 | GyY:   820 | AcX:    -4 | AcY:    10
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.7 | OutR:   -6.7 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.45 m | ToF:0.02 m | Pressure:101589 Pa
+MOTORS   | FR: 237 | FL: 251 | RL: 230 | RR: 216 | Thr:0
+RAW SENSOR | GyX: -1684 | GyY:  1504 | AcX:    88 | AcY:  -112
+ATTITUDE | Pitch:  -0.6 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.4 | OutR:   -7.5 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.46 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR: 236 | FL: 251 | RL: 231 | RR: 216 | Thr:0
+RAW SENSOR | GyX:  -455 | GyY:    35 | AcX:  -117 | AcY:     8
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -2.0 deg
+PID OUT  | OutP:   11.3 | OutR:   -6.2 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.47 m | ToF:0.02 m | Pressure:101590 Pa
+MOTORS   | FR: 239 | FL: 251 | RL: 228 | RR: 216 | Thr:0
+RAW SENSOR | GyX: -1316 | GyY:   598 | AcX:    49 | AcY:    53
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.6 | OutR:   -7.4 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.49 m | ToF:0.02 m | Pressure:101589 Pa
+MOTORS   | FR: 237 | FL: 251 | RL: 230 | RR: 216 | Thr:0
+RAW SENSOR | GyX:  -422 | GyY:    30 | AcX:   147 | AcY:    89
+ATTITUDE | Pitch:  -0.7 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   10.8 | OutR:   -6.8 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.52 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR: 238 | FL: 251 | RL: 229 | RR: 216 | Thr:0
+RAW SENSOR | GyX:  -744 | GyY:   397 | AcX:    74 | AcY:    85
+ATTITUDE | Pitch:  -0.7 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.6 | OutR:   -7.4 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.50 m | ToF:0.02 m | Pressure:101589 Pa
+MOTORS   | FR: 237 | FL: 252 | RL: 230 | RR: 215 | Thr:0
+RAW SENSOR | GyX: -1086 | GyY:   285 | AcX:    86 | AcY:    79
+ATTITUDE | Pitch:  -0.6 deg | Roll:  -1.7 deg
+PID OUT  | OutP:   10.2 | OutR:   -8.0 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.66 m | ToF:0.02 m | Pressure:101584 Pa
+MOTORS   | FR: 236 | FL: 252 | RL: 231 | RR: 215 | Thr:0
+RAW SENSOR | GyX:  -789 | GyY:    20 | AcX:   319 | AcY:    68
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.6 deg
+PID OUT  | OutP:   10.4 | OutR:   -7.6 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.63 m | ToF:0.02 m | Pressure:101586 Pa
+MOTORS   | FR: 226 | FL: 242 | RL: 221 | RR: 205 | Thr:0
+RAW SENSOR | GyX: -2104 | GyY:  1850 | AcX:  -263 | AcY:  -119
+ATTITUDE | Pitch:  -0.4 deg | Roll:  -1.6 deg
+PID OUT  | OutP:   10.2 | OutR:   -8.2 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.55 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR: 170 | FL: 186 | RL: 165 | RR: 149 | Thr:0
+RAW SENSOR | GyX:  -999 | GyY:   236 | AcX:   354 | AcY:   219
+ATTITUDE | Pitch:  -0.6 deg | Roll:  -1.7 deg
+PID OUT  | OutP:   10.6 | OutR:   -7.6 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.39 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR: 154 | FL: 170 | RL: 149 | RR: 133 | Thr:0
+RAW SENSOR | GyX:    -6 | GyY:  -649 | AcX:   100 | AcY:   126
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.3 | OutR:   -6.8 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.39 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR: 172 | FL: 186 | RL: 163 | RR: 149 | Thr:0
+RAW SENSOR | GyX: -1281 | GyY:   990 | AcX:   -54 | AcY:    47
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.0 | OutR:   -7.2 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.48 m | ToF:0.02 m | Pressure:101586 Pa
+MOTORS   | FR: 171 | FL: 186 | RL: 164 | RR: 149 | Thr:0
+RAW SENSOR | GyX:  -326 | GyY:    94 | AcX:    15 | AcY:   -67
+ATTITUDE | Pitch:  -0.9 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   11.3 | OutR:   -6.5 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.50 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR: 172 | FL: 185 | RL: 163 | RR: 150 | Thr:0
+RAW SENSOR | GyX: -1316 | GyY:  1006 | AcX:   103 | AcY:   -11
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.7 | OutR:   -7.2 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.50 m | ToF:0.02 m | Pressure:101587 Pa
+MOTORS   | FR: 205 | FL: 219 | RL: 198 | RR: 184 | Thr:0
+RAW SENSOR | GyX:  -626 | GyY:    10 | AcX:    89 | AcY:   117
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   11.1 | OutR:   -6.7 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.55 m | ToF:0.02 m | Pressure:101589 Pa
+MOTORS   | FR: 241 | FL: 254 | RL: 232 | RR: 219 | Thr:0
+RAW SENSOR | GyX: -1052 | GyY:   884 | AcX:   -88 | AcY:   -33
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   10.7 | OutR:   -7.1 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.49 m | ToF:0.02 m | Pressure:101589 Pa
+MOTORS   | FR: 265 | FL: 279 | RL: 258 | RR: 244 | Thr:0
+RAW SENSOR | GyX: -1131 | GyY:   974 | AcX:    58 | AcY:   173
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.7 deg
+PID OUT  | OutP:    9.7 | OutR:   -8.3 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.55 m | ToF:0.02 m | Pressure:101587 Pa
+MOTORS   | FR: 300 | FL: 316 | RL: 297 | RR: 281 | Thr:0
+RAW SENSOR | GyX:  -245 | GyY:  -364 | AcX:   186 | AcY:   121
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.7 deg
+PID OUT  | OutP:   10.7 | OutR:   -7.2 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.72 m | ToF:0.02 m | Pressure:101584 Pa
+MOTORS   | FR: 421 | FL: 435 | RL: 414 | RR: 400 | Thr:0
+RAW SENSOR | GyX: -1743 | GyY:  1715 | AcX:    78 | AcY:    69
+ATTITUDE | Pitch:  -0.6 deg | Roll:  -1.7 deg
+PID OUT  | OutP:   10.2 | OutR:   -7.9 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.62 m | ToF:0.02 m | Pressure:101587 Pa
+MOTORS   | FR: 438 | FL: 454 | RL: 433 | RR: 417 | Thr:0
+RAW SENSOR | GyX: -1331 | GyY:   582 | AcX:   417 | AcY:   -51
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.5 deg
+PID OUT  | OutP:   10.2 | OutR:   -8.5 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.63 m | ToF:0.02 m | Pressure:101589 Pa
+MOTORS   | FR: 484 | FL: 501 | RL: 481 | RR: 464 | Thr:0
+RAW SENSOR | GyX: -1154 | GyY:   917 | AcX:  -462 | AcY:   -24
+ATTITUDE | Pitch:  -0.3 deg | Roll:  -1.4 deg
+PID OUT  | OutP:    9.9 | OutR:   -8.6 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.72 m | ToF:0.03 m | Pressure:101586 Pa
+MOTORS   | FR: 587 | FL: 604 | RL: 584 | RR: 567 | Thr:0
+RAW SENSOR | GyX:  -308 | GyY:   120 | AcX:  -339 | AcY:   210
+ATTITUDE | Pitch:  -0.2 deg | Roll:  -1.3 deg
+PID OUT  | OutP:   10.0 | OutR:  -12.0 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.73 m | ToF:0.02 m | Pressure:101587 Pa
+MOTORS   | FR: 599 | FL: 624 | RL: 604 | RR: 579 | Thr:0
+RAW SENSOR | GyX:  -658 | GyY:   637 | AcX:   415 | AcY:    76
+ATTITUDE | Pitch:  -0.3 deg | Roll:  -1.4 deg
+PID OUT  | OutP:   10.0 | OutR:  -47.6 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.65 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR: 570 | FL: 665 | RL: 645 | RR: 550 | Thr:0
+RAW SENSOR | GyX:   123 | GyY:  -547 | AcX:  -238 | AcY:   322
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.6 deg
+PID OUT  | OutP:    9.9 | OutR:  -15.1 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.68 m | ToF:0.02 m | Pressure:101580 Pa
+MOTORS   | FR: 677 | FL: 707 | RL: 688 | RR: 658 | Thr:0
+RAW SENSOR | GyX:  -943 | GyY:   632 | AcX:   265 | AcY:  -200
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.5 deg
+PID OUT  | OutP:   10.3 | OutR:  -11.3 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.89 m | ToF:0.02 m | Pressure:101584 Pa
+MOTORS   | FR: 773 | FL: 795 | RL: 774 | RR: 752 | Thr:0
+RAW SENSOR | GyX: -1069 | GyY:   544 | AcX:  -235 | AcY:   288
+ATTITUDE | Pitch:  -0.6 deg | Roll:  -1.5 deg
+PID OUT  | OutP:   10.7 | OutR:  -15.4 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.88 m | ToF:0.03 m | Pressure:101587 Pa
+MOTORS   | FR: 769 | FL: 800 | RL: 778 | RR: 747 | Thr:0
+RAW SENSOR | GyX:  -589 | GyY:  -550 | AcX:   350 | AcY:   -49
+ATTITUDE | Pitch:  -1.2 deg | Roll:  -1.6 deg
+PID OUT  | OutP:   13.1 | OutR:  -13.9 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.87 m | ToF:0.02 m | Pressure:101584 Pa
+MOTORS   | FR: 798 | FL: 826 | RL: 799 | RR: 771 | Thr:0
+RAW SENSOR | GyX:  -285 | GyY:  -921 | AcX:    15 | AcY:  -371
+ATTITUDE | Pitch:  -2.0 deg | Roll:  -2.5 deg
+PID OUT  | OutP:   14.5 | OutR:  -10.8 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.97 m | ToF:0.03 m | Pressure:101585 Pa
+MOTORS   | FR: 811 | FL: 833 | RL: 804 | RR: 782 | Thr:0
+RAW SENSOR | GyX: -3602 | GyY: -1743 | AcX:   -74 | AcY:  -237
+ATTITUDE | Pitch:  -2.4 deg | Roll:  -1.7 deg
+PID OUT  | OutP:   15.2 | OutR:  -17.2 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.95 m | ToF:0.03 m | Pressure:101584 Pa
+MOTORS   | FR: 858 | FL: 893 | RL: 863 | RR: 828 | Thr:0
+RAW SENSOR | GyX: -8497 | GyY:   650 | AcX:   214 | AcY:  -263
+ATTITUDE | Pitch:  -1.9 deg | Roll:   1.5 deg
+PID OUT  | OutP:   11.4 | OutR:  -31.4 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.84 m | ToF:0.03 m | Pressure:101593 Pa
+MOTORS   | FR: 862 | FL: 925 | RL: 903 | RR: 840 | Thr:0
+RAW SENSOR | GyX:-13435 | GyY:  7120 | AcX:   212 | AcY:  -480
+ATTITUDE | Pitch:   1.3 deg | Roll:   6.3 deg
+PID OUT  | OutP:    1.6 | OutR:  -46.7 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.61 m | ToF:0.04 m | Pressure:101589 Pa
+MOTORS   | FR: 846 | FL: 940 | RL: 937 | RR: 843 | Thr:0
+RAW SENSOR | GyX:-19312 | GyY:  9803 | AcX:   246 | AcY:   136
+ATTITUDE | Pitch:   5.4 deg | Roll:  13.2 deg
+PID OUT  | OutP:   -7.9 | OutR:  -76.0 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.05 m | Target:0.00 m | Baro:0.63 m | ToF:0.05 m | Pressure:101586 Pa
+MOTORS   | FR: 793 | FL: 945 | RL: 960 | RR: 808 | Thr:0
+RAW SENSOR | GyX: -4665 | GyY: 10762 | AcX:  -384 | AcY: -1274
+ATTITUDE | Pitch:   8.9 deg | Roll:  16.9 deg
+PID OUT  | OutP:  -15.9 | OutR:  -73.9 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.06 m | Target:0.00 m | Baro:0.67 m | ToF:0.06 m | Pressure:101587 Pa
+MOTORS   | FR: 468 | FL: 615 | RL: 647 | RR: 500 | Thr:0
+RAW SENSOR | GyX: 22565 | GyY: 16451 | AcX:  -207 | AcY:   -89
+ATTITUDE | Pitch:  12.8 deg | Roll:   2.9 deg
+PID OUT  | OutP:  -21.6 | OutR:  -23.4 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.73 m | ToF:0.04 m | Pressure:101586 Pa
+MOTORS   | FR:   0 | FL:   1 | RL:  45 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  1987 | GyY:  9928 | AcX:   669 | AcY:  -505
+ATTITUDE | Pitch:  11.0 deg | Roll:  -8.8 deg
+PID OUT  | OutP:  -10.3 | OutR:  -15.7 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.51 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:   5 | RL:  25 | RR:   0 | Thr:0
+RAW SENSOR | GyX: -2737 | GyY:  2963 | AcX:   741 | AcY:  -591
+ATTITUDE | Pitch:   4.5 deg | Roll:  -6.9 deg
+PID OUT  | OutP:    4.9 | OutR:  -29.4 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.32 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:  34 | RL:  24 | RR:   0 | Thr:0
+RAW SENSOR | GyX: -1859 | GyY:  1388 | AcX:   718 | AcY:  -275
+ATTITUDE | Pitch:  -0.3 deg | Roll:  -3.7 deg
+PID OUT  | OutP:   14.8 | OutR:  -37.3 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.26 m | ToF:0.02 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:  52 | RL:  22 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -728 | GyY: -3154 | AcX: 10729 | AcY:   503
+ATTITUDE | Pitch: -11.9 deg | Roll:  -4.1 deg
+PID OUT  | OutP:   48.9 | OutR:  -31.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.33 m | ToF:0.03 m | Pressure:101593 Pa
+MOTORS   | FR:  17 | FL:  80 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX: -3267 | GyY:  2689 | AcX:  -426 | AcY:  -119
+ATTITUDE | Pitch: -14.2 deg | Roll:  -2.3 deg
+PID OUT  | OutP:   36.3 | OutR:  -41.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.26 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:  77 | RL:   4 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -806 | GyY:   534 | AcX:  -648 | AcY:  -247
+ATTITUDE | Pitch:  -8.6 deg | Roll:  -0.3 deg
+PID OUT  | OutP:   21.2 | OutR:  -46.5 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.21 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:  67 | RL:  25 | RR:   0 | Thr:0
+RAW SENSOR | GyX:   619 | GyY:  -820 | AcX:    59 | AcY:    -2
+ATTITUDE | Pitch:  -4.8 deg | Roll:   0.3 deg
+PID OUT  | OutP:   16.3 | OutR:  -45.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.22 m | ToF:0.02 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:  62 | RL:  29 | RR:   0 | Thr:0
+RAW SENSOR | GyX: -1019 | GyY:   652 | AcX:    41 | AcY:   -19
+ATTITUDE | Pitch:  -2.7 deg | Roll:   0.3 deg
+PID OUT  | OutP:   13.4 | OutR:  -41.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.20 m | ToF:0.02 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:  55 | RL:  28 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -713 | GyY:   355 | AcX:    95 | AcY:    25
+ATTITUDE | Pitch:  -1.8 deg | Roll:  -0.2 deg
+PID OUT  | OutP:   12.2 | OutR:  -37.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.19 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:  49 | RL:  24 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -978 | GyY:   642 | AcX:    45 | AcY:   -16
+ATTITUDE | Pitch:  -1.2 deg | Roll:  -0.4 deg
+PID OUT  | OutP:   11.2 | OutR:  -30.2 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.27 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR:   0 | FL:  41 | RL:  18 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -783 | GyY:   457 | AcX:    66 | AcY:    -4
+ATTITUDE | Pitch:  -1.0 deg | Roll:  -0.6 deg
+PID OUT  | OutP:   10.8 | OutR:  -26.3 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.20 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:  37 | RL:  15 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -981 | GyY:   634 | AcX:    65 | AcY:    -5
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -0.7 deg
+PID OUT  | OutP:   10.4 | OutR:  -10.4 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.10 m | ToF:0.02 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:  20 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -847 | GyY:   523 | AcX:    50 | AcY:   -16
+ATTITUDE | Pitch:  -0.6 deg | Roll:  -0.8 deg
+ATTITUDE | Pitch:  -0.6 deg | Roll:  -0.8 deg
+PID OUT  | OutP:   10.3 | OutR:  -10.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.03 m | ToF:0.02 m | Pressure:101598 Pa
+MOTORS   | FR:   0 | FL:  20 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -907 | GyY:   576 | AcX:    67 | AcY:    -2
+ATTITUDE | Pitch:  -0.6 deg | Roll:  -0.8 deg
+PID OUT  | OutP:   10.2 | OutR:  -10.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:-0.04 m | ToF:0.03 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:  20 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -924 | GyY:   587 | AcX:    59 | AcY:    -7
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.1 | OutR:  -10.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.04 m | ToF:0.02 m | Pressure:101597 Pa
+MOTORS   | FR:   0 | FL:  20 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -892 | GyY:   555 | AcX:    63 | AcY:    -3
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.04 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -908 | GyY:   570 | AcX:    60 | AcY:    -5
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.17 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -910 | GyY:   574 | AcX:    54 | AcY:   -16
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.31 m | ToF:0.02 m | Pressure:101590 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -885 | GyY:   555 | AcX:    66 | AcY:     0
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.32 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -928 | GyY:   586 | AcX:    57 | AcY:    -5
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.33 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   575 | AcX:    60 | AcY:    -6
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.27 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -925 | GyY:   589 | AcX:    58 | AcY:    -4
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.19 m | ToF:0.03 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -895 | GyY:   566 | AcX:    59 | AcY:    -9
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.12 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -905 | GyY:   561 | AcX:    58 | AcY:    -9
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.10 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -915 | GyY:   580 | AcX:    55 | AcY:    -7
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.14 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -896 | GyY:   559 | AcX:    60 | AcY:    -6
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.11 m | ToF:0.02 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -926 | GyY:   595 | AcX:    61 | AcY:   -10
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.09 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -896 | GyY:   555 | AcX:    60 | AcY:    -7
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.13 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -923 | GyY:   585 | AcX:    56 | AcY:   -10
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.11 m | ToF:0.03 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -908 | GyY:   567 | AcX:    59 | AcY:    -9
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.04 m | ToF:0.02 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -919 | GyY:   586 | AcX:    62 | AcY:    -4
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.04 m | ToF:0.02 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -919 | GyY:   575 | AcX:    63 | AcY:    -9
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:   10.0 | OutR:   -9.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.08 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   575 | AcX:    60 | AcY:    -8
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:    8.6 | OutR:   -8.4 | (KpP:1.9, KpR:2.7)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.12 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:  16 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -911 | GyY:   575 | AcX:    61 | AcY:    -7
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:    9.1 | OutR:   -8.9 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.14 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -917 | GyY:   582 | AcX:    61 | AcY:    -8
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:    9.1 | OutR:   -8.9 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.16 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -906 | GyY:   582 | AcX:    58 | AcY:    -8
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.0 deg
+PID OUT  | OutP:    9.1 | OutR:   -8.9 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.09 m | ToF:0.02 m | Pressure:101598 Pa
+MOTORS   | FR:   0 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -908 | GyY:   572 | AcX:    60 | AcY:    -4
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.0 deg
+PID OUT  | OutP:    9.2 | OutR:   -8.9 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.06 m | ToF:0.02 m | Pressure:101598 Pa
+MOTORS   | FR:   0 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -915 | GyY:   573 | AcX:    56 | AcY:    -4
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.0 deg
+PID OUT  | OutP:    9.1 | OutR:   -8.9 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.04 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   572 | AcX:    61 | AcY:    -7
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:    9.1 | OutR:   -8.9 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.12 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   578 | AcX:    60 | AcY:    -6
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.0 deg
+PID OUT  | OutP:    9.1 | OutR:   -8.9 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.13 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -901 | GyY:   573 | AcX:    57 | AcY:    -7
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.0 deg
+PID OUT  | OutP:    9.2 | OutR:   -8.9 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.15 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -909 | GyY:   573 | AcX:    60 | AcY:    -9
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:    9.2 | OutR:   -8.9 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.27 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -907 | GyY:   581 | AcX:    60 | AcY:    -3
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:    9.2 | OutR:   -8.9 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.12 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   572 | AcX:    61 | AcY:    -2
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:    9.1 | OutR:   -8.9 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.12 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   573 | AcX:    61 | AcY:    -6
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -0.9 deg
+PID OUT  | OutP:    9.2 | OutR:   -8.7 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.13 m | ToF:0.02 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX: -1238 | GyY:   743 | AcX:  1463 | AcY:  1901
+ATTITUDE | Pitch:  -1.5 deg | Roll:  -2.5 deg
+PID OUT  | OutP:   14.8 | OutR:    0.8 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.20 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:  15 | FL:  14 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -271 | GyY:   944 | AcX:  1215 | AcY:  1166
+ATTITUDE | Pitch:  -1.4 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   12.1 | OutR:   -4.4 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.14 m | ToF:0.02 m | Pressure:101596 Pa
+MOTORS   | FR:   7 | FL:  16 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX: -1133 | GyY:  1408 | AcX:   842 | AcY:  1360
+ATTITUDE | Pitch:  -3.4 deg | Roll:  -1.4 deg
+PID OUT  | OutP:   16.9 | OutR:   -3.7 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.09 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:  13 | FL:  20 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:   226 | GyY:  -317 | AcX:  -283 | AcY:  -108
+ATTITUDE | Pitch:  -2.8 deg | Roll:  -1.7 deg
+PID OUT  | OutP:   12.1 | OutR:   -7.4 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.12 m | ToF:0.02 m | Pressure:101597 Pa
+MOTORS   | FR:   4 | FL:  19 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -286 | GyY:   220 | AcX:  -363 | AcY:   478
+ATTITUDE | Pitch:  -0.2 deg | Roll:  -2.2 deg
+PID OUT  | OutP:    6.5 | OutR:   -2.7 | (KpP:2.0, KpR:2.9)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.03 m | ToF:0.02 m | Pressure:101596 Pa
+MOTORS   | FR:   3 | FL:   9 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX: -1467 | GyY:   580 | AcX:   173 | AcY:   240
+ATTITUDE | Pitch:   0.9 deg | Roll:  -4.3 deg
+PID OUT  | OutP:    7.3 | OutR:    2.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.03 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:  10 | FL:   4 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX: -1045 | GyY:   694 | AcX:   198 | AcY:   154
+ATTITUDE | Pitch:  -0.4 deg | Roll:  -4.9 deg
+PID OUT  | OutP:   11.1 | OutR:    2.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.14 m | ToF:0.02 m | Pressure:101596 Pa
+MOTORS   | FR:  13 | FL:   8 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   568 | AcX:   110 | AcY:    62
+ATTITUDE | Pitch:  -1.0 deg | Roll:  -4.3 deg
+PID OUT  | OutP:   11.5 | OutR:   -0.3 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.05 m | ToF:0.02 m | Pressure:101596 Pa
+MOTORS   | FR:  11 | FL:  11 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -910 | GyY:   575 | AcX:   100 | AcY:    57
+ATTITUDE | Pitch:  -1.2 deg | Roll:  -3.5 deg
+PID OUT  | OutP:   11.5 | OutR:   -2.6 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.01 m | ToF:0.03 m | Pressure:101596 Pa
+MOTORS   | FR:   8 | FL:  14 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   579 | AcX:   106 | AcY:    56
+ATTITUDE | Pitch:  -1.2 deg | Roll:  -2.9 deg
+PID OUT  | OutP:   11.5 | OutR:   -4.2 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.07 m | ToF:0.02 m | Pressure:101598 Pa
+MOTORS   | FR:   7 | FL:  15 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -914 | GyY:   579 | AcX:   107 | AcY:    58
+ATTITUDE | Pitch:  -1.2 deg | Roll:  -2.5 deg
+PID OUT  | OutP:   11.5 | OutR:   -5.3 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.05 m | ToF:0.02 m | Pressure:101597 Pa
+MOTORS   | FR:   6 | FL:  16 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -922 | GyY:   578 | AcX:   108 | AcY:    59
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -2.2 deg
+PID OUT  | OutP:   11.4 | OutR:   -5.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.14 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:   5 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   576 | AcX:   107 | AcY:    59
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -2.1 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.3 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:-0.06 m | ToF:0.03 m | Pressure:101595 Pa
+MOTORS   | FR:   5 | FL:  17 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   583 | AcX:   109 | AcY:    54
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -2.0 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.6 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.08 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   579 | AcX:   108 | AcY:    58
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.03 m | ToF:0.03 m | Pressure:101594 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   574 | AcX:   105 | AcY:    58
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.10 m | ToF:0.02 m | Pressure:101597 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   577 | AcX:   108 | AcY:    55
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:-0.00 m | ToF:0.03 m | Pressure:101597 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -906 | GyY:   572 | AcX:   106 | AcY:    58
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.02 m | ToF:0.02 m | Pressure:101596 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   576 | AcX:   107 | AcY:    57
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.08 m | ToF:0.02 m | Pressure:101597 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -914 | GyY:   575 | AcX:   108 | AcY:    55
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -7.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:-0.07 m | ToF:0.03 m | Pressure:101596 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   581 | AcX:   107 | AcY:    56
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -7.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.06 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -906 | GyY:   574 | AcX:   107 | AcY:    60
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:0.05 m | ToF:0.03 m | Pressure:101597 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   578 | AcX:   109 | AcY:    57
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:-0.01 m | ToF:0.03 m | Pressure:101596 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -903 | GyY:   579 | AcX:   106 | AcY:    55
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -7.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.07 m | ToF:0.02 m | Pressure:101598 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   584 | AcX:   106 | AcY:    56
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -7.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.16 m | ToF:0.02 m | Pressure:101598 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -917 | GyY:   580 | AcX:   107 | AcY:    55
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -7.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:-0.19 m | ToF:0.03 m | Pressure:101598 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -907 | GyY:   570 | AcX:   107 | AcY:    57
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:-0.26 m | ToF:0.03 m | Pressure:101600 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   578 | AcX:   105 | AcY:    62
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.23 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   575 | AcX:   111 | AcY:    56
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.03 m | Target:0.00 m | Baro:-0.05 m | ToF:0.03 m | Pressure:101595 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   580 | AcX:   101 | AcY:    53
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -7.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:-0.02 m | ToF:0.02 m | Pressure:101596 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -903 | GyY:   566 | AcX:   110 | AcY:    55
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -7.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.02 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -911 | GyY:   577 | AcX:   106 | AcY:    53
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -7.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.09 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -910 | GyY:   576 | AcX:   106 | AcY:    51
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.5 | OutR:   -7.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.04 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR:   4 | FL:  18 | RL:   0 | RR:   0 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   579 | AcX:   100 | AcY:    55
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -7.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.06 m | ToF:0.02 m | Pressure:101595 Pa
+MOTORS   | FR:  82 | FL:  96 | RL:  73 | RR:  59 | Thr:0
+RAW SENSOR | GyX:  -866 | GyY:   524 | AcX:   100 | AcY:    53
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.8 deg
+PID OUT  | OutP:   11.4 | OutR:   -7.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.07 m | ToF:0.02 m | Pressure:101594 Pa
+MOTORS   | FR: 281 | FL: 295 | RL: 272 | RR: 258 | Thr:0
+RAW SENSOR | GyX:  -973 | GyY:   694 | AcX:    77 | AcY:    39
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   11.3 | OutR:   -6.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.12 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR: 428 | FL: 442 | RL: 419 | RR: 405 | Thr:0
+RAW SENSOR | GyX: -1062 | GyY:   765 | AcX:   370 | AcY:    23
+ATTITUDE | Pitch:  -1.1 deg | Roll:  -1.9 deg
+PID OUT  | OutP:   11.4 | OutR:   -6.5 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.20 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR: 531 | FL: 544 | RL: 522 | RR: 509 | Thr:0
+RAW SENSOR | GyX: -1513 | GyY:  1217 | AcX:   430 | AcY:   197
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.6 deg
+PID OUT  | OutP:   10.3 | OutR:   -8.4 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.31 m | ToF:0.02 m | Pressure:101590 Pa
+MOTORS   | FR: 587 | FL: 604 | RL: 584 | RR: 567 | Thr:0
+RAW SENSOR | GyX:  -929 | GyY:   684 | AcX:   285 | AcY:    70
+ATTITUDE | Pitch:  -0.9 deg | Roll:  -1.5 deg
+PID OUT  | OutP:   11.0 | OutR:   -8.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.25 m | ToF:0.02 m | Pressure:101593 Pa
+MOTORS   | FR: 605 | FL: 620 | RL: 598 | RR: 583 | Thr:0
+RAW SENSOR | GyX:  -389 | GyY:   891 | AcX:   -19 | AcY:  -299
+ATTITUDE | Pitch:  -1.0 deg | Roll:  -1.5 deg
+PID OUT  | OutP:   11.1 | OutR:  -11.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.24 m | ToF:0.02 m | Pressure:101591 Pa
+MOTORS   | FR: 617 | FL: 639 | RL: 616 | RR: 594 | Thr:0
+RAW SENSOR | GyX:  -863 | GyY:   -35 | AcX:   492 | AcY:   277
+ATTITUDE | Pitch:  -0.8 deg | Roll:  -1.5 deg
+PID OUT  | OutP:   10.5 | OutR:  -27.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.39 m | ToF:0.02 m | Pressure:101588 Pa
+MOTORS   | FR:1106 | FL:1160 | RL:1139 | RR:1085 | Thr:0
+RAW SENSOR | GyX: -1518 | GyY:  -108 | AcX:  -302 | AcY:   190
+ATTITUDE | Pitch:  -0.5 deg | Roll:  -1.7 deg
+PID OUT  | OutP:    9.8 | OutR:  -29.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.02 m | Target:0.00 m | Baro:0.55 m | ToF:0.02 m | Pressure:101588 Pa
+MOTORS   | FR:1564 | FL:1624 | RL:1605 | RR:1545 | Thr:0
+RAW SENSOR | GyX: -5748 | GyY: -5441 | AcX:  -117 | AcY:   681
+ATTITUDE | Pitch:  -1.6 deg | Roll:  -0.8 deg
+PID OUT  | OutP:   15.7 | OutR:  -38.4 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.05 m | Target:0.00 m | Baro:0.59 m | ToF:0.05 m | Pressure:101588 Pa
+MOTORS   | FR:1699 | FL:1776 | RL:1744 | RR:1667 | Thr:0
+RAW SENSOR | GyX:-16509 | GyY:-10139 | AcX:    36 | AcY:   192
+ATTITUDE | Pitch:  -4.9 deg | Roll:   3.2 deg
+PID OUT  | OutP:   24.9 | OutR:  -56.3 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.15 m | Target:0.00 m | Baro:0.08 m | ToF:0.15 m | Pressure:101599 Pa
+MOTORS   | FR:1491 | FL:1604 | RL:1554 | RR:1441 | Thr:0
+RAW SENSOR | GyX:-20497 | GyY:-13525 | AcX:   183 | AcY:    45
+ATTITUDE | Pitch: -10.5 deg | Roll:  11.2 deg
+PID OUT  | OutP:   41.0 | OutR:  -80.5 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.32 m | Target:0.00 m | Baro:-0.03 m | ToF:0.32 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL: 121 | RL:  39 | RR:   0 | Thr:0
+RAW SENSOR | GyX:-18213 | GyY: -9516 | AcX:   -46 | AcY:    77
+ATTITUDE | Pitch: -14.7 deg | Roll:  17.1 deg
+PID OUT  | OutP:   46.3 | OutR: -103.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.55 m | Target:0.00 m | Baro:0.01 m | ToF:0.55 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL: 149 | RL:  56 | RR:   0 | Thr:0
+RAW SENSOR | GyX:-18139 | GyY: -4911 | AcX:   132 | AcY:   209
+ATTITUDE | Pitch: -15.7 deg | Roll:  20.2 deg
+PID OUT  | OutP:   43.6 | OutR: -111.4 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.79 m | Target:0.00 m | Baro:0.10 m | ToF:0.79 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL: 155 | RL:  67 | RR:   0 | Thr:0
+RAW SENSOR | GyX:-18084 | GyY:   923 | AcX:    38 | AcY:  -170
+ATTITUDE | Pitch: -15.1 deg | Roll:  21.7 deg
+PID OUT  | OutP:   42.0 | OutR: -120.6 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.92 m | Target:0.00 m | Baro:0.23 m | ToF:0.92 m | Pressure:101590 Pa
+MOTORS   | FR:   0 | FL: 162 | RL:  78 | RR:   0 | Thr:0
+RAW SENSOR | GyX:-16480 | GyY:  8252 | AcX:   167 | AcY:   291
+ATTITUDE | Pitch: -13.8 deg | Roll:  22.4 deg
+PID OUT  | OutP:   37.0 | OutR: -122.6 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.13 m | Target:0.00 m | Baro:0.39 m | ToF:0.13 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL: 159 | RL:  85 | RR:   0 | Thr:0
+RAW SENSOR | GyX:-32768 | GyY: 22319 | AcX:  5767 | AcY:  7178
+ATTITUDE | Pitch: -14.4 deg | Roll:  12.7 deg
+PID OUT  | OutP:   40.0 | OutR:  -68.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.18 m | Target:0.00 m | Baro:0.35 m | ToF:0.18 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL: 108 | RL:  28 | RR:   0 | Thr:0
+RAW SENSOR | GyX:-32768 | GyY:   774 | AcX: -8467 | AcY:-19945
+ATTITUDE | Pitch: -27.3 deg | Roll:  14.8 deg
+PID OUT  | OutP:   69.2 | OutR: -165.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.40 m | Target:0.00 m | Baro:0.28 m | ToF:0.40 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL: 234 | RL:  95 | RR:   0 | Thr:0
+RAW SENSOR | GyX:-32768 | GyY:-16780 | AcX: -3161 | AcY: -1220
+ATTITUDE | Pitch: -12.3 deg | Roll:  64.7 deg
+PID OUT  | OutP:   26.9 | OutR: -177.5 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.10 m | Target:0.00 m | Baro:0.19 m | ToF:0.10 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL: 204 | RL: 150 | RR:   0 | Thr:0
+RAW SENSOR | GyX: 17477 | GyY:-29512 | AcX: -3380 | AcY:  1269
+ATTITUDE | Pitch:  13.0 deg | Roll:  60.3 deg
+PID OUT  | OutP:  -33.6 | OutR:  -95.5 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:2.96 m | Target:0.00 m | Baro:0.16 m | ToF:2.96 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:  61 | RL: 129 | RR:   0 | Thr:0
+RAW SENSOR | GyX: 11409 | GyY:-11298 | AcX: -2541 | AcY:  1543
+ATTITUDE | Pitch:  22.9 deg | Roll: -25.7 deg
+PID OUT  | OutP:  -43.1 | OutR:  144.6 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:7.09 m | Target:0.00 m | Baro:0.30 m | ToF:7.09 m | Pressure:101590 Pa
+MOTORS   | FR: 101 | FL:   0 | RL:   0 | RR: 187 | Thr:0
+RAW SENSOR | GyX:  -257 | GyY: -2011 | AcX: -3662 | AcY: -1299
+ATTITUDE | Pitch:  37.5 deg | Roll: -57.0 deg
+PID OUT  | OutP:  -87.6 | OutR:   60.4 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.07 m | Target:0.00 m | Baro:0.31 m | ToF:0.07 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:   0 | RL:  27 | RR: 147 | Thr:0
+RAW SENSOR | GyX:  -976 | GyY:  1518 | AcX: -4016 | AcY:   -39
+ATTITUDE | Pitch:  56.2 deg | Roll: -39.7 deg
+PID OUT  | OutP: -129.2 | OutR:   96.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.09 m | Target:0.00 m | Baro:0.20 m | ToF:0.09 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:   0 | RL:  32 | RR: 225 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   527 | AcX: -4008 | AcY:   -28
+ATTITUDE | Pitch:  69.5 deg | Roll: -19.9 deg
+PID OUT  | OutP: -166.8 | OutR:   33.0 | (KpP:2.4, KpR:3.5)
+ALTITUDE | Current:0.07 m | Target:0.00 m | Baro:0.23 m | ToF:0.07 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 133 | RR: 199 | Thr:0
+RAW SENSOR | GyX:  -907 | GyY:   575 | AcX: -4011 | AcY:   -29
+ATTITUDE | Pitch:  77.1 deg | Roll:  -5.5 deg
+PID OUT  | OutP: -181.5 | OutR:   -8.0 | (KpP:2.4, KpR:3.5)
+ALTITUDE | Current:0.05 m | Target:0.00 m | Baro:0.24 m | ToF:0.05 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 189 | RR: 173 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   586 | AcX: -4016 | AcY:   -29
+ATTITUDE | Pitch:  81.8 deg | Roll:   4.1 deg
+PID OUT  | OutP: -191.3 | OutR:  -37.8 | (KpP:2.4, KpR:3.5)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.31 m | ToF:0.04 m | Pressure:101590 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 229 | RR: 153 | Thr:0
+RAW SENSOR | GyX:  -917 | GyY:   584 | AcX: -4009 | AcY:   -28
+ATTITUDE | Pitch:  84.7 deg | Roll:  10.5 deg
+PID OUT  | OutP: -197.1 | OutR:  -55.9 | (KpP:2.4, KpR:3.5)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.33 m | ToF:0.04 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 252 | RR: 141 | Thr:0
+RAW SENSOR | GyX:  -914 | GyY:   577 | AcX: -4014 | AcY:   -28
+ATTITUDE | Pitch:  86.4 deg | Roll:  13.7 deg
+PID OUT  | OutP: -200.3 | OutR:  -63.9 | (KpP:2.4, KpR:3.5)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.35 m | ToF:0.04 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 264 | RR: 136 | Thr:0
+RAW SENSOR | GyX:  -918 | GyY:   579 | AcX: -4017 | AcY:   -33
+ATTITUDE | Pitch:  87.5 deg | Roll:  15.9 deg
+PID OUT  | OutP: -191.9 | OutR:  -67.4 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.32 m | ToF:0.04 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 259 | RR: 124 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   578 | AcX: -4012 | AcY:   -25
+ATTITUDE | Pitch:  88.1 deg | Roll:  17.2 deg
+PID OUT  | OutP: -193.1 | OutR:  -70.2 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.30 m | ToF:0.04 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 263 | RR: 122 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   579 | AcX: -4018 | AcY:   -30
+ATTITUDE | Pitch:  88.5 deg | Roll:  17.8 deg
+PID OUT  | OutP: -194.0 | OutR:  -71.9 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.27 m | ToF:0.04 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 265 | RR: 122 | Thr:0
+ATTITUDE | Pitch:  88.7 deg | Roll:  18.4 deg
+PID OUT  | OutP: -194.4 | OutR:  -74.6 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.23 m | ToF:0.04 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 268 | RR: 119 | Thr:0
+RAW SENSOR | GyX:  -914 | GyY:   580 | AcX: -4015 | AcY:   -28
+ATTITUDE | Pitch:  88.9 deg | Roll:  18.6 deg
+PID OUT  | OutP: -194.6 | OutR:  -73.9 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.06 m | ToF:0.04 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 268 | RR: 120 | Thr:0
+RAW SENSOR | GyX:  -917 | GyY:   572 | AcX: -4010 | AcY:   -30
+ATTITUDE | Pitch:  89.0 deg | Roll:  18.5 deg
+PID OUT  | OutP: -194.8 | OutR:  -73.7 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.05 m | Target:0.00 m | Baro:0.08 m | ToF:0.05 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 268 | RR: 121 | Thr:0
+RAW SENSOR | GyX:  -914 | GyY:   570 | AcX: -4015 | AcY:   -28
+ATTITUDE | Pitch:  89.0 deg | Roll:  18.4 deg
+PID OUT  | OutP: -194.9 | OutR:  -73.9 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.08 m | ToF:0.04 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 268 | RR: 120 | Thr:0
+RAW SENSOR | GyX:  -914 | GyY:   574 | AcX: -4014 | AcY:   -32
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.7 deg
+PID OUT  | OutP: -194.9 | OutR:  -74.7 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.10 m | ToF:0.04 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 269 | RR: 120 | Thr:0
+RAW SENSOR | GyX:  -914 | GyY:   576 | AcX: -4013 | AcY:   -30
+ATTITUDE | Pitch:  89.1 deg | Roll:  19.0 deg
+PID OUT  | OutP: -195.0 | OutR:  -76.1 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.10 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 271 | RR: 118 | Thr:0
+RAW SENSOR | GyX:  -909 | GyY:   586 | AcX: -4017 | AcY:   -27
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.9 deg
+PID OUT  | OutP: -195.0 | OutR:  -73.9 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.12 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 268 | RR: 121 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   579 | AcX: -4018 | AcY:   -26
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.7 deg
+PID OUT  | OutP: -195.1 | OutR:  -74.2 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.10 m | ToF:0.04 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 269 | RR: 120 | Thr:0
+RAW SENSOR | GyX:  -908 | GyY:   577 | AcX: -4014 | AcY:   -30
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.6 deg
+PID OUT  | OutP: -195.1 | OutR:  -73.5 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.08 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 268 | RR: 121 | Thr:0
+RAW SENSOR | GyX:  -910 | GyY:   571 | AcX: -4016 | AcY:   -25
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.6 deg
+PID OUT  | OutP: -195.1 | OutR:  -74.5 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.07 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 269 | RR: 120 | Thr:0
+RAW SENSOR | GyX:  -922 | GyY:   573 | AcX: -4014 | AcY:   -28
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.7 deg
+PID OUT  | OutP: -195.1 | OutR:  -74.4 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.10 m | ToF:0.04 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 269 | RR: 120 | Thr:0
+RAW SENSOR | GyX:  -915 | GyY:   575 | AcX: -4015 | AcY:   -29
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.7 deg
+PID OUT  | OutP: -195.1 | OutR:  -74.1 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.21 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 269 | RR: 120 | Thr:0
+RAW SENSOR | GyX:  -908 | GyY:   582 | AcX: -4016 | AcY:   -26
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.7 deg
+PID OUT  | OutP: -195.1 | OutR:  -74.7 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.22 m | ToF:0.04 m | Pressure:101591 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 269 | RR: 120 | Thr:0
+RAW SENSOR | GyX:  -907 | GyY:   577 | AcX: -4009 | AcY:   -28
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.6 deg
+PID OUT  | OutP: -195.0 | OutR:  -72.8 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.20 m | ToF:0.04 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 267 | RR: 122 | Thr:0
+RAW SENSOR | GyX:  -909 | GyY:   574 | AcX: -4016 | AcY:   -26
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.5 deg
+PID OUT  | OutP: -195.1 | OutR:  -73.8 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.16 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 268 | RR: 121 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   580 | AcX: -4017 | AcY:   -24
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.3 deg
+PID OUT  | OutP: -195.1 | OutR:  -72.2 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.14 m | ToF:0.04 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 267 | RR: 122 | Thr:0
+RAW SENSOR | GyX:  -920 | GyY:   576 | AcX: -4014 | AcY:   -29
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.1 deg
+PID OUT  | OutP: -195.0 | OutR:  -72.8 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.12 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 267 | RR: 122 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   576 | AcX: -4012 | AcY:   -29
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.6 deg
+PID OUT  | OutP: -195.1 | OutR:  -74.9 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.08 m | ToF:0.04 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 269 | RR: 120 | Thr:0
+RAW SENSOR | GyX:  -909 | GyY:   578 | AcX: -4012 | AcY:   -28
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.9 deg
+PID OUT  | OutP: -195.1 | OutR:  -75.1 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.14 m | ToF:0.04 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 270 | RR: 119 | Thr:0
+RAW SENSOR | GyX:  -918 | GyY:   580 | AcX: -4012 | AcY:   -28
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.8 deg
+PID OUT  | OutP: -195.0 | OutR:  -74.0 | (KpP:2.3, KpR:3.3)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.24 m | ToF:0.04 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 269 | RR: 121 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   581 | AcX: -4015 | AcY:   -31
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.9 deg
+PID OUT  | OutP: -189.7 | OutR:  -73.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.09 m | ToF:0.04 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 262 | RR: 116 | Thr:0
+RAW SENSOR | GyX:  -914 | GyY:   579 | AcX: -4014 | AcY:   -27
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.8 deg
+PID OUT  | OutP: -189.6 | OutR:  -72.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.03 m | ToF:0.04 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 261 | RR: 117 | Thr:0
+RAW SENSOR | GyX:  -915 | GyY:   572 | AcX: -4012 | AcY:   -31
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.9 deg
+PID OUT  | OutP: -189.6 | OutR:  -72.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.03 m | ToF:0.04 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 262 | RR: 116 | Thr:0
+RAW SENSOR | GyX:  -909 | GyY:   568 | AcX: -4014 | AcY:   -26
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.9 deg
+PID OUT  | OutP: -189.6 | OutR:  -72.4 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.13 m | ToF:0.04 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 261 | RR: 117 | Thr:0
+RAW SENSOR | GyX:  -906 | GyY:   579 | AcX: -4015 | AcY:   -29
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.6 deg
+PID OUT  | OutP: -189.6 | OutR:  -71.5 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.28 m | ToF:0.04 m | Pressure:101591 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 261 | RR: 118 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   578 | AcX: -4014 | AcY:   -29
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.6 deg
+PID OUT  | OutP: -189.6 | OutR:  -72.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.28 m | ToF:0.04 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 262 | RR: 116 | Thr:0
+RAW SENSOR | GyX:  -911 | GyY:   575 | AcX: -4010 | AcY:   -30
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.8 deg
+PID OUT  | OutP: -189.6 | OutR:  -72.3 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.25 m | ToF:0.04 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 261 | RR: 117 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   577 | AcX: -4011 | AcY:   -27
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.5 deg
+PID OUT  | OutP: -189.6 | OutR:  -71.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.12 m | ToF:0.04 m | Pressure:101597 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 260 | RR: 118 | Thr:0
+RAW SENSOR | GyX:  -907 | GyY:   573 | AcX: -4013 | AcY:   -26
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.5 deg
+PID OUT  | OutP: -189.7 | OutR:  -71.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.04 m | ToF:0.04 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 261 | RR: 117 | Thr:0
+RAW SENSOR | GyX:  -909 | GyY:   571 | AcX: -4012 | AcY:   -30
+ATTITUDE | Pitch:  89.2 deg | Roll:  18.7 deg
+PID OUT  | OutP: -189.7 | OutR:  -72.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.02 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 262 | RR: 117 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   574 | AcX: -4012 | AcY:   -30
+ATTITUDE | Pitch:  89.2 deg | Roll:  19.0 deg
+PID OUT  | OutP: -189.6 | OutR:  -73.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:-0.02 m | ToF:0.04 m | Pressure:101597 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 263 | RR: 115 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   572 | AcX: -4015 | AcY:   -28
+ATTITUDE | Pitch:  89.1 deg | Roll:  19.0 deg
+PID OUT  | OutP: -189.6 | OutR:  -73.4 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:-0.08 m | ToF:0.04 m | Pressure:101599 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 262 | RR: 116 | Thr:0
+RAW SENSOR | GyX:  -907 | GyY:   572 | AcX: -4018 | AcY:   -28
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.8 deg
+PID OUT  | OutP: -189.6 | OutR:  -72.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:-0.19 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 262 | RR: 116 | Thr:0
+RAW SENSOR | GyX:  -909 | GyY:   580 | AcX: -4018 | AcY:   -30
+ATTITUDE | Pitch:  89.1 deg | Roll:  19.0 deg
+PID OUT  | OutP: -189.6 | OutR:  -73.4 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:-0.07 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 263 | RR: 116 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   577 | AcX: -4017 | AcY:   -27
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.9 deg
+PID OUT  | OutP: -189.6 | OutR:  -72.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:-0.04 m | ToF:0.04 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 262 | RR: 116 | Thr:0
+RAW SENSOR | GyX:  -911 | GyY:   577 | AcX: -4015 | AcY:   -30
+ATTITUDE | Pitch:  89.1 deg | Roll:  19.0 deg
+PID OUT  | OutP: -189.6 | OutR:  -74.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.05 m | Target:0.00 m | Baro:-0.01 m | ToF:0.05 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 263 | RR: 115 | Thr:0
+RAW SENSOR | GyX:  -917 | GyY:   575 | AcX: -4018 | AcY:   -29
+ATTITUDE | Pitch:  89.1 deg | Roll:  19.4 deg
+PID OUT  | OutP: -189.6 | OutR:  -75.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:-0.01 m | ToF:0.04 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 264 | RR: 114 | Thr:0
+RAW SENSOR | GyX:  -914 | GyY:   571 | AcX: -4015 | AcY:   -27
+ATTITUDE | Pitch:  89.1 deg | Roll:  19.6 deg
+PID OUT  | OutP: -189.6 | OutR:  -75.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.06 m | ToF:0.04 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 264 | RR: 114 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   579 | AcX: -4011 | AcY:   -29
+ATTITUDE | Pitch:  89.1 deg | Roll:  19.7 deg
+PID OUT  | OutP: -189.6 | OutR:  -75.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.17 m | ToF:0.04 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 265 | RR: 113 | Thr:0
+RAW SENSOR | GyX:  -915 | GyY:   580 | AcX: -4023 | AcY:   -31
+ATTITUDE | Pitch:  89.1 deg | Roll:  20.1 deg
+PID OUT  | OutP: -189.6 | OutR:  -76.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.06 m | ToF:0.04 m | Pressure:101598 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 266 | RR: 112 | Thr:0
+RAW SENSOR | GyX:  -910 | GyY:   582 | AcX: -4015 | AcY:   -31
+ATTITUDE | Pitch:  89.1 deg | Roll:  20.0 deg
+PID OUT  | OutP: -189.6 | OutR:  -75.2 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:-0.01 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 264 | RR: 114 | Thr:0
+RAW SENSOR | GyX:  -908 | GyY:   580 | AcX: -4017 | AcY:   -27
+ATTITUDE | Pitch:  89.1 deg | Roll:  19.7 deg
+PID OUT  | OutP: -189.6 | OutR:  -75.3 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.05 m | Target:0.00 m | Baro:0.09 m | ToF:0.05 m | Pressure:101598 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 264 | RR: 114 | Thr:0
+RAW SENSOR | GyX:  -912 | GyY:   575 | AcX: -4016 | AcY:   -26
+ATTITUDE | Pitch:  89.1 deg | Roll:  19.2 deg
+PID OUT  | OutP: -189.6 | OutR:  -72.6 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.01 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 262 | RR: 116 | Thr:0
+RAW SENSOR | GyX:  -910 | GyY:   580 | AcX: -4014 | AcY:   -24
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.7 deg
+PID OUT  | OutP: -189.6 | OutR:  -72.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.08 m | ToF:0.04 m | Pressure:101591 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 261 | RR: 117 | Thr:0
+RAW SENSOR | GyX:  -907 | GyY:   574 | AcX: -4017 | AcY:   -29
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.6 deg
+PID OUT  | OutP: -189.6 | OutR:  -72.0 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.21 m | ToF:0.04 m | Pressure:101592 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 261 | RR: 117 | Thr:0
+RAW SENSOR | GyX:  -911 | GyY:   578 | AcX: -4014 | AcY:   -31
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.6 deg
+PID OUT  | OutP: -189.6 | OutR:  -71.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.22 m | ToF:0.04 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 260 | RR: 118 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   578 | AcX: -4019 | AcY:   -30
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.4 deg
+PID OUT  | OutP: -189.6 | OutR:  -71.7 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.09 m | ToF:0.04 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 261 | RR: 117 | Thr:0
+RAW SENSOR | GyX:  -918 | GyY:   582 | AcX: -4015 | AcY:   -30
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.7 deg
+PID OUT  | OutP: -189.6 | OutR:  -72.6 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.15 m | ToF:0.04 m | Pressure:101593 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 262 | RR: 116 | Thr:0
+RAW SENSOR | GyX:  -922 | GyY:   575 | AcX: -4014 | AcY:   -28
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.7 deg
+PID OUT  | OutP: -189.6 | OutR:  -71.8 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.24 m | ToF:0.04 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 261 | RR: 117 | Thr:0
+RAW SENSOR | GyX:  -908 | GyY:   575 | AcX: -4017 | AcY:   -28
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.4 deg
+PID OUT  | OutP: -189.5 | OutR:  -71.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.20 m | ToF:0.04 m | Pressure:101594 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 260 | RR: 118 | Thr:0
+RAW SENSOR | GyX:  -915 | GyY:   580 | AcX: -4011 | AcY:   -29
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.4 deg
+PID OUT  | OutP: -189.5 | OutR:  -71.1 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.07 m | ToF:0.04 m | Pressure:101598 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 260 | RR: 118 | Thr:0
+RAW SENSOR | GyX:  -913 | GyY:   576 | AcX: -4011 | AcY:   -31
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.5 deg
+PID OUT  | OutP: -189.5 | OutR:  -71.2 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:0.02 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 260 | RR: 118 | Thr:0
+RAW SENSOR | GyX:  -911 | GyY:   574 | AcX: -4011 | AcY:   -26
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.3 deg
+PID OUT  | OutP: -189.5 | OutR:  -71.3 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:-0.08 m | ToF:0.04 m | Pressure:101598 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 260 | RR: 118 | Thr:0
+RAW SENSOR | GyX:  -916 | GyY:   580 | AcX: -4015 | AcY:   -28
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.3 deg
+PID OUT  | OutP: -189.6 | OutR:  -70.9 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:-0.01 m | ToF:0.04 m | Pressure:101595 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 260 | RR: 118 | Thr:0
+RAW SENSOR | GyX:  -915 | GyY:   575 | AcX: -4012 | AcY:   -31
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.6 deg
+PID OUT  | OutP: -189.6 | OutR:  -72.4 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:-0.01 m | ToF:0.04 m | Pressure:101596 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 261 | RR: 117 | Thr:0
+RAW SENSOR | GyX:  -909 | GyY:   579 | AcX: -4017 | AcY:   -24
+ATTITUDE | Pitch:  89.1 deg | Roll:  18.6 deg
+PID OUT  | OutP: -189.6 | OutR:  -71.6 | (KpP:2.2, KpR:3.2)
+ALTITUDE | Current:0.04 m | Target:0.00 m | Baro:-0.05 m | ToF:0.04 m | Pressure:101597 Pa
+MOTORS   | FR:   0 | FL:   0 | RL: 261 | RR: 117 | Thr:0
+RAW SENSOR | GyX:  -911 | GyY:   576 | AcX: -4016 | AcY:   -28

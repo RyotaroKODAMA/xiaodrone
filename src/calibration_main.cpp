@@ -102,9 +102,11 @@ void calibrateLevel() {
     float accZ = 0.0f;
     getNormalizedAccel(upsideDown, accX, accY, accZ);
 
-    float rawAccP = atan2(accY, sqrt(accX * accX + accZ * accZ)) * 180 / PI;
-    float rawAccR = atan2(-accX, accZ) * 180 / PI;
-
+    // float rawAccP = atan2(accY, sqrt(accX * accX + accZ * accZ)) * 180 / PI;
+    // float rawAccR = atan2(-accX, accZ) * 180 / PI;
+    // accY にマイナスを付ける
+    float rawAccR = atan2(-accY, accZ) * 180.0 / PI;
+    float rawAccP = atan2(-accX, sqrt(accX * accX + accZ * accZ)) * 180.0 / PI;
     pitchSum += rawAccP;
     rollSum += rawAccR;
     delay(2);
